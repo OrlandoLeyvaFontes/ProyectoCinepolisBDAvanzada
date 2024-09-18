@@ -4,16 +4,23 @@
  */
 package Presentacion;
 
+import Negocio.PeliculasNegocio;
+import Persistencia.ConexionBD;
+import Persistencia.PeliculasDAO;
+
 /**
  *
  * @author Oley
  */
 public class MenuAdministrador extends javax.swing.JFrame {
-
+    private PeliculasNegocio peliculasNegocio;
+private ConexionBD conexionBD;
     /**
      * Creates new form MenuAdministrador
      */
     public MenuAdministrador() {
+        conexionBD = new ConexionBD();
+          this.peliculasNegocio = new PeliculasNegocio(new PeliculasDAO(conexionBD));
         initComponents();
     }
 
@@ -44,7 +51,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        AñadirPeliculas añadir = new AñadirPeliculas();
+        AñadirPeliculas añadir = new AñadirPeliculas(peliculasNegocio);
         añadir.setVisible(true);
 
         // TODO add your handling code here:

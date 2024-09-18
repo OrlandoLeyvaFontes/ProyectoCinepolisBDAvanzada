@@ -4,17 +4,45 @@
  */
 package Presentacion;
 
+import Negocio.PeliculasNegocio;
+import Persistencia.PersistenciaException;
+import dtoCinepolis.PeliculasDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Oley
  */
 public class AñadirPeliculas extends javax.swing.JFrame {
 
+    private PeliculasNegocio peliculasNegocio;
+
     /**
      * Creates new form AñadirPeliculas
      */
-    public AñadirPeliculas() {
+    public AñadirPeliculas(PeliculasNegocio peliculasNegocio) {
+        this.peliculasNegocio = peliculasNegocio;
+
         initComponents();
+    }
+
+    private void AñadirPelicula() throws PersistenciaException {
+        String titulo = jTextField1.getText();
+        String genero = jTextField2.getText();
+        int duracionMinutos = Integer.parseInt(jTextField3.getText());
+        String clasificacion = jTextField5.getText();
+        String paisOrigen = jTextField4.getText();
+        String texto = jTextField6.getText();
+        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, texto);
+
+        try {
+            peliculasNegocio.guardar(peliculaDTO);
+            JOptionPane.showMessageDialog(this, "Película guardada exitosamente.");
+        } catch (PersistenciaException e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar la película: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -48,8 +76,8 @@ public class AñadirPeliculas extends javax.swing.JFrame {
         jLabel1.setText("Añadir Peliculas");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
 
-        jLabel2.setText("Nombre:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
+        jLabel2.setText("titulo:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 250, -1));
 
         jLabel3.setText("Genero:");
@@ -100,6 +128,11 @@ public class AñadirPeliculas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            AñadirPelicula();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(AñadirPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
         ExitoPelicula exito = new ExitoPelicula();
         exito.setVisible(true);

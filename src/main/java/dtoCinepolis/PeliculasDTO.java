@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Entidad;
+package dtoCinepolis;
 
 /**
  *
  * @author Oley
  */
-public class Peliculas {
+public class PeliculasDTO {
 
     int id;
     String titulo;
@@ -18,10 +18,10 @@ public class Peliculas {
     String paisOrigen;
     String texto;
 
-    public Peliculas() {
+    public PeliculasDTO() {
     }
 
-    public Peliculas(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
+    public PeliculasDTO(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
         this.titulo = titulo;
         this.clasificacion = clasificacion;
         this.genero = genero;
@@ -30,7 +30,7 @@ public class Peliculas {
         this.texto = texto;
     }
 
-    public Peliculas(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
+    public PeliculasDTO(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
         this.id = id;
         this.titulo = titulo;
         this.clasificacion = clasificacion;
@@ -41,65 +41,59 @@ public class Peliculas {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id = this.id;
     }
 
     public String getTitulo() {
-        return titulo;
+        return this.titulo;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+   public void setTitulo(String titulo) {
+    this.titulo = titulo;
     }
 
     public String getClasificacion() {
-        return clasificacion;
+        return this.clasificacion;
     }
 
-    public void setClasificacion(String clasificacion) {
-        this.clasificacion = clasificacion;
-    }
+   public void setClasificacion(String clasificacion) {
+    this.clasificacion = clasificacion; 
+}
 
     public String getGenero() {
-        return genero;
+        return this.genero;
     }
 
     public void setGenero(String genero) {
-        this.genero = genero;
+    this.genero = genero;
     }
 
     public int getDuracionMinutos() {
-        return duracionMinutos;
+        return this.duracionMinutos;
     }
 
-    public void setDuracionMinutos(int duracionMinutos) {
-        this.duracionMinutos = duracionMinutos;
+   public void setDuracionMinutos(int duracionMinutos) {
+    this.duracionMinutos = duracionMinutos;
     }
 
     public String getPaisOrigen() {
-        return paisOrigen;
+        return this.paisOrigen;
     }
 
-    public void setPaisOrigen(String paisOrigen) {
-        this.paisOrigen = paisOrigen;
+   public void setPaisOrigen(String paisOrigen) {
+    this.paisOrigen = paisOrigen;
     }
 
     public String getTexto() {
-        return texto;
+        return this.texto;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+   public void setTexto(String texto) {
+    this.texto = texto;
     }
 
-    
-    
-    
-    
-    
-    
 }

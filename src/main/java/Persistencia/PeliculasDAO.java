@@ -21,6 +21,7 @@ public class PeliculasDAO implements IPeliculasDAO {
         this.conexionBD = conexionBD;
     }
 
+
     @Override
     public void guardar(Peliculas pelicula) throws PersistenciaException {
         String sql = "INSERT INTO peliculas (titulo, clasificacion, genero,  paisOrigen, duracionMinutos,sinopsis) VALUES (?, ?, ?, ?, ?, ?)";
