@@ -2,56 +2,59 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Entidad;
+package dtoCinepolis;
 
 /**
  *
  * @author Oley
  */
-public class Sucursales {
+public class SucursalesDTO {
     int id;
     String nombre;
-    String ciudad; 
+    String ciudad;
 
-    public Sucursales() {
+    public SucursalesDTO() {
     }
 
-    public Sucursales(String nombre, String ciudad) {
+    public SucursalesDTO(String nombre, String ciudad) {
         this.nombre = nombre;
         this.ciudad = ciudad;
     }
 
-    public Sucursales(int id, String nombre, String ciudad) {
-        this.id = id;
-        this.nombre = nombre;
-        this.ciudad = ciudad;
-    }
+   
+
+public SucursalesDTO(int id, String nombre, String ciudad) {
+    this.id = id;
+    this.nombre = nombre; 
+    this.ciudad = ciudad; 
+}
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
-        this.id = this.id;
+        this.id = id;
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre =nombre;
+        this.nombre = nombre;
     }
+
+  
 
     public String getCiudad() {
         return ciudad;
     }
 
     public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+        this.ciudad = ciudad; 
     }
+   
 
-    
-    
     
 }

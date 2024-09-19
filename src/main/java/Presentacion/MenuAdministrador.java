@@ -5,22 +5,27 @@
 package Presentacion;
 
 import Negocio.PeliculasNegocio;
+import Negocio.SucursalesNegocio;
 import Persistencia.ConexionBD;
 import Persistencia.PeliculasDAO;
+import Persistencia.SucursalDAO;
 
 /**
  *
  * @author Oley
  */
 public class MenuAdministrador extends javax.swing.JFrame {
+
     private PeliculasNegocio peliculasNegocio;
-private ConexionBD conexionBD;
+    private ConexionBD conexionBD;
+    private SucursalesNegocio sucursalesNegocios;
+
     /**
      * Creates new form MenuAdministrador
      */
     public MenuAdministrador() {
         conexionBD = new ConexionBD();
-          this.peliculasNegocio = new PeliculasNegocio(new PeliculasDAO(conexionBD));
+        this.peliculasNegocio = new PeliculasNegocio(new PeliculasDAO(conexionBD));
         initComponents();
     }
 
@@ -34,6 +39,7 @@ private ConexionBD conexionBD;
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -46,6 +52,14 @@ private ConexionBD conexionBD;
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 131, -1, -1));
 
+        jButton2.setText("Añadir Sucursales");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -56,6 +70,16 @@ private ConexionBD conexionBD;
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false);
+        SucursalDAO sucursalDAO= new SucursalDAO(conexionBD);
+ AñadirSucursales sucursal=new AñadirSucursales(sucursalDAO);
+ sucursal.setVisible(true);
+      
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -94,5 +118,6 @@ private ConexionBD conexionBD;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     // End of variables declaration//GEN-END:variables
 }

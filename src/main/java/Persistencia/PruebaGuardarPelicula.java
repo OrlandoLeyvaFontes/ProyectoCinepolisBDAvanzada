@@ -17,7 +17,7 @@ public class PruebaGuardarPelicula {
     public static void main(String[] args) throws PersistenciaException {
         IConexionBD conexionBD = new ConexionBD();
         PeliculasDAO peliculasDAO = new PeliculasDAO(conexionBD);
-        Peliculas peliculas = new Peliculas("Mi villano favorito 4", "niños", "comedia", 180, "estados unidos", "cuarta parte de la pelicula de mi villano favorito");
+        Peliculas peliculas = new Peliculas("Mi villano favorito 8", "niños", "comedia", 180, "estados unidos", "cuarta parte de la pelicula de mi villano favorito");
         try {
             peliculasDAO.guardar(peliculas);
         } catch (PersistenciaException ex) {

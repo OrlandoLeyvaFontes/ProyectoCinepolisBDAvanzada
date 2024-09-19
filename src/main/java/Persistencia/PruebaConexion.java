@@ -16,8 +16,8 @@ public class PruebaConexion {
 
     public static void main(String[] args) {
         try {
-            IConexionBD conexionBD = new ConexionBD();
-            conexionBD.crearConexion();
+          ConexionBD conexion= new ConexionBD();
+            conexion.crearConexion();
             System.out.println("Se creo la conexion");
         } catch (Exception e) {
             System.out.println("error: " + e.getMessage());
