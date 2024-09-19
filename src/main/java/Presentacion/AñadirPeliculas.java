@@ -35,7 +35,8 @@ public class AñadirPeliculas extends javax.swing.JFrame {
         String clasificacion = jTextField5.getText();
         String paisOrigen = jTextField4.getText();
         String texto = jTextField6.getText();
-        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, texto);
+        String link=jTextField7.getText();
+        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, texto,link);
 
         try {
             peliculasNegocio.guardar(peliculaDTO);
@@ -69,6 +70,8 @@ public class AñadirPeliculas extends javax.swing.JFrame {
         jTextField6 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -106,7 +109,7 @@ public class AñadirPeliculas extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, -1));
 
         jButton2.setText("Continuar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +117,11 @@ public class AñadirPeliculas extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, -1, -1));
+
+        jLabel8.setText("Link trailer:");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, -1));
+        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 282, 230, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -154,11 +161,13 @@ public class AñadirPeliculas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }

@@ -40,6 +40,7 @@ public void guardar(PeliculasDTO peliculaDTO) throws PersistenciaException {
     pelicula.setPaisOrigen(peliculasDTO.getPaisOrigen());
     pelicula.setDuracionMinutos(peliculasDTO.getDuracionMinutos());
     pelicula.setTexto(peliculasDTO.getTexto());
+    pelicula.setLinkTrailer(peliculasDTO.getLinkTrailer());
     return pelicula;
     }
 }

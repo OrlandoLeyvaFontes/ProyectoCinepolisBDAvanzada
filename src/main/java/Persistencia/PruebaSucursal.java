@@ -16,7 +16,7 @@ public class PruebaSucursal {
     
   IConexionBD conexionBD=new ConexionBD();
   SucursalDAO surcursalDAO=new SucursalDAO(conexionBD);
-  Sucursales sucursales=new Sucursales( "itcason", "hermosillo");
+  Sucursales sucursales=new Sucursales( "itcason", "dubai");
   surcursalDAO.guardar(sucursales);
 }
 }

@@ -24,7 +24,7 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
     public void guardar(Peliculas pelicula) throws PersistenciaException {
-        String sql = "INSERT INTO peliculas (titulo, clasificacion, genero,  paisOrigen, duracionMinutos,sinopsis) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO peliculas (titulo, clasificacion, genero,  paisOrigen, duracionMinutos,sinopsis,linkTrailer) VALUES (?, ?, ?, ?, ?, ?,?)";
         try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sql)) {
             prepared.setString(1, pelicula.getTitulo());
             prepared.setString(2, pelicula.getClasificacion());
@@ -33,6 +33,7 @@ public class PeliculasDAO implements IPeliculasDAO {
             prepared.setInt(5, pelicula.getDuracionMinutos());
 
             prepared.setString(6, pelicula.getTexto());
+            prepared.setString(7, pelicula.getLinkTrailer());
             prepared.executeUpdate();
         } catch (SQLException e) {
             throw new PersistenciaException("Error al guardar la pelicula", e);

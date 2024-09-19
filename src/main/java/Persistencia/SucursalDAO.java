@@ -23,7 +23,7 @@ public class SucursalDAO implements ISucursalDAO {
 
     @Override
     public void guardar(Sucursales sucursales) throws PersistenciaException {
-         String sql = "INSERT INTO sucursales (nombre, ciudad) VALUES (?, ?)";
+         String sql = "INSERT INTO sucursales (nombre, idCiudad) VALUES (?, ?)";
     try (Connection conexion = conexionBD.crearConexion(); 
          PreparedStatement prepared = conexion.prepareStatement(sql)) {
         prepared.setString(1, sucursales.getNombre());

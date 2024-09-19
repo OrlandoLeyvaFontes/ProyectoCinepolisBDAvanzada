@@ -22,7 +22,7 @@ public class ProbarPeliculasNegocio {
         IPeliculasDAO peliculasDAO = new PeliculasDAO(conexionBD);
         PeliculasNegocio peliculasNegocio = new PeliculasNegocio(peliculasDAO);
 
-        PeliculasDTO peliculaDTO = new PeliculasDTO("ALIEN", "adultos", "accion", 180, "estados unidos", "los aliens llegaron ya");
+        PeliculasDTO peliculaDTO = new PeliculasDTO("ALIEN", "adultos", "accion", 180, "estados unidos", "los aliens llegaron ya","https://www.youtube.com/watch?v=I0_qFoptZ4Y");
        
 
        
