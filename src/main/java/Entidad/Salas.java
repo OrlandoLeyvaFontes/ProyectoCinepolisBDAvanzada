@@ -4,6 +4,8 @@
  */
 package Entidad;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Oley
@@ -12,7 +14,8 @@ public class Salas {
     int id;
      String nombre;
      int cantidadAsientos;
-
+    LocalDateTime tiempoLimpieza;
+     
     public Salas() {
     }
 

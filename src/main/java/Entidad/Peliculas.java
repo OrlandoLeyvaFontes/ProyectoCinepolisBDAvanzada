@@ -18,11 +18,12 @@ public class Peliculas {
     String paisOrigen;
     String texto;
     String linkTrailer;
+    String rutaImagen;
 
     public Peliculas() {
     }
 
-    public Peliculas(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer) {
+    public Peliculas(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen) {
         this.titulo = titulo;
         this.clasificacion = clasificacion;
         this.genero = genero;
@@ -30,7 +31,10 @@ public class Peliculas {
         this.paisOrigen = paisOrigen;
         this.texto = texto;
         this.linkTrailer = linkTrailer;
+        this.rutaImagen = rutaImagen;
     }
+
+  
 
    
 
@@ -106,6 +110,14 @@ public class Peliculas {
 
     public void setLinkTrailer(String linkTrailer) {
         this.linkTrailer = linkTrailer;
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
     }
 
     
