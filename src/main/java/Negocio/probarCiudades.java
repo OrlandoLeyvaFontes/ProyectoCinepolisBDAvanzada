@@ -32,7 +32,7 @@ CuidadFiltroTablaDTO filtro = new CuidadFiltroTablaDTO();
 filtro.setFiltro("obregon");
 filtro.setLimit(10);
 filtro.setOffset(0);
-List<CuidadTablaDTO> ciudades = ciudadesNegocio.buscarCuidadID(filtro);
+List<CuidadTablaDTO> ciudades = ciudadesNegocio.buscarCuidadTabla(filtro);
 if (ciudades != null && !ciudades.isEmpty()) {
     for (CuidadTablaDTO ciudad : ciudades) {
         System.out.println("ID: " + ciudad.getId() + ", Nombre: " + ciudad.getNombre());

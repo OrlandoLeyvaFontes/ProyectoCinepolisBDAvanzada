@@ -56,7 +56,7 @@ public class CatalogoCiudades extends javax.swing.JFrame {
     private void cargarTablaCiudades() {
         try {
             CuidadFiltroTablaDTO filtro = obtenerFiltrosTabla();
-            List<CuidadTablaDTO> cuidadLista = ciudadesNegocio.buscarCuidadID(filtro);
+            List<CuidadTablaDTO> cuidadLista = ciudadesNegocio.buscarCuidadTabla(filtro);
             BorrarRegistrosTablaCuidades();
             AgregarRegistrosTablaCiudad(cuidadLista);
         } catch (NegocioException e) {

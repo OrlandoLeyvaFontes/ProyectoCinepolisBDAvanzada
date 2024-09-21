@@ -47,9 +47,9 @@ private Ciudad convertirADominio(CiudadesDTO ciudadesDTO){
     }
 
     @Override
-    public List<CuidadTablaDTO> buscarCuidadID(CuidadFiltroTablaDTO filtro) throws NegocioException {
+    public List<CuidadTablaDTO> buscarCuidadTabla(CuidadFiltroTablaDTO filtro) throws NegocioException {
 try{
-          List<CuidadTablaDTO> cuidadLista=ciudadesDAO.buscarCuidadID(filtro);
+          List<CuidadTablaDTO> cuidadLista=ciudadesDAO.buscarCuidadTabla(filtro);
           if(cuidadLista==null){
                              throw new NegocioException("No se encontraron registros con los filtros");
  

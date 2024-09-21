@@ -18,5 +18,5 @@ import java.util.List;
 public interface ICiudadesNegocio {
 
     CiudadesDTO guardar(CiudadesDTO ciudad) throws PersistenciaException;
-    List< CuidadTablaDTO > buscarCuidadID( CuidadFiltroTablaDTO filtro) throws NegocioException;
+    List< CuidadTablaDTO > buscarCuidadTabla( CuidadFiltroTablaDTO filtro) throws NegocioException;
 }

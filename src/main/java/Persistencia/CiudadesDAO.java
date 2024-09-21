@@ -43,8 +43,8 @@ public class CiudadesDAO implements ICiudadesDAO {
     }
 
     @Override
-    public List<CuidadTablaDTO> buscarCuidadID(CuidadFiltroTablaDTO filtro) throws PersistenciaException {
-         List<CuidadTablaDTO> cuidadesLista = new ArrayList<>();
+    public List<CuidadTablaDTO> buscarCuidadTabla(CuidadFiltroTablaDTO filtro) throws PersistenciaException {
+        List<CuidadTablaDTO> cuidadesLista = new ArrayList<>();
         String sql = """
                       SELECT id, nombre 
                       FROM ciudades 
@@ -52,9 +52,8 @@ public class CiudadesDAO implements ICiudadesDAO {
                       LIMIT ? 
                       OFFSET ?
                       """;
-        try (Connection conexion = conexionBD.crearConexion();
-             PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
-            
+        try (Connection conexion = conexionBD.crearConexion(); PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
+
             preparedStatement.setString(1, "%" + filtro.getFiltro() + "%");
             preparedStatement.setInt(2, filtro.getLimit());
             preparedStatement.setInt(3, filtro.getOffset());
@@ -73,4 +72,57 @@ public class CiudadesDAO implements ICiudadesDAO {
         return cuidadesLista;
     }
 
+    @Override
+    public Ciudad modificar(CiudadesDTO ciudad) throws PersistenciaException {
+       try {
+        Connection conexion = this.conexionBD.crearConexion();
+        String updateCiudad = """
+                       UPDATE ciudades
+                       SET nombre = ?
+                       WHERE id = ?
+                       """;
+        PreparedStatement prepared = conexion.prepareStatement(updateCiudad);
+        prepared.setString(1, ciudad.getNombre()); 
+        prepared.setInt(2, ciudad.getId());        
+
+        prepared.executeUpdate();
+        prepared.close();
+        conexion.close();
+
+        return buscarPorID(ciudad.getId());  
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
+    }
+
+    }
+
+    @Override
+    public Ciudad buscarPorID(int id) throws PersistenciaException {
+       try {
+        Ciudad ciudad = null;
+        Connection conexion = conexionBD.crearConexion();
+        String codigoSQL = """
+                          SELECT nombre 
+                          FROM ciudades 
+                          WHERE id = ? 
+                     """;
+        PreparedStatement prepared = conexion.prepareStatement(codigoSQL);
+        prepared.setInt(1, id);
+        ResultSet resultado = prepared.executeQuery();
+
+        if (resultado.next()) {
+            ciudad = new Ciudad(resultado.getString("nombre"));
+        }
+
+        resultado.close();
+        prepared.close();
+        conexion.close();
+
+        return ciudad;
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        throw new PersistenciaException("Ocurrió un error al leer la base de datos, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
+    }
+    }
 }
