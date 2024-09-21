@@ -6,6 +6,7 @@ package Presentacion;
 
 import Negocio.PeliculasNegocio;
 import Negocio.SucursalesNegocio;
+import Persistencia.ClientesDAO;
 import Persistencia.ConexionBD;
 import Persistencia.PeliculasDAO;
 import Persistencia.SucursalDAO;
@@ -41,6 +42,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -69,6 +71,14 @@ public class MenuAdministrador extends javax.swing.JFrame {
         });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, -1, -1));
 
+        jButton4.setText("Catalogo Clientes");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -82,22 +92,30 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        SucursalDAO sucursalDAO= new SucursalDAO(conexionBD);
- AñadirSucursales sucursal=new AñadirSucursales(sucursalDAO);
- sucursal.setVisible(true);
-      
+        SucursalDAO sucursalDAO = new SucursalDAO(conexionBD);
+        AñadirSucursales sucursal = new AñadirSucursales(sucursalDAO);
+        sucursal.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-this.setVisible(false);
-CatalogoCiudades catalogo= new CatalogoCiudades();
-catalogo.setVisible(true);
-
+        this.setVisible(false);
+        CatalogoCiudades catalogo = new CatalogoCiudades();
+        catalogo.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.setVisible(false);
+        ClientesDAO clientesDAO = new ClientesDAO(conexionBD);
+
+        AñadirClientes añadirClientes = new AñadirClientes(clientesDAO);
+        añadirClientes.setVisible(true);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,5 +156,6 @@ catalogo.setVisible(true);
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     // End of variables declaration//GEN-END:variables
 }
