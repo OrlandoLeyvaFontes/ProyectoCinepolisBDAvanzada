@@ -5,27 +5,71 @@
 package Presentacion;
 
 import Negocio.CiudadesNegocio;
+import Negocio.NegocioException;
 import Persistencia.CiudadesDAO;
 import Persistencia.ConexionBD;
+import dtoCinepolis.CuidadFiltroTablaDTO;
+import dtoCinepolis.CuidadTablaDTO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Oley
  */
 public class CatalogoCiudades extends javax.swing.JFrame {
-private  CiudadesNegocio ciudadesNegocio; 
+
+    private CiudadesNegocio ciudadesNegocio;
     private ConexionBD conexionBD;
 
     /**
      * Creates new form CatalogoCiudades
      */
     public CatalogoCiudades() {
-                conexionBD = new ConexionBD();
+        conexionBD = new ConexionBD();
 
-        this.ciudadesNegocio=new CiudadesNegocio(new CiudadesDAO(conexionBD));
+        this.ciudadesNegocio = new CiudadesNegocio(new CiudadesDAO(conexionBD));
         initComponents();
+
+    }
+
+    private void AgregarRegistrosTablaCiudad(List<CuidadTablaDTO> cuidadLista) {
+        if (cuidadLista == null) {
+            return;
+        }
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
+        cuidadLista.forEach(row -> {
+            Object[] fila = new Object[2];
+            fila[0] = row.getId();
+            fila[1] = row.getNombre();
+            modeloTabla.addRow(fila);
+                    });
+
+        }
+ private void BorrarRegistrosTablaCuidades() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
+        modeloTabla.setRowCount(0);
+            
         
     }
+    private void cargarTablaCiudades() {
+        try {
+            CuidadFiltroTablaDTO filtro = obtenerFiltrosTabla();
+            List<CuidadTablaDTO> cuidadLista = ciudadesNegocio.buscarCuidadID(filtro);
+            BorrarRegistrosTablaCuidades();
+            AgregarRegistrosTablaCiudad(cuidadLista);
+        } catch (NegocioException e) {
+            this.BorrarRegistrosTablaCuidades();
+//            this.HEIGHT--;
+//            this.establecerTituloPaginacion();
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    private CuidadFiltroTablaDTO obtenerFiltrosTabla() {
+ return new CuidadFiltroTablaDTO(10, 0, jTextField1.getText());    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,6 +126,11 @@ private  CiudadesNegocio ciudadesNegocio;
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 400, -1));
 
         jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, -1, -1));
 
         pack();
@@ -94,6 +143,12 @@ private  CiudadesNegocio ciudadesNegocio;
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.cargarTablaCiudades();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

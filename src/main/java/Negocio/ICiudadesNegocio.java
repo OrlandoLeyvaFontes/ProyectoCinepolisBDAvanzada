@@ -7,6 +7,9 @@ package Negocio;
 import Entidad.Ciudad;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.CiudadesDTO;
+import dtoCinepolis.CuidadFiltroTablaDTO;
+import dtoCinepolis.CuidadTablaDTO;
+import java.util.List;
 
 /**
  *
@@ -15,4 +18,5 @@ import dtoCinepolis.CiudadesDTO;
 public interface ICiudadesNegocio {
 
     CiudadesDTO guardar(CiudadesDTO ciudad) throws PersistenciaException;
+    List< CuidadTablaDTO > buscarCuidadID( CuidadFiltroTablaDTO filtro) throws NegocioException;
 }

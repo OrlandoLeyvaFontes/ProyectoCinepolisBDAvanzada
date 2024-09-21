@@ -9,6 +9,11 @@ import Persistencia.CiudadesDAO;
 import Persistencia.ICiudadesDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.CiudadesDTO;
+import dtoCinepolis.CuidadFiltroTablaDTO;
+import dtoCinepolis.CuidadTablaDTO;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,5 +44,21 @@ private Ciudad convertirADominio(CiudadesDTO ciudadesDTO){
         CiudadesDTO cuidadDTO = new CiudadesDTO();
         cuidadDTO.setNombre(cuidad.getNombre());
         return cuidadDTO;
+    }
+
+    @Override
+    public List<CuidadTablaDTO> buscarCuidadID(CuidadFiltroTablaDTO filtro) throws NegocioException {
+try{
+          List<CuidadTablaDTO> cuidadLista=ciudadesDAO.buscarCuidadID(filtro);
+          if(cuidadLista==null){
+                             throw new NegocioException("No se encontraron registros con los filtros");
+ 
+
+    }
+          return cuidadLista;
+}catch(PersistenciaException e){
+       System.out.println(e.getMessage());
+            throw new NegocioException(e.getMessage()); 
+}      
     }
 }
