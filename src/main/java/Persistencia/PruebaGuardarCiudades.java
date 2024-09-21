@@ -17,7 +17,6 @@ import java.util.List;
 public class PruebaGuardarCiudades {
 
     public static void main(String[] args) throws PersistenciaException {
-        try {
 
             IConexionBD conexionBD = new ConexionBD();
             CiudadesDAO ciudadesDAO = new CiudadesDAO(conexionBD);
@@ -42,21 +41,20 @@ public class PruebaGuardarCiudades {
 //            System.err.println("Error al buscar ciudades: " + e.getMessage());
 //            e.printStackTrace();
 
-            CiudadesDTO ciudadModificar = new CiudadesDTO(4, "Tucson");
-            Ciudad ciudadActualizada = ciudadesDAO.modificar(ciudadModificar);
- if (ciudadActualizada != null) {
-                System.out.println("Ciudad actualizada: ");
-                System.out.println("ID: " + ciudadActualizada.getId());
-                System.out.println("Nombre: " + ciudadActualizada.getNombre());
-            } else {
-                System.out.println("No se encontró la ciudad.");
-            }
+           
+        Ciudad ciudad = new Ciudad();
+        ciudad.setId(1); // Asegúrate de que este ID exista en la base de datos
+        ciudad.setNombre("ESTONIA"); // Establece el nuevo nombre
 
+        try {
+            ciudadesDAO.editar(ciudad);
+            System.out.println("Ciudad actualizada correctamente.");
         } catch (PersistenciaException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.err.println("Error al actualizar la ciudad: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        }
+    }
+        
         }
     
 

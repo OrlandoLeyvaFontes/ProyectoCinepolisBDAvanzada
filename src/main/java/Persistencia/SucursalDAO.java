@@ -4,9 +4,11 @@
  */
 package Persistencia;
 
+import Entidad.Ciudad;
 import Entidad.Sucursales;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -22,22 +24,25 @@ public class SucursalDAO implements ISucursalDAO {
     }
 
     @Override
-    public void guardar(Sucursales sucursales) throws PersistenciaException {
-         String sql = "INSERT INTO sucursales (nombre, idCiudad) VALUES (?, ?)";
-    try (Connection conexion = conexionBD.crearConexion(); 
-         PreparedStatement prepared = conexion.prepareStatement(sql)) {
-        prepared.setString(1, sucursales.getNombre());
-        prepared.setString(2, sucursales.getCiudad());
-        int rowsAffected = prepared.executeUpdate();
-        
+public void guardar(Sucursales sucursal, Ciudad ciudad) throws PersistenciaException{
+          String sqlInsertarSucursal = "INSERT INTO sucursales (nombre, ciudad) VALUES (?, ?)";
+
+    try (Connection conexion = conexionBD.crearConexion();
+         PreparedStatement insertarSucursalStmt = conexion.prepareStatement(sqlInsertarSucursal)) {
+
+        insertarSucursalStmt.setString(1, sucursal.getNombre()); 
+        insertarSucursalStmt.setString(2, ciudad.getNombre());
+        int rowsAffected = insertarSucursalStmt.executeUpdate();
+
         if (rowsAffected > 0) {
             System.out.println("Sucursal guardada correctamente.");
         } else {
             System.out.println("No se guardó ninguna sucursal.");
         }
+
     } catch (SQLException e) {
         System.out.println("Error SQL: " + e.getMessage());
         throw new PersistenciaException("Error al guardar la sucursal", e);
-        }
+    }
     }
 }

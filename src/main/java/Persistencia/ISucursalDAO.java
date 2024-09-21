@@ -4,6 +4,7 @@
  */
 package Persistencia;
 
+import Entidad.Ciudad;
 import Entidad.Sucursales;
 
 /**
@@ -11,5 +12,5 @@ import Entidad.Sucursales;
  * @author Oley
  */
 public interface ISucursalDAO {
-    void guardar(Sucursales sucursal) throws PersistenciaException;
+public void guardar(Sucursales sucursal, Ciudad ciudad) throws PersistenciaException;
 }

@@ -8,6 +8,7 @@ import Entidad.Ciudad;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.CiudadesDTO;
 import dtoCinepolis.CuidadFiltroTablaDTO;
+import dtoCinepolis.CuidadModificadoDTO;
 import dtoCinepolis.CuidadTablaDTO;
 import java.util.List;
 
@@ -18,5 +19,8 @@ import java.util.List;
 public interface ICiudadesNegocio {
 
     CiudadesDTO guardar(CiudadesDTO ciudad) throws PersistenciaException;
+   
+
     List< CuidadTablaDTO > buscarCuidadTabla( CuidadFiltroTablaDTO filtro) throws NegocioException;
+ public void editar(CiudadesDTO ciudadesDTO) throws NegocioException;
 }

@@ -4,10 +4,12 @@
  */
 package Negocio;
 
+import Entidad.Ciudad;
 import Entidad.Sucursales;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.SucursalesDTO;
 import Persistencia.ISucursalDAO;
+import Persistencia.SucursalDAO;
 
 /**
  *
@@ -25,7 +27,11 @@ public class SucursalesNegocio implements ISucursalesNegocio {
     @Override
     public void guardar(SucursalesDTO sucursalesDTO) throws PersistenciaException {
         Sucursales sucursal = DTOEntidad(sucursalesDTO);
-        sucursalDAO.guardar(sucursal);
+
+        Ciudad ciudad = new Ciudad(sucursalesDTO.getCiudad());
+
+        sucursalDAO.guardar(sucursal, ciudad);
+    
     }
 
     private Sucursales DTOEntidad(SucursalesDTO sucursalesDTO) {

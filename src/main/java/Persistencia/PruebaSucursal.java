@@ -4,6 +4,7 @@
  */
 package Persistencia;
 
+import Entidad.Ciudad;
 import Entidad.Sucursales;
 
 /**
@@ -14,9 +15,19 @@ public class PruebaSucursal {
     public static void main(String[] args) throws PersistenciaException {
         
     
-  IConexionBD conexionBD=new ConexionBD();
-  SucursalDAO surcursalDAO=new SucursalDAO(conexionBD);
-  Sucursales sucursales=new Sucursales( "itcason", "dubai");
-  surcursalDAO.guardar(sucursales);
-}
+       
+     try {
+            IConexionBD conexionBD = new ConexionBD(); 
+            SucursalDAO sucursalDAO = new SucursalDAO(conexionBD);
+
+            Sucursales nuevaSucursal = new Sucursales("ITCason", "obregon");
+            Ciudad ciudad = new Ciudad("obregon"); 
+
+            sucursalDAO.guardar(nuevaSucursal, ciudad);
+
+        } catch (PersistenciaException e) {
+            System.out.println("Error al guardar la sucursal: " + e.getMessage());
+        }
+    }
+    
 }
