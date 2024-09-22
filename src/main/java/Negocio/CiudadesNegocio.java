@@ -83,15 +83,21 @@ public class CiudadesNegocio implements ICiudadesNegocio {
 
     @Override
     public void editar(CiudadesDTO ciudadesDTO) throws NegocioException {
-        try {
-            Ciudad ciudad = DTOaENTIDAD(ciudadesDTO);
-            ciudadesDAO.editar(ciudad);
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(CiudadesNegocio.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         try {
+        Ciudad ciudad = DTOaENTIDAD2(ciudadesDTO);
+        ciudadesDAO.editar(ciudad);
+    } catch (PersistenciaException ex) {
+        throw new NegocioException("Error al editar la ciudad: " + ex.getMessage(), ex);
+    }
     
 
     }
+private Ciudad DTOaENTIDAD2(CiudadesDTO ciudadesDTO) {
+    Ciudad ciudad = new Ciudad();
+    ciudad.setId(ciudadesDTO.getId()); 
+    ciudad.setNombre(ciudadesDTO.getNombre());
+    return ciudad;
+}
 
     private Ciudad DTOaENTIDAD(CiudadesDTO ciudadesDTO) {
         Ciudad ciudad = new Ciudad();

@@ -229,6 +229,11 @@ private int idCiudadSeleccionada = -1;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+  this.setVisible(false);
+        MenuAdministrador administrador=new MenuAdministrador();
+administrador.setVisible(true);
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 

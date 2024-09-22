@@ -4,20 +4,36 @@
  */
 package Presentacion;
 
+import Negocio.CiudadesNegocio;
+import Negocio.NegocioException;
+import Persistencia.PersistenciaException;
+import dtoCinepolis.CiudadesDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Oley
  */
 public class ModificarCiudad extends javax.swing.JFrame {
     private int idCiudad;
+private CiudadesNegocio ciudadesNegocio; 
 
     /**
      * Creates new form ModificarCiudad
      */
-    public ModificarCiudad(int idCiudad) {
+    public ModificarCiudad(int idCiudad,CiudadesNegocio ciudadesNegocio) {
                 this.idCiudad = idCiudad;
+                      this.ciudadesNegocio=ciudadesNegocio;
+
 
         initComponents();
+    }
+    private void modificarCiudad() throws PersistenciaException, NegocioException{
+        String nombre=jTextField1.getText();
+     CiudadesDTO ciudadesDTO=new CiudadesDTO(idCiudad,nombre);
+     ciudadesNegocio.editar(ciudadesDTO);
     }
 
     /**
@@ -44,11 +60,27 @@ public class ModificarCiudad extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
 
         jButton1.setText("Editar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, -1, -1));
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 290, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         try {
+            modificarCiudad();
+            JOptionPane.showMessageDialog(this, "Ciudad editada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose(); // Cierra la ventana después de editar
+        } catch (PersistenciaException | NegocioException ex) {
+            Logger.getLogger(ModificarCiudad.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
   
 
