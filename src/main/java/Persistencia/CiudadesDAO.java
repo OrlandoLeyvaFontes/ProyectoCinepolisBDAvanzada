@@ -97,56 +97,76 @@ public class CiudadesDAO implements ICiudadesDAO {
 //        System.out.println(e.getMessage());
 //        throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
 //    }
-
-    
-
     @Override
     public Ciudad buscarPorID(int id) throws PersistenciaException {
-       try {
-        Ciudad ciudad = null;
-        Connection conexion = conexionBD.crearConexion();
-        String codigoSQL = """
+        try {
+            Ciudad ciudad = null;
+            Connection conexion = conexionBD.crearConexion();
+            String codigoSQL = """
                           SELECT nombre 
                           FROM ciudades 
                           WHERE id = ? 
                      """;
-        PreparedStatement prepared = conexion.prepareStatement(codigoSQL);
-        prepared.setInt(1, id);
-        ResultSet resultado = prepared.executeQuery();
+            PreparedStatement prepared = conexion.prepareStatement(codigoSQL);
+            prepared.setInt(1, id);
+            ResultSet resultado = prepared.executeQuery();
 
-        if (resultado.next()) {
-            ciudad = new Ciudad(resultado.getString("nombre"));
+            if (resultado.next()) {
+                ciudad = new Ciudad(resultado.getString("nombre"));
+            }
+
+            resultado.close();
+            prepared.close();
+            conexion.close();
+
+            return ciudad;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new PersistenciaException("Ocurrió un error al leer la base de datos, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
         }
-
-        resultado.close();
-        prepared.close();
-        conexion.close();
-
-        return ciudad;
-    } catch (SQLException e) {
-        System.out.println(e.getMessage());
-        throw new PersistenciaException("Ocurrió un error al leer la base de datos, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
-    }
     }
 
     @Override
     public void editar(Ciudad ciudad) throws PersistenciaException {
-   String updateCiudad = """
+        String updateCiudad = """
                            UPDATE ciudades
                            SET nombre = ?
                            WHERE id = ?
                            """;
-    try (Connection conexion = conexionBD.crearConexion(); 
-         PreparedStatement prepared = conexion.prepareStatement(updateCiudad)) {
-        
-        prepared.setString(1, ciudad.getNombre());
-        prepared.setInt(2, ciudad.getId()); // Aquí se establece el ID
-        prepared.executeUpdate();
-    } catch (SQLException ex) {
-        throw new PersistenciaException("Error al actualizar el cliente", ex);
+        try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(updateCiudad)) {
+
+            prepared.setString(1, ciudad.getNombre());
+            prepared.setInt(2, ciudad.getId()); // Aquí se establece el ID
+            prepared.executeUpdate();
+        } catch (SQLException ex) {
+            throw new PersistenciaException("Error al actualizar el cliente", ex);
+        }
+
     }
 
-
-
+    @Override
+    public Ciudad eliminar(int id) throws PersistenciaException {
+        try {
+            Ciudad ciudad = buscarPorID(id);
+            if (ciudad == null) {
+                throw new PersistenciaException("Ocurrio un error en obtener la información de la ciudad por su clave");
+            }
+            Connection conexion = this.conexionBD.crearConexion();
+            String updateCiudad = """
+                                   UPDATE ciudades
+                                                              SET estaEliminado = 1
+                                                              WHERE id = ?
+                                   """;
+            PreparedStatement prepared = conexion.prepareStatement(updateCiudad);
+            prepared.setInt(1, id);
+            int filasAfectadas = prepared.executeUpdate();
+            System.out.println("filasAfectadas = " + filasAfectadas);
+            prepared.close();
+            conexion.close();
+            return ciudad;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
+        }
     }
 }

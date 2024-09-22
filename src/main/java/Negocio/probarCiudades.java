@@ -46,17 +46,28 @@ public class probarCiudades {
           IConexionBD conexionBD = new ConexionBD();
         ICiudadesDAO ciudadesDAO = new CiudadesDAO(conexionBD);
         CiudadesNegocio ciudadesNegocio = new CiudadesNegocio(ciudadesDAO);
+try{
+    
+    int idCiudadEliminar=10;
+    CiudadesDTO ciudadEliminada= ciudadesNegocio.eliminar(idCiudadEliminar);
+if(ciudadEliminada !=null){
+    System.out.println("Ciudad Eliminada"+ ciudadEliminada);
+}
 
-        CiudadesDTO ciudadesDTO = new CiudadesDTO();
-        ciudadesDTO.setId(10);
-        ciudadesDTO.setNombre("Nuevo Nombre");
 
-        try {
-            ciudadesNegocio.editar(ciudadesDTO);
-            System.out.println("Ciudad actualizada correctamente.");
-        } catch (NegocioException e) {
-            System.err.println("Error al actualizar la ciudad: " + e.getMessage());
-        }
+}catch(NegocioException e){
+    System.out.println("Error"+e.getMessage());
+}
+//        CiudadesDTO ciudadesDTO = new CiudadesDTO();
+//        ciudadesDTO.setId(10);
+//        ciudadesDTO.setNombre("Nuevo Nombre");
+//
+//        try {
+//            ciudadesNegocio.editar(ciudadesDTO);
+//            System.out.println("Ciudad actualizada correctamente.");
+//        } catch (NegocioException e) {
+//            System.err.println("Error al actualizar la ciudad: " + e.getMessage());
+//        }
         
     }
 }

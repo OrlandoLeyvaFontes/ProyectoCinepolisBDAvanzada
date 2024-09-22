@@ -18,13 +18,11 @@ public class PruebaGuardarCiudades {
 
     public static void main(String[] args) throws PersistenciaException {
 
-            IConexionBD conexionBD = new ConexionBD();
-            CiudadesDAO ciudadesDAO = new CiudadesDAO(conexionBD);
+        IConexionBD conexionBD = new ConexionBD();
+        CiudadesDAO ciudadesDAO = new CiudadesDAO(conexionBD);
 //        Ciudad ciudades= new Ciudad("Bolivia");
 //        ciudadesDAO.guardar(ciudades);
 
-
-         
 //            CuidadFiltroTablaDTO filtro = new CuidadFiltroTablaDTO();
 //            filtro.setFiltro("guadalajara");
 //            filtro.setLimit(10);
@@ -40,21 +38,24 @@ public class PruebaGuardarCiudades {
 //            }catch (PersistenciaException e) {
 //            System.err.println("Error al buscar ciudades: " + e.getMessage());
 //            e.printStackTrace();
-
-           
-        Ciudad ciudad = new Ciudad();
-        ciudad.setId(1); // Asegúrate de que este ID exista en la base de datos
-        ciudad.setNombre("ESTONIA"); // Establece el nuevo nombre
-
+//        ciudad.setId(1); 
+//        ciudad.setNombre("ESTONIA"); 
         try {
-            ciudadesDAO.editar(ciudad);
-            System.out.println("Ciudad actualizada correctamente.");
+            int idCiudadEliminar = 13;
+            Ciudad ciudadEliminada = ciudadesDAO.eliminar(idCiudadEliminar);
+            if (ciudadEliminada != null) {
+                System.out.println("Ciudad eliminada: " + ciudadEliminada);
+            }
         } catch (PersistenciaException e) {
-            System.err.println("Error al actualizar la ciudad: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Error" + e.getMessage());
+
+//        try {
+//            ciudadesDAO.editar(ciudad);
+//            System.out.println("Ciudad actualizada correctamente.");
+//        } catch (PersistenciaException e) {
+//            System.err.println("Error al actualizar la ciudad: " + e.getMessage());
+//            e.printStackTrace();
         }
     }
-        
-        }
-    
 
+}

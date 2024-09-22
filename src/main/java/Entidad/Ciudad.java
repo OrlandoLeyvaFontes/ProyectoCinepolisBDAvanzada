@@ -9,10 +9,18 @@ package Entidad;
  * @author Oley
  */
 public class Ciudad {
-   int id;
-   String nombre;
+
+    int id;
+    String nombre;
+    private boolean estaEliminado;
 
     public Ciudad() {
+    }
+
+    public Ciudad(int id, String nombre, boolean estaEliminado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.estaEliminado = estaEliminado;
     }
 
     public Ciudad(String nombre) {
@@ -34,7 +42,5 @@ public class Ciudad {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-   
-   
-   
+
 }

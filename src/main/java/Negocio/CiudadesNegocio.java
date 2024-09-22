@@ -77,6 +77,7 @@ public class CiudadesNegocio implements ICiudadesNegocio {
         return new CiudadesDTO(
                 ciudad.getId(),
                 ciudad.getNombre()
+                
         );
     }
 
@@ -96,5 +97,26 @@ public class CiudadesNegocio implements ICiudadesNegocio {
         Ciudad ciudad = new Ciudad();
         ciudad.setNombre(ciudadesDTO.getNombre());
         return ciudad;
+    }
+
+    @Override
+    public CiudadesDTO eliminar(int id) throws NegocioException {
+     try{
+         if(id<=0){
+             throw new NegocioException("El id recibido es incorrecto");
+         }
+         Ciudad ciudad=ciudadesDAO.buscarPorID(id);
+         if(ciudad==null){
+             throw new NegocioException("Nose pudo obtener la ciudad con la clave ingresada");
+         }
+         Ciudad ciudadEliminada=ciudadesDAO.eliminar(id);
+         System.out.println(ciudadEliminada);
+         return convertirCiudadDTO(ciudadEliminada);
+             
+         
+     }catch(PersistenciaException ex){
+         throw new NegocioException(ex.getMessage());
+     }
+
     }
 }

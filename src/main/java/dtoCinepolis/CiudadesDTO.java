@@ -12,6 +12,7 @@ public class CiudadesDTO {
 
     int id;
     String nombre;
+    private boolean estaEliminado;
 
     public CiudadesDTO() {
     }
@@ -20,6 +21,14 @@ public class CiudadesDTO {
         this.id = id;
         this.nombre = nombre;
     }
+
+    public CiudadesDTO(int id, String nombre, boolean estaEliminado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.estaEliminado = estaEliminado;
+    }
+
+   
 
     public CiudadesDTO(String nombre) {
         this.nombre = nombre;
@@ -40,4 +49,13 @@ public class CiudadesDTO {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public boolean isEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
+    }
+    
 }
