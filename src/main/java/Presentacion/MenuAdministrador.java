@@ -55,7 +55,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 131, -1, -1));
 
-        jButton2.setText("Añadir Sucursales");
+        jButton2.setText("Catalogo Sucursales");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -92,9 +92,8 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        SucursalDAO sucursalDAO = new SucursalDAO(conexionBD);
-        AñadirSucursales sucursal = new AñadirSucursales(sucursalDAO);
-        sucursal.setVisible(true);
+        CatalogoSucursales catalogoSucursales=new CatalogoSucursales();
+        catalogoSucursales.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed

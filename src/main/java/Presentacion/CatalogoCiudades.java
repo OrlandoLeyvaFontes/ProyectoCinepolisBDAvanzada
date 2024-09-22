@@ -16,6 +16,8 @@ import javax.swing.table.DefaultTableModel;
 import enumerador.CiudadCRUDEnumerador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.TableColumnModel;
@@ -29,7 +31,7 @@ public class CatalogoCiudades extends javax.swing.JFrame {
 
     private CiudadesNegocio ciudadesNegocio;
     private ConexionBD conexionBD;
-
+private int idCiudadSeleccionada = -1;
     /**
      * Creates new form CatalogoCiudades
      */
@@ -39,8 +41,23 @@ public class CatalogoCiudades extends javax.swing.JFrame {
         this.ciudadesNegocio = new CiudadesNegocio(new CiudadesDAO(conexionBD));
         initComponents();
                 cargarTablaCiudades();
-
-
+  jTable1.addMouseListener(new MouseAdapter() {
+    public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 1) { 
+            int row = jTable1.getSelectedRow();
+            if (row != -1) {
+                idCiudadSeleccionada = (int) jTable1.getValueAt(row, 0); 
+                System.out.println("ID Ciudad seleccionada: " + idCiudadSeleccionada);
+                }
+            
+        }
+    }
+});
+    }
+    
+ private void abrirDetallesCiudad(int idCiudad) {
+        OpcionesCiudades opcionesCiudades = new OpcionesCiudades(idCiudad);
+        opcionesCiudades.setVisible(true); 
     }
 
     private void AgregarRegistrosTablaCiudad(List<CuidadTablaDTO> cuidadLista) {
@@ -74,13 +91,7 @@ public class CatalogoCiudades extends javax.swing.JFrame {
             return 0;
         }
     }
- private void eliminar() throws NegocioException{
-       int id=getIdSeleccionadoTablaCiudades();
-       ciudadesNegocio.eliminar(id);
-       cargarTablaCiudades();
-    
- }
-  
+ 
    
     private void cargarTablaCiudades() {
         try {
@@ -104,47 +115,7 @@ public class CatalogoCiudades extends javax.swing.JFrame {
 //    }
 //}
 //    }
-    private void cargarConfiguracionInicialTablaCiudades(){
-//        ActionListener onEditarClickListener = new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                editar();
-//            }
-//        };
-        int indiceColumnaEditar = 4;
-        TableColumnModel modeloColumnas = this.jTable1.getColumnModel();
-//        modeloColumnas.getColumn(indiceColumnaEditar)
-//                .setCellRenderer(new JButtonRenderer("Editar"));
-//        modeloColumnas.getColumn(indiceColumnaEditar)
-//                .setCellEditor(new JButtonCellEditor("Editar", onEditarClickListener));
-
-        ActionListener onEliminarClickListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    eliminar();
-                } catch (NegocioException ex) {
-                    Logger.getLogger(CatalogoCiudades.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        int indiceColumnaEliminar = 6;
-        modeloColumnas = this.jTable1.getColumnModel();
-        modeloColumnas.getColumn(indiceColumnaEliminar)
-                .setCellRenderer(new JButtonRenderer("Eliminar"));
-        modeloColumnas.getColumn(indiceColumnaEliminar)
-                .setCellEditor(new JButtonCellEditor("Eliminar", onEliminarClickListener));
-    }
-    private int getIdSeleccionadoTablaCiudades() {
-    int indiceFilaSeleccionada = this.jTable1.getSelectedRow();
-    if (indiceFilaSeleccionada != -1) {
-        DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
-        int indiceColumnaId = 0;
-        return (int) modelo.getValueAt(indiceFilaSeleccionada, indiceColumnaId);
-    } else {
-        return 0;
-    }
-}
+   
     private CuidadFiltroTablaDTO obtenerFiltrosTabla() {
  return new CuidadFiltroTablaDTO(10, 0, jTextField1.getText());    }
 
@@ -166,6 +137,8 @@ public class CatalogoCiudades extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -180,17 +153,17 @@ public class CatalogoCiudades extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "ID", "Nombre", "Editar", "Eliminar"
+                "ID", "Nombre"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -199,7 +172,7 @@ public class CatalogoCiudades extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 520, 240));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 520, 240));
 
         jLabel1.setText("Catalogo de Ciudades");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
@@ -222,10 +195,21 @@ public class CatalogoCiudades extends javax.swing.JFrame {
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
 
         jButton4.setText("<--");
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, -1, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, -1, -1));
 
         jButton5.setText("-->");
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 380, -1, -1));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 400, -1, -1));
+
+        jButton6.setText("Detalles");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 370, -1, -1));
+
+        jLabel2.setText("Pica la ciudad que quieres y despues pulsa el boton de detalles!!!");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 380, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -248,6 +232,21 @@ public class CatalogoCiudades extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+  if (idCiudadSeleccionada != -1) {
+    System.out.println("ID Ciudad antes de abrir: " + idCiudadSeleccionada); // Agrega esta línea
+    if (idCiudadSeleccionada != -1) {
+        abrirDetallesCiudad(idCiudadSeleccionada);
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona una ciudad de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    
+
+    }
+  }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -258,7 +257,9 @@ public class CatalogoCiudades extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
