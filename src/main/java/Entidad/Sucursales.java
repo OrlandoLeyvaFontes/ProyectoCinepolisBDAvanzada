@@ -11,21 +11,32 @@ package Entidad;
 public class Sucursales {
     int id;
     String nombre;
-    String ciudad; 
+    Ciudad ciudad; 
+    private boolean estaEliminado;
 
     public Sucursales() {
     }
 
-    public Sucursales(String nombre, String ciudad) {
+    public Sucursales(String nombre, Ciudad ciudad, boolean estaEliminado) {
         this.nombre = nombre;
         this.ciudad = ciudad;
+        this.estaEliminado = estaEliminado;
     }
 
-    public Sucursales(int id, String nombre, String ciudad) {
+    public Sucursales(int id, String nombre, Ciudad ciudad, boolean estaEliminado) {
         this.id = id;
         this.nombre = nombre;
         this.ciudad = ciudad;
+        this.estaEliminado = estaEliminado;
     }
+
+   
+
+    public Sucursales(String nombre) {
+        this.nombre = nombre;
+    }
+
+    
 
     public int getId() {
         return this.id;
@@ -43,12 +54,22 @@ public class Sucursales {
         this.nombre =nombre;
     }
 
-    public String getCiudad() {
+    public Ciudad getCiudad() {
         return ciudad;
     }
 
-    public void setCiudad(String ciudad) {
+    public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
+    }
+
+    
+
+    public boolean isEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
     }
 
     

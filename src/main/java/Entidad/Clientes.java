@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
  * @author Oley
  */
 public class Clientes {
+
     int id;
     String nombre;
     String apellidoPaterno;
@@ -18,12 +19,12 @@ public class Clientes {
     LocalDateTime fechaNacimiento;
     String correo;
     String contraseña;
-    String ciudad;
+    Ciudad ciudad;
 
     public Clientes() {
     }
 
-    public Clientes(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, String ciudad) {
+    public Clientes(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, Ciudad ciudad) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -33,7 +34,7 @@ public class Clientes {
         this.ciudad = ciudad;
     }
 
-    public Clientes(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, String ciudad) {
+    public Clientes(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, Ciudad ciudad) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -44,15 +45,13 @@ public class Clientes {
         this.ciudad = ciudad;
     }
 
-    public String getCiudad() {
+    public Ciudad getCiudad() {
         return ciudad;
     }
 
-    public void setCiudad(String ciudad) {
+    public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
     }
-
-   
 
     public int getId() {
         return id;
@@ -109,5 +108,5 @@ public class Clientes {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-   
+
 }

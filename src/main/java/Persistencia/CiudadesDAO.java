@@ -169,4 +169,27 @@ public class CiudadesDAO implements ICiudadesDAO {
             throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
         }
     }
+        public Ciudad buscarCiudadPorNombre(String nombreCiudad) throws PersistenciaException {
+    String sqlBuscarCiudad = "SELECT * FROM ciudades WHERE nombre = ?";
+    Ciudad ciudad = null;
+
+    try (Connection conexion = conexionBD.crearConexion();
+         PreparedStatement buscarCiudadStmt = conexion.prepareStatement(sqlBuscarCiudad)) {
+        
+        buscarCiudadStmt.setString(1, nombreCiudad);
+        ResultSet resultSet = buscarCiudadStmt.executeQuery();
+
+        if (resultSet.next()) {
+            ciudad = new Ciudad();
+            ciudad.setId(resultSet.getInt("id")); // Asegúrate de que "id" es el nombre correcto de la columna
+            ciudad.setNombre(resultSet.getString("nombre"));
+        }
+
+    } catch (SQLException e) {
+        throw new PersistenciaException("Error al buscar la ciudad", e);
+    }
+
+    return ciudad;
+}
+    
 }

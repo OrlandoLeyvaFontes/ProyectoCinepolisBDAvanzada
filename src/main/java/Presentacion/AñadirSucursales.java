@@ -4,12 +4,20 @@
  */
 package Presentacion;
 
+import Entidad.Ciudad;
+import Entidad.Sucursales;
+import Negocio.CiudadesNegocio;
 import Negocio.SucursalesNegocio;
+import Persistencia.ConexionBD;
+import Persistencia.IConexionBD;
 import Persistencia.ISucursalDAO;
 import Persistencia.PersistenciaException;
+import Persistencia.SucursalDAO;
+import dtoCinepolis.CiudadesDTO;
 import dtoCinepolis.SucursalesDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,20 +25,30 @@ import java.util.logging.Logger;
  */
 public class AñadirSucursales extends javax.swing.JFrame {
 
-    private SucursalesNegocio sucursalesNegocio;
+  private SucursalesNegocio sucursalesNegocio;
+    private CiudadesNegocio ciudadNegocio;
     /**
      * Creates new form AñadirSucursales
      */
-    public AñadirSucursales(ISucursalDAO sucursalDAO) {
-  this.sucursalesNegocio = new SucursalesNegocio(sucursalDAO);
+    public AñadirSucursales(ISucursalDAO sucursalDAO, CiudadesNegocio ciudadNegocio) {
+      if (sucursalDAO == null) {
+            throw new IllegalArgumentException("sucursalDAO no puede ser null");
+        }
+        this.sucursalesNegocio = new SucursalesNegocio(sucursalDAO);
+        this.ciudadNegocio = ciudadNegocio;
   initComponents();
+
     }
-private void añadirSucursales() throws PersistenciaException{
-    String sucursal=jTextField1.getText();
-    String cuidad=jTextField2.getText();
-    SucursalesDTO sucursalesDTO=new SucursalesDTO(sucursal, cuidad);
+ private void añadirSucursales() throws PersistenciaException {
+      String nombreSucursal = jTextField1.getText();
+    String ciudadNombre = jTextField2.getText();
+
+    SucursalesDTO sucursalesDTO = new SucursalesDTO();
+    sucursalesDTO.setNombre(nombreSucursal);
+    sucursalesDTO.setCiudad(new CiudadesDTO(0, ciudadNombre)); 
     sucursalesNegocio.guardar(sucursalesDTO);
-}
+    }
+
    
 
     /**
@@ -100,15 +118,14 @@ private void añadirSucursales() throws PersistenciaException{
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
      try {
-         añadirSucursales();
-     } catch (PersistenciaException ex) {
-         Logger.getLogger(AñadirSucursales.class.getName()).log(Level.SEVERE, null, ex);
-     }
-     this.setVisible(false);
-     ExitoSucursal exito=new ExitoSucursal();
-     exito.setVisible(true);
-        
-        
+        añadirSucursales();
+        this.setVisible(false);
+        ExitoSucursal exito = new ExitoSucursal();
+        exito.setVisible(true);
+    } catch (PersistenciaException ex) {
+        Logger.getLogger(AñadirSucursales.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, "Error al añadir la sucursal: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

@@ -48,7 +48,7 @@ public class AñadirClientes extends javax.swing.JFrame {
         clientesDTO.setApellidoPaterno(apellidoPaterno);
         clientesDTO.setApellidoMaterno(apellidoMaterno);
         clientesDTO.setFechaNacimiento(fechaNacimiento);
-        clientesDTO.setCiudad(ciudad);
+//        clientesDTO.setCiudad(ciudad);
         clientesDTO.setCorreo(correo);
         clientesDTO.setContraseña(contraseña);
         
@@ -139,17 +139,17 @@ public class AñadirClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         try {
-        ClientesDTO clientesDTO = crearClientesDTO();
-        clientesNegocios.guardar(clientesDTO);
-        this.setVisible(false);
-        new ExitoCliente().setVisible(true);
-    } catch (DateTimeParseException e) {
-        JOptionPane.showMessageDialog(this, "Formato de fecha no válido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (PersistenciaException ex) {
-        Logger.getLogger(AñadirClientes.class.getName()).log(Level.SEVERE, null, ex);
-        JOptionPane.showMessageDialog(this, "Error al guardar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+//         try {
+//        ClientesDTO clientesDTO = crearClientesDTO();
+//        clientesNegocios.guardar(clientesDTO);
+//        this.setVisible(false);
+//        new ExitoCliente().setVisible(true);
+//    } catch (DateTimeParseException e) {
+//        JOptionPane.showMessageDialog(this, "Formato de fecha no válido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//    } catch (PersistenciaException ex) {
+//        Logger.getLogger(AñadirClientes.class.getName()).log(Level.SEVERE, null, ex);
+//        JOptionPane.showMessageDialog(this, "Error al guardar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+//    }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 

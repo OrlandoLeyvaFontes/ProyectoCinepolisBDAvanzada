@@ -49,7 +49,9 @@ public class CiudadesNegocio implements ICiudadesNegocio {
         cuidadDTO.setNombre(cuidad.getNombre());
         return cuidadDTO;
     }
-
+  public Ciudad buscarCiudadPorNombre(String nombreCiudad) throws PersistenciaException {
+        return ciudadesDAO.buscarCiudadPorNombre(nombreCiudad);
+    }
     @Override
     public List<CuidadTablaDTO> buscarCuidadTabla(CuidadFiltroTablaDTO filtro) throws NegocioException {
         try {

@@ -4,8 +4,11 @@
  */
 package Presentacion;
 
+import Negocio.CiudadesNegocio;
+import Persistencia.CiudadesDAO;
 import Persistencia.ConexionBD;
 import Persistencia.SucursalDAO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +21,8 @@ public class CatalogoSucursales extends javax.swing.JFrame {
      * Creates new form CatalogoSucursales
      */
     public CatalogoSucursales() {
-        initComponents();
+  this.conexionBD = new ConexionBD();
+  initComponents();
     }
 
     /**
@@ -91,11 +95,19 @@ public class CatalogoSucursales extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-   this.setVisible(false);
+    this.setVisible(false);
+    
+        // Asegúrate de que conexionBD no sea null
+        if (conexionBD == null) {
+            JOptionPane.showMessageDialog(this, "La conexión a la base de datos no está inicializada.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         SucursalDAO sucursalDAO = new SucursalDAO(conexionBD);
-        AñadirSucursales sucursal = new AñadirSucursales(sucursalDAO);
+        CiudadesDAO ciudadesDAO = new CiudadesDAO(conexionBD);
+        CiudadesNegocio ciudadesNegocio = new CiudadesNegocio(ciudadesDAO);
+        AñadirSucursales sucursal = new AñadirSucursales(sucursalDAO, ciudadesNegocio);
         sucursal.setVisible(true);
-
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 

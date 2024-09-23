@@ -11,23 +11,28 @@ package dtoCinepolis;
 public class SucursalesDTO {
     int id;
     String nombre;
-    String ciudad;
+     CiudadesDTO ciudad;
+         private boolean estaEliminado;
 
     public SucursalesDTO() {
     }
 
-    public SucursalesDTO(String nombre, String ciudad) {
+    public SucursalesDTO(String nombre, CiudadesDTO ciudad) {
         this.nombre = nombre;
         this.ciudad = ciudad;
     }
 
+    public SucursalesDTO(int id, String nombre, CiudadesDTO ciudad, boolean estaEliminado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+        this.estaEliminado = estaEliminado;
+    }
+
+   
    
 
-public SucursalesDTO(int id, String nombre, String ciudad) {
-    this.id = id;
-    this.nombre = nombre; 
-    this.ciudad = ciudad; 
-}
+
 
     public int getId() {
         return id;
@@ -45,14 +50,23 @@ public SucursalesDTO(int id, String nombre, String ciudad) {
         this.nombre = nombre;
     }
 
-  
-
-    public String getCiudad() {
+    public CiudadesDTO getCiudad() {
         return ciudad;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad; 
+    public void setCiudad(CiudadesDTO ciudad) {
+        this.ciudad = ciudad;
+    }
+
+  
+
+    
+    public boolean isEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
     }
    
 

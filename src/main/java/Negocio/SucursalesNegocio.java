@@ -10,6 +10,7 @@ import Persistencia.PersistenciaException;
 import dtoCinepolis.SucursalesDTO;
 import Persistencia.ISucursalDAO;
 import Persistencia.SucursalDAO;
+import dtoCinepolis.CiudadesDTO;
 
 /**
  *
@@ -27,17 +28,31 @@ public class SucursalesNegocio implements ISucursalesNegocio {
     @Override
     public void guardar(SucursalesDTO sucursalesDTO) throws PersistenciaException {
         Sucursales sucursal = DTOEntidad(sucursalesDTO);
+    
+    if (sucursal.getCiudad() == null || sucursal.getCiudad().getId() <= 0) {
+        throw new PersistenciaException("La ciudad asociada no es válida.");
+    }
 
-        Ciudad ciudad = new Ciudad(sucursalesDTO.getCiudad());
-
-        sucursalDAO.guardar(sucursal, ciudad);
+    sucursalDAO.guardar(sucursal);
     
     }
 
-    private Sucursales DTOEntidad(SucursalesDTO sucursalesDTO) {
-        Sucursales sucursal = new Sucursales();
-        sucursal.setNombre(sucursalesDTO.getNombre());
-        sucursal.setCiudad(sucursalesDTO.getCiudad());
-        return sucursal;
+     private Sucursales DTOEntidad(SucursalesDTO sucursalesDTO) {
+         Sucursales sucursal = new Sucursales();
+    sucursal.setNombre(sucursalesDTO.getNombre());
+    Ciudad ciudad = DTOCiudad(sucursalesDTO.getCiudad());
+    sucursal.setCiudad(ciudad);
+
+    return sucursal;
+    }
+
+    private Ciudad DTOCiudad(CiudadesDTO ciudadDTO) {
+    if (ciudadDTO == null) {
+        return null; // Manejar el caso donde no haya ciudad asociada
+    }
+    Ciudad ciudad = new Ciudad();
+    ciudad.setId(ciudadDTO.getId());
+    ciudad.setNombre(ciudadDTO.getNombre());
+    return ciudad;
     }
 }

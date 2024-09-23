@@ -25,4 +25,6 @@ public interface ICiudadesDAO {
     Ciudad buscarPorID(int id) throws PersistenciaException;
 
     Ciudad eliminar(int id) throws PersistenciaException;
+            public Ciudad buscarCiudadPorNombre(String nombreCiudad) throws PersistenciaException ;
+
 }

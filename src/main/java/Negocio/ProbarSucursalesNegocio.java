@@ -18,30 +18,30 @@ import dtoCinepolis.SucursalesDTO;
  */
 public class ProbarSucursalesNegocio {
     public static void main(String[] args) throws PersistenciaException {
-     try {
-            IConexionBD conexionBD = new ConexionBD();
-
-            SucursalDAO sucursalDAO = new SucursalDAO(conexionBD);
-            SucursalesNegocio sucursalesNegocio = new SucursalesNegocio(sucursalDAO);
-
-            SucursalesDTO nuevaSucursalDTO = new SucursalesDTO();
-            nuevaSucursalDTO.setNombre("ITCason");
-            
-            CiudadesDTO ciudadDTO = new CiudadesDTO();
-            ciudadDTO.setId(1);  
-            ciudadDTO.setNombre("Obregón");
-
-            nuevaSucursalDTO.setCiudad(ciudadDTO.getNombre());
-
-            sucursalesNegocio.guardar(nuevaSucursalDTO);
-
-            System.out.println("Sucursal guardada exitosamente.");
-
-        } catch (PersistenciaException e) {
-            System.out.println("Error al guardar la sucursal: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Error inesperado: " + e.getMessage());
-        }
+//     try {
+//            IConexionBD conexionBD = new ConexionBD();
+//
+//            SucursalDAO sucursalDAO = new SucursalDAO(conexionBD);
+//            SucursalesNegocio sucursalesNegocio = new SucursalesNegocio(sucursalDAO);
+//
+//            SucursalesDTO nuevaSucursalDTO = new SucursalesDTO();
+//            nuevaSucursalDTO.setNombre("ITCason");
+//            
+//            CiudadesDTO ciudadDTO = new CiudadesDTO();
+//            ciudadDTO.setId(1);  
+//            ciudadDTO.setNombre("Obregón");
+//
+//            nuevaSucursalDTO.setCiudad(ciudadDTO.getNombre());
+//
+//            sucursalesNegocio.guardar(nuevaSucursalDTO);
+//
+//            System.out.println("Sucursal guardada exitosamente.");
+//
+//        } catch (PersistenciaException e) {
+//            System.out.println("Error al guardar la sucursal: " + e.getMessage());
+//        } catch (Exception e) {
+//            System.out.println("Error inesperado: " + e.getMessage());
+//        }
 }
 }
 

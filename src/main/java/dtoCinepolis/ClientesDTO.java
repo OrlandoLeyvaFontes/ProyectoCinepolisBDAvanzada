@@ -4,6 +4,7 @@
  */
 package dtoCinepolis;
 
+import Entidad.Ciudad;
 import java.time.LocalDateTime;
 
 /**
@@ -12,19 +13,19 @@ import java.time.LocalDateTime;
  */
 public class ClientesDTO {
     
-int id;
+  int id;
     String nombre;
     String apellidoPaterno;
     String apellidoMaterno;
     LocalDateTime fechaNacimiento;
     String correo;
     String contraseña;
-     String ciudad;
- 
+    Ciudad ciudad;
+
     public ClientesDTO() {
     }
 
-    public ClientesDTO(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, String ciudad) {
+    public ClientesDTO(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, Ciudad ciudad) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -34,7 +35,7 @@ int id;
         this.ciudad = ciudad;
     }
 
-    public ClientesDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, String ciudad) {
+    public ClientesDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, Ciudad ciudad) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -45,15 +46,13 @@ int id;
         this.ciudad = ciudad;
     }
 
-    public String getCiudad() {
+    public Ciudad getCiudad() {
         return ciudad;
     }
 
-    public void setCiudad(String ciudad) {
+    public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
     }
-
-    
 
     public int getId() {
         return id;
@@ -110,6 +109,5 @@ int id;
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-   
 }
 
