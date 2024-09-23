@@ -24,6 +24,11 @@ public class Clientes {
     public Clientes() {
     }
 
+    public Clientes(String correo, String contraseña) {
+        this.correo = correo;
+        this.contraseña = contraseña;
+    }
+
     public Clientes(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, Ciudad ciudad) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;

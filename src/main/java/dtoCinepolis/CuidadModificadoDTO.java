@@ -9,6 +9,7 @@ package dtoCinepolis;
  * @author Oley
  */
 public class CuidadModificadoDTO {
+
     int id;
     String nombre;
 

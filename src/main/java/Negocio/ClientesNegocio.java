@@ -4,12 +4,9 @@
  */
 package Negocio;
 
-import Entidad.Ciudad;
-import Entidad.Clientes;
 import Persistencia.IClientesDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.ClientesDTO;
-import java.sql.Timestamp;
 
 /**
  *
@@ -18,7 +15,7 @@ import java.sql.Timestamp;
 public class ClientesNegocio implements IClientesNegocios {
 
     private final IClientesDAO clientesDAO;
-    
+
     public ClientesNegocio(IClientesDAO clientesDAO) {
         this.clientesDAO = clientesDAO;
     }
@@ -34,7 +31,6 @@ public class ClientesNegocio implements IClientesNegocios {
 //        clientes.setCiudad(clientesDTO.getCiudad());
 //        return clientes;
 //    }
-
 //    @Override
 //    public void guardar(ClientesDTO clientesDTO) throws PersistenciaException {
 //        Clientes clientes = DTOaEntidad(clientesDTO);        
@@ -42,10 +38,14 @@ public class ClientesNegocio implements IClientesNegocios {
 //        clientesDAO.guardar(clientes, ciudad);
 //        
 //    }
-
     @Override
     public void guardar(ClientesDTO clientesDTO) throws PersistenciaException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena) throws PersistenciaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

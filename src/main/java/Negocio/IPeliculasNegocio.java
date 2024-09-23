@@ -13,6 +13,7 @@ import dtoCinepolis.PeliculasDTO;
  * @author Oley
  */
 public interface IPeliculasNegocio {
-         void guardar(PeliculasDTO peliculaDTO) throws  PersistenciaException;
+
+    void guardar(PeliculasDTO peliculaDTO) throws PersistenciaException;
 
 }

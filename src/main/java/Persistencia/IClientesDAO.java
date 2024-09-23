@@ -6,11 +6,17 @@ package Persistencia;
 
 import Entidad.Ciudad;
 import Entidad.Clientes;
+import dtoCinepolis.ClientesDTO;
 
 /**
  *
  * @author Oley
  */
 public interface IClientesDAO {
-    public void guardar(Clientes clientes, Ciudad cuidad) throws  PersistenciaException;
+
+    public void iniciarSesion(Clientes correo, Clientes contrasena) throws PersistenciaException;
+
+    public void guardar(Clientes clientes, Ciudad cuidad) throws PersistenciaException;
+
+    public boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena);
 }

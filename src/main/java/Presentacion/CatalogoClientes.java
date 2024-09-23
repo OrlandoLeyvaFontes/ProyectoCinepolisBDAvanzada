@@ -88,7 +88,7 @@ public class CatalogoClientes extends javax.swing.JFrame {
         this.setVisible(false);
         ClientesDAO clientesDAO = new ClientesDAO(conexionBD);
 
-        AñadirClientes añadirClientes = new AñadirClientes(clientesDAO);
+        AgregarClientes añadirClientes = new AgregarClientes(clientesDAO);
         añadirClientes.setVisible(true);
 
         // TODO add your handling code here:

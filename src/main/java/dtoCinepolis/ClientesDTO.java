@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
  * @author Oley
  */
 public class ClientesDTO {
-    
-  int id;
+
+    int id;
     String nombre;
     String apellidoPaterno;
     String apellidoMaterno;
@@ -110,4 +110,3 @@ public class ClientesDTO {
         this.contraseña = contraseña;
     }
 }
-

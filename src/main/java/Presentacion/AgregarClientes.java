@@ -19,30 +19,34 @@ import javax.swing.JOptionPane;
  *
  * @author Oley
  */
-public class AñadirClientes extends javax.swing.JFrame {
+public class AgregarClientes extends javax.swing.JFrame {
 
     private ClientesNegocio clientesNegocios;
 
     /**
      * Creates new form AñadirClientes
      */
-    public AñadirClientes(IClientesDAO clientesDAO) {
+    public AgregarClientes(IClientesDAO clientesDAO) {
         this.clientesNegocios = new ClientesNegocio(clientesDAO);
         initComponents();
     }
-  private ClientesDTO crearClientesDTO() throws DateTimeParseException {
+
+    public AgregarClientes() {
+    }
+
+    private ClientesDTO crearClientesDTO() throws DateTimeParseException {
         String nombre = jTextField1.getText();
         String apellidoPaterno = jTextField2.getText();
         String apellidoMaterno = jTextField3.getText();
         String fechaNacimientoTexto = jTextField4.getText();
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime fechaNacimiento = LocalDateTime.parse(fechaNacimientoTexto, formatter);
-        
+
         String ciudad = jTextField5.getText();
         String correo = jTextField6.getText();
         String contraseña = jTextField7.getText();
-        
+
         ClientesDTO clientesDTO = new ClientesDTO();
         clientesDTO.setNombre(nombre);
         clientesDTO.setApellidoPaterno(apellidoPaterno);
@@ -51,9 +55,10 @@ public class AñadirClientes extends javax.swing.JFrame {
 //        clientesDTO.setCiudad(ciudad);
         clientesDTO.setCorreo(correo);
         clientesDTO.setContraseña(contraseña);
-        
+
         return clientesDTO;
-  }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,7 +140,7 @@ public class AñadirClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

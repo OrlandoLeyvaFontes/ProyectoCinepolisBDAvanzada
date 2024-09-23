@@ -9,9 +9,10 @@ package Entidad;
  * @author Oley
  */
 public class Sucursales {
+
     int id;
     String nombre;
-    Ciudad ciudad; 
+    Ciudad ciudad;
     private boolean estaEliminado;
 
     public Sucursales() {
@@ -30,13 +31,9 @@ public class Sucursales {
         this.estaEliminado = estaEliminado;
     }
 
-   
-
     public Sucursales(String nombre) {
         this.nombre = nombre;
     }
-
-    
 
     public int getId() {
         return this.id;
@@ -51,7 +48,7 @@ public class Sucursales {
     }
 
     public void setNombre(String nombre) {
-        this.nombre =nombre;
+        this.nombre = nombre;
     }
 
     public Ciudad getCiudad() {
@@ -62,8 +59,6 @@ public class Sucursales {
         this.ciudad = ciudad;
     }
 
-    
-
     public boolean isEstaEliminado() {
         return estaEliminado;
     }
@@ -72,7 +67,4 @@ public class Sucursales {
         this.estaEliminado = estaEliminado;
     }
 
-    
-    
-    
 }

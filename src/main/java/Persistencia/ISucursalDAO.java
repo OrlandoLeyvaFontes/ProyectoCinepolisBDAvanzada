@@ -17,7 +17,6 @@ public interface ISucursalDAO {
 
     public void guardar(Sucursales sucursal) throws PersistenciaException;
 
-
     void editar(Sucursales sucursales) throws PersistenciaException;
 
     Sucursales buscarPorID(int id) throws PersistenciaException;

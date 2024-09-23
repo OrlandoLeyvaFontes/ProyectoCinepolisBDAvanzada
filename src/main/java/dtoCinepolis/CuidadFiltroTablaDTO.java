@@ -9,7 +9,8 @@ package dtoCinepolis;
  * @author Oley
  */
 public class CuidadFiltroTablaDTO {
-     private int limit;
+
+    private int limit;
     private int offset;
     private String filtro;
 
@@ -45,5 +46,5 @@ public class CuidadFiltroTablaDTO {
     public void setFiltro(String filtro) {
         this.filtro = filtro;
     }
-    
+
 }

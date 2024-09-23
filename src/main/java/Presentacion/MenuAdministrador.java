@@ -84,7 +84,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        AñadirPeliculas añadir = new AñadirPeliculas(peliculasNegocio);
+        AgregarPeliculas añadir = new AgregarPeliculas(peliculasNegocio);
         añadir.setVisible(true);
 
         // TODO add your handling code here:

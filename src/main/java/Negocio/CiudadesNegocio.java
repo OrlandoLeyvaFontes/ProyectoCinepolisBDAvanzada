@@ -5,17 +5,11 @@
 package Negocio;
 
 import Entidad.Ciudad;
-import Negocio.ICiudadesNegocio;
-import Persistencia.CiudadesDAO;
 import Persistencia.ICiudadesDAO;
-import Persistencia.PersistenciaException;
 import dtoCinepolis.CiudadesDTO;
 import dtoCinepolis.CuidadFiltroTablaDTO;
-import dtoCinepolis.CuidadModificadoDTO;
 import dtoCinepolis.CuidadTablaDTO;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import Persistencia.PersistenciaException;
 
 /**
@@ -49,7 +43,7 @@ public class CiudadesNegocio implements ICiudadesNegocio {
         cuidadDTO.setNombre(cuidad.getNombre());
         return cuidadDTO;
     }
- 
+
     @Override
     public List<CuidadTablaDTO> buscarCuidadTabla(CuidadFiltroTablaDTO filtro) throws NegocioException {
         try {
@@ -77,27 +71,26 @@ public class CiudadesNegocio implements ICiudadesNegocio {
         return new CiudadesDTO(
                 ciudad.getId(),
                 ciudad.getNombre()
-                
         );
     }
 
     @Override
     public void editar(CiudadesDTO ciudadesDTO) throws NegocioException {
-         try {
-        Ciudad ciudad = DTOaENTIDAD2(ciudadesDTO);
-        ciudadesDAO.editar(ciudad);
-    } catch (PersistenciaException ex) {
-        throw new NegocioException("Error al editar la ciudad: " + ex.getMessage(), ex);
-    }
-    
+        try {
+            Ciudad ciudad = DTOaENTIDAD2(ciudadesDTO);
+            ciudadesDAO.editar(ciudad);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al editar la ciudad: " + ex.getMessage(), ex);
+        }
 
     }
-private Ciudad DTOaENTIDAD2(CiudadesDTO ciudadesDTO) {
-    Ciudad ciudad = new Ciudad();
-    ciudad.setId(ciudadesDTO.getId()); 
-    ciudad.setNombre(ciudadesDTO.getNombre());
-    return ciudad;
-}
+
+    private Ciudad DTOaENTIDAD2(CiudadesDTO ciudadesDTO) {
+        Ciudad ciudad = new Ciudad();
+        ciudad.setId(ciudadesDTO.getId());
+        ciudad.setNombre(ciudadesDTO.getNombre());
+        return ciudad;
+    }
 
     private Ciudad DTOaENTIDAD(CiudadesDTO ciudadesDTO) {
         Ciudad ciudad = new Ciudad();
@@ -107,37 +100,36 @@ private Ciudad DTOaENTIDAD2(CiudadesDTO ciudadesDTO) {
 
     @Override
     public CiudadesDTO eliminar(int id) throws NegocioException {
-     try{
-         if(id<=0){
-             throw new NegocioException("El id recibido es incorrecto");
-         }
-         Ciudad ciudad=ciudadesDAO.buscarPorID(id);
-         if(ciudad==null){
-             throw new NegocioException("Nose pudo obtener la ciudad con la clave ingresada");
-         }
-         Ciudad ciudadEliminada=ciudadesDAO.eliminar(id);
-         System.out.println(ciudadEliminada);
-         return convertirCiudadDTO(ciudadEliminada);
-             
-         
-     }catch(PersistenciaException ex){
-         throw new NegocioException(ex.getMessage());
-     }
+        try {
+            if (id <= 0) {
+                throw new NegocioException("El id recibido es incorrecto");
+            }
+            Ciudad ciudad = ciudadesDAO.buscarPorID(id);
+            if (ciudad == null) {
+                throw new NegocioException("Nose pudo obtener la ciudad con la clave ingresada");
+            }
+            Ciudad ciudadEliminada = ciudadesDAO.eliminar(id);
+            System.out.println(ciudadEliminada);
+            return convertirCiudadDTO(ciudadEliminada);
+
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
 
     }
-    
-        @Override
+
+    @Override
     public CiudadesDTO buscarCiudadPorNombre(String nombreCiudad) throws NegocioException {
         try {
             Ciudad ciudad = ciudadesDAO.buscarCiudadPorNombre(nombreCiudad);
 
             CiudadesDTO ciudadDTO = new CiudadesDTO();
-            ciudadDTO.setId(ciudad.getId());  
-            ciudadDTO.setNombre(ciudad.getNombre()); 
-            
-            return ciudadDTO; 
+            ciudadDTO.setId(ciudad.getId());
+            ciudadDTO.setNombre(ciudad.getNombre());
+
+            return ciudadDTO;
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al buscar la ciudad por nombre en la capa de negocio", e);
         }
-}
+    }
 }

@@ -9,8 +9,9 @@ package dtoCinepolis;
  * @author Oley
  */
 public class CuidadTablaDTO {
+
     int id;
-   String nombre;
+    String nombre;
 
     public CuidadTablaDTO() {
     }
@@ -35,5 +36,5 @@ public class CuidadTablaDTO {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-   
+
 }

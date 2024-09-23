@@ -12,20 +12,21 @@ import Entidad.Sucursales;
  * @author Oley
  */
 public class PruebaSucursales {
-     public static void main(String[] args) {
-        ConexionBD conexionBD = new ConexionBD(); 
+
+    public static void main(String[] args) {
+        ConexionBD conexionBD = new ConexionBD();
 
         SucursalDAO sucursalesPersistencia = new SucursalDAO(conexionBD);
-        CiudadesDAO ciudadPersistencia = new CiudadesDAO(conexionBD); 
+        CiudadesDAO ciudadPersistencia = new CiudadesDAO(conexionBD);
 
-        String nombreCiudad = "tucson"; 
+        String nombreCiudad = "tucson";
 
         try {
             Ciudad ciudad = ciudadPersistencia.buscarCiudadPorNombre(nombreCiudad);
 
             Sucursales nuevaSucursal = new Sucursales();
             nuevaSucursal.setNombre("Sucursal Centro");
-            nuevaSucursal.setCiudad(ciudad); 
+            nuevaSucursal.setCiudad(ciudad);
 
             sucursalesPersistencia.guardar(nuevaSucursal);
             System.out.println("Sucursal guardada exitosamente con la ciudad: " + ciudad.getId());

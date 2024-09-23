@@ -12,5 +12,8 @@ import dtoCinepolis.ClientesDTO;
  * @author Oley
  */
 public interface IClientesNegocios {
+
+    boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena) throws PersistenciaException;
+
     void guardar(ClientesDTO clientesDTO) throws PersistenciaException;
 }

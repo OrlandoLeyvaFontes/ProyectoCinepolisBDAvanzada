@@ -94,7 +94,7 @@ public class CatalogoSucursales extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 this.setVisible(false);
-AñadirSucursales añadirSucursales=new AñadirSucursales();
+AgregarSucursales añadirSucursales=new AgregarSucursales();
 añadirSucursales.setVisible(true);
         
         

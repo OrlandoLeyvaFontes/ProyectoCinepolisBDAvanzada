@@ -215,7 +215,7 @@ private int idCiudadSeleccionada = -1;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        AñadirCiudades añadirCiudades = new AñadirCiudades(ciudadesNegocio);
+        AgregarCiudades añadirCiudades = new AgregarCiudades(ciudadesNegocio);
         añadirCiudades.setVisible(true);
 
         // TODO add your handling code here:

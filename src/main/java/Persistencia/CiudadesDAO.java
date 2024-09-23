@@ -5,10 +5,6 @@
 package Persistencia;
 
 import Entidad.Ciudad;
-import Persistencia.ICiudadesDAO;
-import Persistencia.IConexionBD;
-import Persistencia.PersistenciaException;
-import dtoCinepolis.CiudadesDTO;
 import dtoCinepolis.CuidadFiltroTablaDTO;
 import dtoCinepolis.CuidadTablaDTO;
 import java.sql.Connection;
@@ -17,8 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -169,27 +163,27 @@ public class CiudadesDAO implements ICiudadesDAO {
             throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
         }
     }
-        public Ciudad buscarCiudadPorNombre(String nombreCiudad) throws PersistenciaException {
-    String sqlBuscarCiudad = "SELECT * FROM ciudades WHERE nombre = ?";
-    Ciudad ciudad = null;
 
-    try (Connection conexion = conexionBD.crearConexion();
-         PreparedStatement buscarCiudadStmt = conexion.prepareStatement(sqlBuscarCiudad)) {
-        
-        buscarCiudadStmt.setString(1, nombreCiudad);
-        ResultSet resultSet = buscarCiudadStmt.executeQuery();
+    public Ciudad buscarCiudadPorNombre(String nombreCiudad) throws PersistenciaException {
+        String sqlBuscarCiudad = "SELECT * FROM ciudades WHERE nombre = ?";
+        Ciudad ciudad = null;
 
-        if (resultSet.next()) {
-            ciudad = new Ciudad();
-            ciudad.setId(resultSet.getInt("id")); // Asegúrate de que "id" es el nombre correcto de la columna
-            ciudad.setNombre(resultSet.getString("nombre"));
+        try (Connection conexion = conexionBD.crearConexion(); PreparedStatement buscarCiudadStmt = conexion.prepareStatement(sqlBuscarCiudad)) {
+
+            buscarCiudadStmt.setString(1, nombreCiudad);
+            ResultSet resultSet = buscarCiudadStmt.executeQuery();
+
+            if (resultSet.next()) {
+                ciudad = new Ciudad();
+                ciudad.setId(resultSet.getInt("id")); // Asegúrate de que "id" es el nombre correcto de la columna
+                ciudad.setNombre(resultSet.getString("nombre"));
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al buscar la ciudad", e);
         }
 
-    } catch (SQLException e) {
-        throw new PersistenciaException("Error al buscar la ciudad", e);
+        return ciudad;
     }
 
-    return ciudad;
-}
-    
 }

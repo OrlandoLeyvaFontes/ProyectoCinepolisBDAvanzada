@@ -28,8 +28,6 @@ public class CiudadesDTO {
         this.estaEliminado = estaEliminado;
     }
 
-   
-
     public CiudadesDTO(String nombre) {
         this.nombre = nombre;
     }
@@ -57,5 +55,5 @@ public class CiudadesDTO {
     public void setEstaEliminado(boolean estaEliminado) {
         this.estaEliminado = estaEliminado;
     }
-    
+
 }

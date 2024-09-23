@@ -15,20 +15,20 @@ import javax.swing.JOptionPane;
  *
  * @author Oley
  */
-public class AñadirPeliculas extends javax.swing.JFrame {
+public class AgregarPeliculas extends javax.swing.JFrame {
 
     private PeliculasNegocio peliculasNegocio;
 
     /**
      * Creates new form AñadirPeliculas
      */
-    public AñadirPeliculas(PeliculasNegocio peliculasNegocio) {
+    public AgregarPeliculas(PeliculasNegocio peliculasNegocio) {
         this.peliculasNegocio = peliculasNegocio;
 
         initComponents();
     }
 
-    private void AñadirPelicula() throws PersistenciaException {
+    private void agregarPelicula() throws PersistenciaException {
         String titulo = jTextField1.getText();
         String genero = jTextField2.getText();
         int duracionMinutos = Integer.parseInt(jTextField3.getText());
@@ -136,9 +136,9 @@ public class AñadirPeliculas extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            AñadirPelicula();
+            agregarPelicula();
         } catch (PersistenciaException ex) {
-            Logger.getLogger(AñadirPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setVisible(false);
         ExitoPelicula exito = new ExitoPelicula();

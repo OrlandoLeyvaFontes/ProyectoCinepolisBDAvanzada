@@ -32,8 +32,6 @@ public class PeliculasDTO {
         this.linkTrailer = linkTrailer;
     }
 
-    
-
     public PeliculasDTO(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
         this.id = id;
         this.titulo = titulo;

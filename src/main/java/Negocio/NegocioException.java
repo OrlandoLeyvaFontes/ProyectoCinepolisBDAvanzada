@@ -8,12 +8,14 @@ package Negocio;
  *
  * @author Oley
  */
-public class NegocioException extends Exception{
-      public NegocioException(String message) {
+public class NegocioException extends Exception {
+
+    public NegocioException(String message) {
         super(message);
     }
- public NegocioException(String message, Throwable cause) {
+
+    public NegocioException(String message, Throwable cause) {
         super(message, cause);
     }
-      
+
 }

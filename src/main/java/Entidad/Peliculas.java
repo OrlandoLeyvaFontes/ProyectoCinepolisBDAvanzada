@@ -23,6 +23,12 @@ public class Peliculas {
     public Peliculas() {
     }
 
+    public Peliculas(String titulo, String clasificacion, String genero) {
+        this.titulo = titulo;
+        this.clasificacion = clasificacion;
+        this.genero = genero;
+    }
+
     public Peliculas(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen) {
         this.titulo = titulo;
         this.clasificacion = clasificacion;

@@ -11,9 +11,10 @@ import Entidad.Ciudad;
  * @author Oley
  */
 public class SucursalesDTO {
-       int id;
+
+    int id;
     String nombre;
-    CiudadesDTO ciudad; 
+    CiudadesDTO ciudad;
     private boolean estaEliminado;
 
     public SucursalesDTO() {
@@ -32,16 +33,9 @@ public class SucursalesDTO {
         this.estaEliminado = estaEliminado;
     }
 
-  
-
-   
-   
-
     public SucursalesDTO(String nombre) {
         this.nombre = nombre;
     }
-
-    
 
     public int getId() {
         return this.id;
@@ -56,7 +50,7 @@ public class SucursalesDTO {
     }
 
     public void setNombre(String nombre) {
-        this.nombre =nombre;
+        this.nombre = nombre;
     }
 
     public CiudadesDTO getCiudad() {
@@ -66,8 +60,6 @@ public class SucursalesDTO {
     public void setCiudad(CiudadesDTO ciudad) {
         this.ciudad = ciudad;
     }
-
-   
 
     public boolean isEstaEliminado() {
         return estaEliminado;

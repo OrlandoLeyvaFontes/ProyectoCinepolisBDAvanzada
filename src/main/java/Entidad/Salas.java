@@ -11,12 +11,13 @@ import java.time.LocalDateTime;
  * @author Oley
  */
 public class Salas {
+
     int id;
-     String nombre;
-     int cantidadAsientos;
-     Sucursales sucursales;
+    String nombre;
+    int cantidadAsientos;
+    Sucursales sucursales;
     LocalDateTime tiempoLimpieza;
-     
+
     public Salas() {
     }
 
@@ -51,8 +52,6 @@ public class Salas {
         this.tiempoLimpieza = tiempoLimpieza;
     }
 
-    
-
     public int getId() {
         return this.id;
     }
@@ -76,5 +75,5 @@ public class Salas {
     public void setCantidadAsientos(int cantidadAsientos) {
         this.cantidadAsientos = this.cantidadAsientos;
     }
-     
+
 }

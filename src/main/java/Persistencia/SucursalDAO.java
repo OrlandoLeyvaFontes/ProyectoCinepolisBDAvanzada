@@ -29,26 +29,23 @@ public class SucursalDAO implements ISucursalDAO {
     public void guardar(Sucursales sucursal) throws PersistenciaException {
         String sqlInsertarSucursal = "INSERT INTO sucursales (nombre, ciudad) VALUES (?, ?)";
 
-    try (Connection conexion = conexionBD.crearConexion(); 
-         PreparedStatement insertarSucursalStmt = conexion.prepareStatement(sqlInsertarSucursal)) {
+        try (Connection conexion = conexionBD.crearConexion(); PreparedStatement insertarSucursalStmt = conexion.prepareStatement(sqlInsertarSucursal)) {
 
-        insertarSucursalStmt.setString(1, sucursal.getNombre());
-        insertarSucursalStmt.setInt(2, sucursal.getCiudad().getId());
+            insertarSucursalStmt.setString(1, sucursal.getNombre());
+            insertarSucursalStmt.setInt(2, sucursal.getCiudad().getId());
 
-        int rowsAffected = insertarSucursalStmt.executeUpdate();
+            int rowsAffected = insertarSucursalStmt.executeUpdate();
 
-        if (rowsAffected > 0) {
-            System.out.println("Sucursal guardada correctamente.");
-        } else {
-            System.out.println("No se guardó ninguna sucursal.");
+            if (rowsAffected > 0) {
+                System.out.println("Sucursal guardada correctamente.");
+            } else {
+                System.out.println("No se guardó ninguna sucursal.");
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al guardar la sucursal", e);
         }
-
-    } catch (SQLException e) {
-        throw new PersistenciaException("Error al guardar la sucursal", e);
     }
-}
-
-    
 
     @Override
     public void editar(Sucursales sucursales) throws PersistenciaException {

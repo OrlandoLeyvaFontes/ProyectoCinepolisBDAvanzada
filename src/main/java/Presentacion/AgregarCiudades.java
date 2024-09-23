@@ -14,20 +14,23 @@ import java.util.logging.Logger;
  *
  * @author Oley
  */
-public class AñadirCiudades extends javax.swing.JFrame {
-private CiudadesNegocio ciudadesNegocio; 
+public class AgregarCiudades extends javax.swing.JFrame {
+
+    private CiudadesNegocio ciudadesNegocio;
+
     /**
      * Creates new form AñadirCiudades
      */
-    public AñadirCiudades(CiudadesNegocio ciudadesNegocio) {
-      this.ciudadesNegocio=ciudadesNegocio;
+    public AgregarCiudades(CiudadesNegocio ciudadesNegocio) {
+        this.ciudadesNegocio = ciudadesNegocio;
         initComponents();
     }
-private void añadirCiudad() throws PersistenciaException{
-     String nombre=jTextField1.getText();
-     CiudadesDTO ciudadesDTO=new CiudadesDTO(nombre);
-     ciudadesNegocio.guardar(ciudadesDTO);
-}
+
+    private void agregarCiudad() throws PersistenciaException {
+        String nombre = jTextField1.getText();
+        CiudadesDTO ciudadesDTO = new CiudadesDTO(nombre);
+        ciudadesNegocio.guardar(ciudadesDTO);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,22 +72,20 @@ private void añadirCiudad() throws PersistenciaException{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    try {
-        añadirCiudad();
-    } catch (PersistenciaException ex) {
-        Logger.getLogger(AñadirCiudades.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    this.setVisible(false);
-        ExitoCiudad exitoCiudad=new ExitoCiudad();
+        try {
+            agregarCiudad();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(AgregarCiudades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setVisible(false);
+        ExitoCiudad exitoCiudad = new ExitoCiudad();
         exitoCiudad.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

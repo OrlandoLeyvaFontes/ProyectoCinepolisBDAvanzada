@@ -11,5 +11,6 @@ import Entidad.Peliculas;
  * @author Oley
  */
 public interface IPeliculasDAO {
-     void guardar(Peliculas pelicula) throws  PersistenciaException;
+
+    void guardar(Peliculas pelicula) throws PersistenciaException;
 }
