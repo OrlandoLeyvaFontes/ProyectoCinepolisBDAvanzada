@@ -13,7 +13,7 @@ import dtoCinepolis.ClientesDTO;
  */
 public interface IClientesNegocios {
 
-    boolean iniciarSesion(String correo, String contrasena) throws NegocioException;
+//    boolean iniciarSesion(String correo, String contrasena) throws NegocioException;
 
     void guardar(ClientesDTO clientesDTO) throws NegocioException;
 }

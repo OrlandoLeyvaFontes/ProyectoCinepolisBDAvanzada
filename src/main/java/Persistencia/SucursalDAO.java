@@ -82,7 +82,25 @@ public class SucursalDAO implements ISucursalDAO {
         }
 
     }
+public Sucursales buscarSucursalPorNombre(String nombre) throws PersistenciaException{
+    String sqlBuscarSucursal="SELECT * FROM sucursales where nombre=?";
+ Sucursales Sucursales=null;
+try(Connection conexion= conexionBD.crearConexion(); 
+        PreparedStatement buscarCiudadStmt = conexion.prepareStatement(sqlBuscarSucursal)){
+    buscarCiudadStmt.setString(1,nombre );
+    ResultSet resultSet= buscarCiudadStmt.executeQuery();
+    
+            if (resultSet.next()) {
+                Sucursales = new Sucursales();
+                Sucursales.setId(resultSet.getInt("id")); 
+                Sucursales.setNombre(resultSet.getString("nombre"));
+            }
+}catch(SQLException e){
+                throw new PersistenciaException("Error al buscar la ciudad", e);
 
+}
+ return Sucursales;
+}
     @Override
     public Sucursales eliminar(int id) throws PersistenciaException {
         try {

@@ -40,8 +40,10 @@ public class Sucursales {
     }
 
     public void setId(int id) {
-        this.id = this.id;
+        this.id = id;
     }
+
+ 
 
     public String getNombre() {
         return this.nombre;

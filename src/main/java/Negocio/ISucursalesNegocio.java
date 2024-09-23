@@ -15,4 +15,5 @@ public interface ISucursalesNegocio {
 
     void guardarSucursalConCiudadPorNombre(SucursalesDTO sucursalDTO, String nombreCiudad) throws NegocioException;
 
+    public SucursalesDTO buscarSucursalPorNombre(String nombre) throws NegocioException;
 }

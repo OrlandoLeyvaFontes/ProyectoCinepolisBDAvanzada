@@ -15,7 +15,7 @@ import dtoCinepolis.SucursalesDTO;
  *
  * @author Oley
  */
-public class SucursalesNegocio {
+public class SucursalesNegocio implements ISucursalesNegocio {
 
     private SucursalDAO sucursalesDAO;
     private CiudadesNegocio ciudadesNegocio;
@@ -59,6 +59,20 @@ public class SucursalesNegocio {
         sucursal.setNombre(sucursalDTO.getNombre());
         sucursal.setCiudad(convertirADto(sucursalDTO.getCiudad()));
         return sucursal;
+    }
+
+    @Override
+    public SucursalesDTO buscarSucursalPorNombre(String nombre) throws NegocioException {
+        try {
+            Sucursales sucursales = sucursalesDAO.buscarSucursalPorNombre(nombre);
+            SucursalesDTO sucursalesDTO = new SucursalesDTO();
+            sucursalesDTO.setId(sucursales.getId());
+            sucursalesDTO.setNombre(sucursales.getNombre());
+            return sucursalesDTO;
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al buscar la sucursal por nombre en la capa de negocio", e);
+
+        }
     }
 
 }

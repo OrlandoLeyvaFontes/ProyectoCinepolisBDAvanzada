@@ -158,19 +158,19 @@ public class IniciarSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_txtContrasenaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            String correo = txtCorreo.getText();
-            String contrasena = txtContrasena.getText();
-            
-            boolean inicioExitoso = clienteNegocio.iniciarSesion(correo, contrasena);
-            
-            if (inicioExitoso) {
-                JOptionPane.showMessageDialog(this, "Inicio Exitoso");
-            }
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al intentar iniciar sesión: " + e.getMessage(),
-                                          "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//        try {
+//            String correo = txtCorreo.getText();
+//            String contrasena = txtContrasena.getText();
+//            
+//            boolean inicioExitoso = clienteNegocio.iniciarSesion(correo, contrasena);
+//            
+//            if (inicioExitoso) {
+//                JOptionPane.showMessageDialog(this, "Inicio Exitoso");
+//            }
+//        } catch (NegocioException e) {
+//            JOptionPane.showMessageDialog(this, "Error al intentar iniciar sesión: " + e.getMessage(),
+//                                          "Error", JOptionPane.ERROR_MESSAGE);
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

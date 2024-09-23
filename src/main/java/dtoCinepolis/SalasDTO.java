@@ -2,50 +2,54 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Entidad;
+package dtoCinepolis;
 
+import Entidad.Sucursales;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author Oley
  */
-public class Salas {
-
-    int id;
+public class SalasDTO {
+     int id;
     String nombre;
     int cantidadAsientos;
     LocalDateTime tiempoLimpieza;
-    Sucursales sucursales;
+    SucursalesDTO sucursales;
 
   
 
-    public Salas() {
+    public SalasDTO() {
     }
 
-    public Salas(String nombre, int cantidadAsientos, Sucursales sucursales, LocalDateTime tiempoLimpieza) {
+    public SalasDTO(String nombre, int cantidadAsientos, LocalDateTime tiempoLimpieza, SucursalesDTO sucursales) {
         this.nombre = nombre;
         this.cantidadAsientos = cantidadAsientos;
-        this.sucursales = sucursales;
         this.tiempoLimpieza = tiempoLimpieza;
+        this.sucursales = sucursales;
     }
 
-    public Salas(int id, String nombre, int cantidadAsientos, Sucursales sucursales, LocalDateTime tiempoLimpieza) {
+    public SalasDTO(int id, String nombre, int cantidadAsientos, LocalDateTime tiempoLimpieza, SucursalesDTO sucursales) {
         this.id = id;
         this.nombre = nombre;
         this.cantidadAsientos = cantidadAsientos;
-        this.sucursales = sucursales;
         this.tiempoLimpieza = tiempoLimpieza;
+        this.sucursales = sucursales;
     }
 
-    public Sucursales getSucursales() {
+    public SucursalesDTO getSucursales() {
         return sucursales;
     }
 
-    public void setSucursales(Sucursales sucursales) {
+    public void setSucursales(SucursalesDTO sucursales) {
         this.sucursales = sucursales;
     }
 
+   
+
+    
+ 
     public LocalDateTime getTiempoLimpieza() {
         return tiempoLimpieza;
     }
@@ -77,5 +81,4 @@ public class Salas {
     public void setCantidadAsientos(int cantidadAsientos) {
         this.cantidadAsientos = cantidadAsientos; 
     }
-
 }
