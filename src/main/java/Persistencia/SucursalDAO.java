@@ -6,8 +6,7 @@ package Persistencia;
 
 import Entidad.Ciudad;
 import Entidad.Sucursales;
-import dtoCinepolis.SucursalFiltroTablaDTO;
-import dtoCinepolis.SucursalTablaDTO;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,10 +48,7 @@ public class SucursalDAO implements ISucursalDAO {
     }
 }
 
-    @Override
-    public List<SucursalTablaDTO> buscarSucursalTabla(SucursalFiltroTablaDTO filtro) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     @Override
     public void editar(Sucursales sucursales) throws PersistenciaException {

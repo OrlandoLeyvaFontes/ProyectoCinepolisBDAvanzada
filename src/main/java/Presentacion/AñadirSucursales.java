@@ -14,7 +14,6 @@ import Persistencia.ISucursalDAO;
 import Persistencia.PersistenciaException;
 import Persistencia.SucursalDAO;
 import dtoCinepolis.CiudadesDTO;
-import dtoCinepolis.SucursalesDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,30 +24,16 @@ import javax.swing.JOptionPane;
  */
 public class AñadirSucursales extends javax.swing.JFrame {
 
-  private SucursalesNegocio sucursalesNegocio;
-    private CiudadesNegocio ciudadNegocio;
+  
     /**
      * Creates new form AñadirSucursales
      */
-    public AñadirSucursales(ISucursalDAO sucursalDAO, CiudadesNegocio ciudadNegocio) {
-      if (sucursalDAO == null) {
-            throw new IllegalArgumentException("sucursalDAO no puede ser null");
-        }
-        this.sucursalesNegocio = new SucursalesNegocio(sucursalDAO);
-        this.ciudadNegocio = ciudadNegocio;
+    public AñadirSucursales() {
+    
   initComponents();
 
     }
- private void añadirSucursales() throws PersistenciaException {
-      String nombreSucursal = jTextField1.getText();
-    String ciudadNombre = jTextField2.getText();
-
-    SucursalesDTO sucursalesDTO = new SucursalesDTO();
-    sucursalesDTO.setNombre(nombreSucursal);
-    sucursalesDTO.setCiudad(new CiudadesDTO(0, ciudadNombre)); 
-    sucursalesNegocio.guardar(sucursalesDTO);
-    }
-
+ 
    
 
     /**
@@ -117,15 +102,7 @@ public class AñadirSucursales extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-     try {
-        añadirSucursales();
-        this.setVisible(false);
-        ExitoSucursal exito = new ExitoSucursal();
-        exito.setVisible(true);
-    } catch (PersistenciaException ex) {
-        Logger.getLogger(AñadirSucursales.class.getName()).log(Level.SEVERE, null, ex);
-        JOptionPane.showMessageDialog(this, "Error al añadir la sucursal: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+    
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

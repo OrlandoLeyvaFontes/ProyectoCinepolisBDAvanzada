@@ -15,13 +15,11 @@ import javax.swing.JOptionPane;
  * @author Oley
  */
 public class CatalogoSucursales extends javax.swing.JFrame {
-    private ConexionBD conexionBD;
-
+   
     /**
      * Creates new form CatalogoSucursales
      */
     public CatalogoSucursales() {
-  this.conexionBD = new ConexionBD();
   initComponents();
     }
 
@@ -95,20 +93,7 @@ public class CatalogoSucursales extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    this.setVisible(false);
-    
-        // Asegúrate de que conexionBD no sea null
-        if (conexionBD == null) {
-            JOptionPane.showMessageDialog(this, "La conexión a la base de datos no está inicializada.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        SucursalDAO sucursalDAO = new SucursalDAO(conexionBD);
-        CiudadesDAO ciudadesDAO = new CiudadesDAO(conexionBD);
-        CiudadesNegocio ciudadesNegocio = new CiudadesNegocio(ciudadesDAO);
-        AñadirSucursales sucursal = new AñadirSucursales(sucursalDAO, ciudadesNegocio);
-        sucursal.setVisible(true);
-        // TODO add your handling code here:
+   
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

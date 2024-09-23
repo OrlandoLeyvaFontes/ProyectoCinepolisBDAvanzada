@@ -21,8 +21,7 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.TableColumnModel;
-import utilirias.JButtonCellEditor;
-import utilirias.JButtonRenderer;
+
 /**
  *
  * @author Oley

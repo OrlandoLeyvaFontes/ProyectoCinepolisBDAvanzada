@@ -6,8 +6,7 @@ package Persistencia;
 
 import Entidad.Ciudad;
 import Entidad.Sucursales;
-import dtoCinepolis.SucursalFiltroTablaDTO;
-import dtoCinepolis.SucursalTablaDTO;
+
 import java.util.List;
 
 /**
@@ -18,7 +17,6 @@ public interface ISucursalDAO {
 
     public void guardar(Sucursales sucursal) throws PersistenciaException;
 
-    List<SucursalTablaDTO> buscarSucursalTabla(SucursalFiltroTablaDTO filtro) throws PersistenciaException;
 
     void editar(Sucursales sucursales) throws PersistenciaException;
 
