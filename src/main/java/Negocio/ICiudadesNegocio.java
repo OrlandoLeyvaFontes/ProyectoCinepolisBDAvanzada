@@ -24,5 +24,6 @@ public interface ICiudadesNegocio {
     List< CuidadTablaDTO > buscarCuidadTabla( CuidadFiltroTablaDTO filtro) throws NegocioException;
  public void editar(CiudadesDTO ciudadesDTO) throws NegocioException;
  CiudadesDTO eliminar(int id) throws NegocioException;
-   
+       public CiudadesDTO buscarCiudadPorNombre(String nombreCiudad) throws NegocioException ;
+
 }

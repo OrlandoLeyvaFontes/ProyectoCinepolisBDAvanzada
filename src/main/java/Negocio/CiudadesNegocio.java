@@ -49,9 +49,7 @@ public class CiudadesNegocio implements ICiudadesNegocio {
         cuidadDTO.setNombre(cuidad.getNombre());
         return cuidadDTO;
     }
-  public Ciudad buscarCiudadPorNombre(String nombreCiudad) throws PersistenciaException {
-        return ciudadesDAO.buscarCiudadPorNombre(nombreCiudad);
-    }
+ 
     @Override
     public List<CuidadTablaDTO> buscarCuidadTabla(CuidadFiltroTablaDTO filtro) throws NegocioException {
         try {
@@ -127,4 +125,19 @@ private Ciudad DTOaENTIDAD2(CiudadesDTO ciudadesDTO) {
      }
 
     }
+    
+        @Override
+    public CiudadesDTO buscarCiudadPorNombre(String nombreCiudad) throws NegocioException {
+        try {
+            Ciudad ciudad = ciudadesDAO.buscarCiudadPorNombre(nombreCiudad);
+
+            CiudadesDTO ciudadDTO = new CiudadesDTO();
+            ciudadDTO.setId(ciudad.getId());  
+            ciudadDTO.setNombre(ciudad.getNombre()); 
+            
+            return ciudadDTO; 
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al buscar la ciudad por nombre en la capa de negocio", e);
+        }
+}
 }

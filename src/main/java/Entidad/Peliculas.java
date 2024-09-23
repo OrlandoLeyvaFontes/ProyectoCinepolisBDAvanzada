@@ -34,10 +34,6 @@ public class Peliculas {
         this.rutaImagen = rutaImagen;
     }
 
-  
-
-   
-
     public Peliculas(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
         this.id = id;
         this.titulo = titulo;
@@ -120,10 +116,4 @@ public class Peliculas {
         this.rutaImagen = rutaImagen;
     }
 
-    
-    
-    
-    
-    
-    
 }

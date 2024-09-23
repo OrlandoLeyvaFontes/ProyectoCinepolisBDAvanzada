@@ -5,10 +5,13 @@
 package Negocio;
 
 import Persistencia.PersistenciaException;
+import dtoCinepolis.SucursalesDTO;
 
 /**
  *
  * @author Oley
  */
 public interface ISucursalesNegocio {
+     void guardarSucursalConCiudadPorNombre(SucursalesDTO sucursalDTO, String nombreCiudad) throws NegocioException;
+
 }

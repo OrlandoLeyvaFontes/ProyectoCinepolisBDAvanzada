@@ -7,13 +7,16 @@ package Presentacion;
 import Entidad.Ciudad;
 import Entidad.Sucursales;
 import Negocio.CiudadesNegocio;
+import Negocio.NegocioException;
 import Negocio.SucursalesNegocio;
+import Persistencia.CiudadesDAO;
 import Persistencia.ConexionBD;
 import Persistencia.IConexionBD;
 import Persistencia.ISucursalDAO;
 import Persistencia.PersistenciaException;
 import Persistencia.SucursalDAO;
 import dtoCinepolis.CiudadesDTO;
+import dtoCinepolis.SucursalesDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,16 +26,23 @@ import javax.swing.JOptionPane;
  * @author Oley
  */
 public class AñadirSucursales extends javax.swing.JFrame {
-
-  
+private CiudadesNegocio ciudadesNegocio;
+    private SucursalDAO sucursalesDAO;
+    private SucursalesNegocio sucursalesNegocio;
+    private ConexionBD conexionBD;
+    private CiudadesDAO ciudadesDAO;
     /**
      * Creates new form AñadirSucursales
      */
     public AñadirSucursales() {
     
   initComponents();
-
-    }
+  
+  conexionBD = new ConexionBD(); 
+        ciudadesDAO = new CiudadesDAO(conexionBD); 
+        ciudadesNegocio = new CiudadesNegocio(ciudadesDAO);
+        sucursalesDAO = new SucursalDAO(conexionBD); 
+        sucursalesNegocio = new SucursalesNegocio(sucursalesDAO, ciudadesNegocio);  }
  
    
 
@@ -101,8 +111,30 @@ public class AñadirSucursales extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+    String nombreSucursal = jTextField1.getText();
+    String nombreCiudad = jTextField2.getText();
     
+    SucursalesDTO sucursalDTO = new SucursalesDTO();
+    sucursalDTO.setNombre(nombreSucursal);
+    
+    CiudadesNegocio ciudadesNegocio = new CiudadesNegocio(ciudadesDAO);
+    SucursalDAO sucursalesDAO = new SucursalDAO(conexionBD);
+    SucursalesNegocio sucursalServicio = new SucursalesNegocio(sucursalesDAO, ciudadesNegocio);
+    
+    try {
+        sucursalServicio.guardarSucursalConCiudadPorNombre(sucursalDTO, nombreCiudad);
+        JOptionPane.showMessageDialog(this, "Sucursal guardada exitosamente.");
+        
+        jTextField1.setText("");
+        jTextField2.setText("");
+    } catch (NegocioException e) {
+        JOptionPane.showMessageDialog(this, "Error al guardar la sucursal: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+        
+        
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

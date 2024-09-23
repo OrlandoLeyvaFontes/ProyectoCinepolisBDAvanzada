@@ -93,7 +93,13 @@ public class CatalogoSucursales extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-   
+this.setVisible(false);
+AñadirSucursales añadirSucursales=new AñadirSucursales();
+añadirSucursales.setVisible(true);
+        
+        
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
