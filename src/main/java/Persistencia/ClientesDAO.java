@@ -9,6 +9,7 @@ import Entidad.Clientes;
 import dtoCinepolis.ClientesDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
@@ -25,18 +26,15 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void iniciarSesion(Clientes correo, Clientes contrasena) throws PersistenciaException {
+    public boolean iniciarSesion(Clientes correo, Clientes contrasena) throws PersistenciaException {
         String sqlIniciarSesion = "SELECT * FROM clientes WHERE correo = ? AND contrasena = ?";
 
         try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sqlIniciarSesion)) {
             prepared.setString(1, correo.getCorreo());
             prepared.setString(2, contrasena.getContraseña());
-            prepared.executeUpdate();
+            ResultSet rs = prepared.executeQuery();
+            
+            return rs.next();
 
         } catch (SQLException e) {
             e.printStackTrace();

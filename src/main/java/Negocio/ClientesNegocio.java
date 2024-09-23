@@ -7,6 +7,8 @@ package Negocio;
 import Persistencia.IClientesDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.ClientesDTO;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,13 +41,27 @@ public class ClientesNegocio implements IClientesNegocios {
 //        
 //    }
     @Override
-    public void guardar(ClientesDTO clientesDTO) throws PersistenciaException {
+    public void guardar(ClientesDTO clientesDTO) throws NegocioException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena) throws NegocioException {
+        try {
+            // Asumiendo que clientesDAO tiene un método iniciarSesion que acepta Strings
+            boolean esValido = clientesDAO.iniciarSesion(correo, contrasena);
+
+            if (esValido) {
+                return true;  // Credenciales válidas
+            } else {
+                // Mostrar mensaje de error
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos",
+                        "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (Exception e) {  // Cambié ESQLException a SQLException
+            throw new NegocioException("Error al validar el usuario", e);
+        }
     }
 
 }

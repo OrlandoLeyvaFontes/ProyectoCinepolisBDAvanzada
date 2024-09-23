@@ -4,8 +4,11 @@
  */
 package Presentacion;
 
+import Negocio.ClientesNegocio;
+import Negocio.NegocioException;
 import Persistencia.ClientesDAO;
 import Persistencia.ConexionBD;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,12 +17,14 @@ import Persistencia.ConexionBD;
 public class IniciarSesion extends javax.swing.JFrame {
 
     private ConexionBD conexionBD;
+    private ClientesNegocio clienteNegocio;
 
     /**
      * Creates new form CatalogoClientes
      */
     public IniciarSesion() {
         conexionBD = new ConexionBD();
+        this.clienteNegocio = clienteNegocio;
 
         initComponents();
     }
@@ -153,7 +158,19 @@ public class IniciarSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_txtContrasenaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            String correo = txtCorreo.getText();
+            String contrasena = txtContrasena.getText();
+            
+            boolean inicioExitoso = clienteNegocio.iniciarSesion(correo, contrasena);
+            
+            if (inicioExitoso) {
+                JOptionPane.showMessageDialog(this, "Inicio Exitoso");
+            }
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al intentar iniciar sesión: " + e.getMessage(),
+                                          "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
