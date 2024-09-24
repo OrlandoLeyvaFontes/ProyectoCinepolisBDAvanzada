@@ -4,8 +4,12 @@
  */
 package Presentacion;
 
+import Negocio.CiudadesNegocio;
+import Negocio.ClientesNegocio;
+import Persistencia.CiudadesDAO;
 import Persistencia.ClientesDAO;
 import Persistencia.ConexionBD;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -85,13 +89,20 @@ public class CatalogoClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setVisible(false);
-        ClientesDAO clientesDAO = new ClientesDAO(conexionBD);
+    if (conexionBD == null) {
+        JOptionPane.showMessageDialog(this, "Error: La conexión a la base de datos no está inicializada.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        AgregarClientes añadirClientes = new AgregarClientes(clientesDAO);
-        añadirClientes.setVisible(true);
+    ClientesDAO clientesDAO = new ClientesDAO(conexionBD);
+    CiudadesDAO ciudadesDAO=new CiudadesDAO(conexionBD);
+   CiudadesNegocio  ciudadesNegocio=new CiudadesNegocio(ciudadesDAO);
+    ClientesNegocio clienteNegocio = new ClientesNegocio(clientesDAO,ciudadesNegocio);
 
-        // TODO add your handling code here:
+    AgregarClientes añadirClientes = new AgregarClientes(clientesDAO, ciudadesNegocio);
+    añadirClientes.setVisible(true);
+
+    this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

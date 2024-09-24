@@ -16,5 +16,5 @@ public interface IClientesDAO {
 
     public boolean iniciarSesion(Clientes correo, Clientes contrasena) throws PersistenciaException;
 
-    public void guardar(Clientes clientes, Ciudad cuidad) throws PersistenciaException;
+    public void guardar(Clientes clientes) throws PersistenciaException;
 }

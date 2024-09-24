@@ -43,7 +43,7 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public void guardar(Clientes clientes, Ciudad cuidad) throws PersistenciaException {
+    public void guardar(Clientes clientes) throws PersistenciaException {
         String sqlInsertarCiudad = "INSERT INTO clientes(nombres,apellidoPaterno,apellidoMaterno,fechaNacimiento,correo,contrasena,Ciudad) VALUES(?,?,?,?,?,?,?) ";
 
         try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sqlInsertarCiudad)) {
@@ -54,7 +54,7 @@ public class ClientesDAO implements IClientesDAO {
             prepared.setTimestamp(4, timestamp);
             prepared.setString(5, clientes.getCorreo());
             prepared.setString(6, clientes.getContraseña());
-            prepared.setString(7, cuidad.getNombre());
+            prepared.setInt(7, clientes.getCiudad().getId());
             prepared.executeUpdate();
 
         } catch (SQLException e) {

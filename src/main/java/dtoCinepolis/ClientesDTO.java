@@ -20,12 +20,12 @@ public class ClientesDTO {
     LocalDateTime fechaNacimiento;
     String correo;
     String contraseña;
-    Ciudad ciudad;
+    CiudadesDTO ciudad;
 
     public ClientesDTO() {
     }
 
-    public ClientesDTO(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, Ciudad ciudad) {
+    public ClientesDTO(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, CiudadesDTO ciudad) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -35,7 +35,7 @@ public class ClientesDTO {
         this.ciudad = ciudad;
     }
 
-    public ClientesDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, Ciudad ciudad) {
+    public ClientesDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, CiudadesDTO ciudad) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -46,13 +46,17 @@ public class ClientesDTO {
         this.ciudad = ciudad;
     }
 
-    public Ciudad getCiudad() {
+    public CiudadesDTO getCiudad() {
         return ciudad;
     }
 
-    public void setCiudad(Ciudad ciudad) {
+    public void setCiudad(CiudadesDTO ciudad) {
         this.ciudad = ciudad;
     }
+
+   
+
+    
 
     public int getId() {
         return id;

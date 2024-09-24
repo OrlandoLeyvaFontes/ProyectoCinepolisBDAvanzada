@@ -4,8 +4,11 @@
  */
 package Negocio;
 
+import Entidad.Ciudad;
+import Entidad.Clientes;
 import Persistencia.IClientesDAO;
 import Persistencia.PersistenciaException;
+import dtoCinepolis.CiudadesDTO;
 import dtoCinepolis.ClientesDTO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -16,11 +19,14 @@ import javax.swing.JOptionPane;
  */
 public class ClientesNegocio implements IClientesNegocios {
 
-    private final IClientesDAO clientesDAO;
+    private  IClientesDAO clientesDAO;
+     private  CiudadesNegocio ciudadesNegocio;
 
-    public ClientesNegocio(IClientesDAO clientesDAO) {
+    public ClientesNegocio(IClientesDAO clientesDAO, CiudadesNegocio ciudadesNegocio) {
         this.clientesDAO = clientesDAO;
+        this.ciudadesNegocio = ciudadesNegocio;
     }
+    
 
 //    private Clientes DTOaEntidad(ClientesDTO clientesDTO) {
 //        Clientes clientes = new Clientes();
@@ -40,10 +46,7 @@ public class ClientesNegocio implements IClientesNegocios {
 //        clientesDAO.guardar(clientes, ciudad);
 //        
 //    }
-    @Override
-    public void guardar(ClientesDTO clientesDTO) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
 //    @Override
 //    public boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena) throws NegocioException {
@@ -64,4 +67,55 @@ public class ClientesNegocio implements IClientesNegocios {
 //        }
 //    }
 
+    @Override
+    public void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException {
+    try {
+        String nombreN = nombre.trim().toLowerCase();
+        CiudadesDTO ciudadesDTO = ciudadesNegocio.buscarCiudadPorNombre(nombreN);
+        
+        if (ciudadesDTO == null) {
+            throw new NegocioException("Ciudad no encontrada: " + nombre);
+        }
+        
+        clientesDTO.setCiudad(ciudadesDTO);
+        Clientes clientes = convertirADTO(clientesDTO);
+        clientesDAO.guardar(clientes);
+    } catch (PersistenciaException e) {
+        throw new NegocioException("Error al guardar el cliente en la capa de negocio", e);
+    }
+}
+
+
+private Clientes convertirADTO(ClientesDTO clientesDTO){
+    if(clientesDTO==null){
+        return null;
+    }
+    Clientes clientes=new Clientes();
+    clientes.setId(clientesDTO.getId());
+    clientes.setNombre(clientesDTO.getNombre());
+    clientes.setApellidoPaterno(clientesDTO.getApellidoPaterno());
+    clientes.setApellidoMaterno(clientesDTO.getApellidoMaterno());
+    clientes.setFechaNacimiento(clientesDTO.getFechaNacimiento());
+    clientes.setCorreo(clientesDTO.getCorreo());
+    clientes.setContraseña(clientesDTO.getContraseña());
+    clientes.setCiudad(convertirADTO(clientesDTO.getCiudad()));
+    return clientes;
+    
+    
+    
+    
+    
+}
+
+private Ciudad convertirADTO(CiudadesDTO ciudadesDTO){
+    if(ciudadesDTO==null){
+        return null;
+    }
+    Ciudad ciudad=new Ciudad();
+    ciudad.setId(ciudadesDTO.getId());
+    ciudad.setNombre(ciudadesDTO.getNombre());
+    return ciudad;
+    
+    
+} 
 }

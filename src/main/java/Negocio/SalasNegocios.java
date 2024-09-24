@@ -27,16 +27,11 @@ private SucursalesNegocio SucursalesNegocio;
     @Override
     public void guardarSucursalesConSalas(SalasDTO salasDTO, String nombre) throws NegocioException {
   try {
-        // Normaliza el nombre
         String nombreNormalizado = nombre.trim().toLowerCase();
-        
-        // Busca la sucursal
         SucursalesDTO sucursalesDTO1 = SucursalesNegocio.buscarSucursalPorNombre(nombreNormalizado);
-        
         if (sucursalesDTO1 == null) {
             throw new NegocioException("Sucursal no encontrada: " + nombre);
         }
-
         salasDTO.setSucursales(sucursalesDTO1);
         Salas salas = convertirADTO(salasDTO);
         salasDAO.guardar(salas);

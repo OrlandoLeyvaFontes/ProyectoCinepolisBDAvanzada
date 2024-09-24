@@ -174,11 +174,11 @@ public class IniciarSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setVisible(false);
-        ClientesDAO clientesDAO = new ClientesDAO(conexionBD);
-
-        AgregarClientes añadirClientes = new AgregarClientes(clientesDAO);
-        añadirClientes.setVisible(true);
+//        this.setVisible(false);
+//        ClientesDAO clientesDAO = new ClientesDAO(conexionBD);
+//         ClientesNegocio clientesNegocio=new ClientesNegocio(clientesDAO);
+//        AgregarClientes añadirClientes = new AgregarClientes(clientesDAO,clientesNegocio);
+//        añadirClientes.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
