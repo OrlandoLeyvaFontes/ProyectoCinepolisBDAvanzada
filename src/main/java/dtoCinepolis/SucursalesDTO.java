@@ -38,12 +38,14 @@ public class SucursalesDTO {
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
-        this.id = this.id;
+        this.id = id;
     }
+
+   
 
     public String getNombre() {
         return this.nombre;

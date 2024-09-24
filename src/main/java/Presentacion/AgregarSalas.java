@@ -75,6 +75,12 @@ salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
 
         jLabel3.setText("Cantidad de asientos:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 350, -1));
 
         jLabel4.setText("Tiempo de limpieza:");
@@ -97,20 +103,22 @@ salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-   try {
+     try {
         String nombreSala = jTextField1.getText();
         String nombreSucursal = jTextField4.getText();
-        String fechaTexto = jTextField3.getText();
+        String minutosTexto = jTextField2.getText(); 
 
-        // Validar campos vacíos
-        if (nombreSala.isEmpty() || nombreSucursal.isEmpty() || jTextField2.getText().isEmpty() || fechaTexto.isEmpty()) {
+        if (nombreSala.isEmpty() || nombreSucursal.isEmpty() || minutosTexto.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         int cantidadAsientos = Integer.parseInt(jTextField2.getText());
-        LocalDateTime fechaLimpieza = LocalDateTime.parse(fechaTexto, formatter);
         
+        int minutosAAnadir = Integer.parseInt(minutosTexto);
+        
+        LocalDateTime fechaLimpieza = LocalDateTime.now().plusMinutes(minutosAAnadir); 
+
         SalasDTO salasDTO = new SalasDTO();
         salasDTO.setNombre(nombreSala);
         salasDTO.setCantidadAsientos(cantidadAsientos);
@@ -121,65 +129,31 @@ salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
             JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
         salasDTO.setSucursales(sucursalDTO);
 
-        salasNegocios.guardarSucursalesConSalas(salasDTO, nombreSala); // Cambia este método según tu lógica
+        salasNegocios.guardarSucursalesConSalas(salasDTO, nombreSucursal);
         
-        // Mensaje de éxito
         JOptionPane.showMessageDialog(this, "Sala añadida exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         
-        // Limpiar campos
         jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
+        jTextField2.setText(""); 
         jTextField4.setText("");
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Por favor, introduce un número válido en cantidad de asientos.", "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (DateTimeParseException e) {
-        JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Usa 'yyyy-MM-dd HH:mm:ss'.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Por favor, introduce un número válido en cantidad de asientos y minutos.", "Error", JOptionPane.ERROR_MESSAGE);
     } catch (NegocioException e) {
         JOptionPane.showMessageDialog(this, "Error al guardar la sala: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Se ha producido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarSalas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarSalas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarSalas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarSalas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AgregarSalas().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -19,13 +19,13 @@ public class ProbarSalas {
     public static void main(String[] args) throws PersistenciaException {
          try {
         Salas salas = new Salas();
-        salas.setNombre("Sala 1"); // Verifica que esto no sea nulo o vacío
+        salas.setNombre("Sala 1"); 
         salas.setCantidadAsientos(35);
         LocalDateTime limpieza = LocalDateTime.now();
         salas.setTiempoLimpieza(limpieza);
         
         Sucursales sucursal = new Sucursales();
-        sucursal.setId(4); // Asegúrate de que este ID sea válido
+        sucursal.setId(4); 
         salas.setSucursales(sucursal);
         
         // Verifica valores

@@ -63,16 +63,18 @@ public class SucursalesNegocio implements ISucursalesNegocio {
 
     @Override
     public SucursalesDTO buscarSucursalPorNombre(String nombre) throws NegocioException {
-        try {
-            Sucursales sucursales = sucursalesDAO.buscarSucursalPorNombre(nombre);
-            SucursalesDTO sucursalesDTO = new SucursalesDTO();
-            sucursalesDTO.setId(sucursales.getId());
-            sucursalesDTO.setNombre(sucursales.getNombre());
-            return sucursalesDTO;
-        } catch (PersistenciaException e) {
-            throw new NegocioException("Error al buscar la sucursal por nombre en la capa de negocio", e);
-
+    try {
+        Sucursales sucursales = sucursalesDAO.buscarSucursalPorNombre(nombre);
+        if (sucursales == null) {
+            return null; // O lanzar una excepción específica si prefieres
+        }
+        SucursalesDTO sucursalesDTO = new SucursalesDTO();
+        sucursalesDTO.setId(sucursales.getId());
+        sucursalesDTO.setNombre(sucursales.getNombre());
+        return sucursalesDTO;
+    } catch (PersistenciaException e) {
+        throw new NegocioException("Error al buscar la sucursal por nombre en la capa de negocio", e);
         }
     }
-
+    
 }
