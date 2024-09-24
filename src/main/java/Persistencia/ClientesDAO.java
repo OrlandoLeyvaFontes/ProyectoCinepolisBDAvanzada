@@ -26,19 +26,19 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public boolean iniciarSesion(Clientes correo, Clientes contrasena) throws PersistenciaException {
+    public boolean iniciarSesion(String  correo, String  contrasena) throws PersistenciaException {
         String sqlIniciarSesion = "SELECT * FROM clientes WHERE correo = ? AND contrasena = ?";
 
         try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sqlIniciarSesion)) {
-            prepared.setString(1, correo.getCorreo());
-            prepared.setString(2, contrasena.getContraseña());
+            prepared.setString(1, correo);
+            prepared.setString(2, contrasena);
             ResultSet rs = prepared.executeQuery();
             
             return rs.next();
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new PersistenciaException("Error al guardar el cliente", e);
+            throw new PersistenciaException("Error al iniciar sesion", e);
         }
     }
 

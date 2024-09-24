@@ -14,7 +14,7 @@ import dtoCinepolis.ClientesDTO;
  */
 public interface IClientesDAO {
 
-    public boolean iniciarSesion(Clientes correo, Clientes contrasena) throws PersistenciaException;
+    public boolean iniciarSesion(String  correo, String  contrasena) throws PersistenciaException;
 
     public void guardar(Clientes clientes) throws PersistenciaException;
 }

@@ -4,10 +4,20 @@
  */
 package Presentacion;
 
+import Negocio.CiudadesNegocio;
 import Negocio.ClientesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.NegocioException;
+import Persistencia.CiudadesDAO;
 import Persistencia.ClientesDAO;
 import Persistencia.ConexionBD;
+import Persistencia.ICiudadesDAO;
+import Persistencia.IClientesDAO;
+import Persistencia.IConexionBD;
+import Persistencia.PersistenciaException;
+import dtoCinepolis.ClientesDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,15 +26,18 @@ import javax.swing.JOptionPane;
  */
 public class IniciarSesion extends javax.swing.JFrame {
 
-    private ConexionBD conexionBD;
     private ClientesNegocio clienteNegocio;
 
     /**
      * Creates new form CatalogoClientes
      */
     public IniciarSesion() {
-        conexionBD = new ConexionBD();
-        this.clienteNegocio = clienteNegocio;
+        IConexionBD conexionBD = new ConexionBD();
+        IClientesDAO clientesDAO = new ClientesDAO(conexionBD);
+        ICiudadesDAO ciudadesDAO = new CiudadesDAO(conexionBD);
+        CiudadesNegocio ciudadesNegocio = new CiudadesNegocio(ciudadesDAO);
+        
+        clienteNegocio = new ClientesNegocio(clientesDAO, ciudadesNegocio);
 
         initComponents();
     }
@@ -107,10 +120,10 @@ public class IniciarSesion extends javax.swing.JFrame {
                             .addComponent(txtCorreo)
                             .addComponent(txtContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(152, 152, 152)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -158,27 +171,36 @@ public class IniciarSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_txtContrasenaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        try {
-//            String correo = txtCorreo.getText();
-//            String contrasena = txtContrasena.getText();
-//            
-//            boolean inicioExitoso = clienteNegocio.iniciarSesion(correo, contrasena);
-//            
-//            if (inicioExitoso) {
-//                JOptionPane.showMessageDialog(this, "Inicio Exitoso");
-//            }
-//        } catch (NegocioException e) {
-//            JOptionPane.showMessageDialog(this, "Error al intentar iniciar sesión: " + e.getMessage(),
-//                                          "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+        String correo = txtCorreo.getText();
+        String contrasena = txtContrasena.getText();
+
+        // Validación de campos
+        if (correo.isEmpty() || contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            boolean sesionIniciada = clienteNegocio.iniciarSesion(correo, contrasena);
+            if (sesionIniciada) {
+                JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                SucursalesDisponibles sd = new SucursalesDisponibles();
+                sd.setVisible(true);
+                this.dispose(); // Cierra la ventana de inicio de sesión
+            }
+        } catch (NegocioException ex) {
+            Logger.getLogger(IniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error en la autenticación", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Limpiar campos después del intento
+        txtCorreo.setText("");
+        txtContrasena.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-//        this.setVisible(false);
-//        ClientesDAO clientesDAO = new ClientesDAO(conexionBD);
-//         ClientesNegocio clientesNegocio=new ClientesNegocio(clientesDAO);
-//        AgregarClientes añadirClientes = new AgregarClientes(clientesDAO,clientesNegocio);
-//        añadirClientes.setVisible(true);
+        AgregarClientes ac = new AgregarClientes();
+        ac.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
