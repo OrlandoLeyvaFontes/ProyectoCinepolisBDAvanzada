@@ -5,6 +5,7 @@
 package Presentacion;
 
 import Negocio.ClientesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.NegocioException;
 import Persistencia.ClientesDAO;
 import Persistencia.ConexionBD;
@@ -17,16 +18,26 @@ import javax.swing.JOptionPane;
 public class IniciarSesion extends javax.swing.JFrame {
 
     private ConexionBD conexionBD;
-    private ClientesNegocio clienteNegocio;
+    private IClientesNegocios clienteNegocio;
+
+    public IniciarSesion() {
+    }
 
     /**
      * Creates new form CatalogoClientes
      */
-    public IniciarSesion() {
-        conexionBD = new ConexionBD();
+    public IniciarSesion(IClientesNegocios clienteNegocio) {
         this.clienteNegocio = clienteNegocio;
-
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+
+//        initComponents();
+//        this.setLocationRelativeTo(null);
+//        this.setResizable(false);
+//        btnAnterior.setEnabled(false);
+//        this.cargarConfiguracionInicialTablaClientes();
+//        this.cargarTablaClientes();
     }
 
     /**

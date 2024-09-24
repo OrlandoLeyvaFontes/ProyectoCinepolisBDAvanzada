@@ -4,11 +4,10 @@
  */
 package Negocio;
 
+import Entidad.Clientes;
 import Persistencia.IClientesDAO;
-import Persistencia.PersistenciaException;
 import dtoCinepolis.ClientesDTO;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -22,46 +21,78 @@ public class ClientesNegocio implements IClientesNegocios {
         this.clientesDAO = clientesDAO;
     }
 
-//    private Clientes DTOaEntidad(ClientesDTO clientesDTO) {
-//        Clientes clientes = new Clientes();
-//        clientes.setNombre(clientesDTO.getNombre());
-//        clientes.setApellidoPaterno(clientesDTO.getApellidoPaterno());
-//        clientes.setApellidoMaterno(clientesDTO.getApellidoMaterno());
-//        clientes.setFechaNacimiento(clientesDTO.getFechaNacimiento()); // Asumiendo que este es LocalDateTime
-//        clientes.setCorreo(clientesDTO.getCorreo());
-//        clientes.setContraseña(clientesDTO.getContraseña());
-//        clientes.setCiudad(clientesDTO.getCiudad());
-//        return clientes;
-//    }
 //    @Override
-//    public void guardar(ClientesDTO clientesDTO) throws PersistenciaException {
-//        Clientes clientes = DTOaEntidad(clientesDTO);        
-//        Ciudad ciudad = new Ciudad(clientesDTO.getCiudad());
-//        clientesDAO.guardar(clientes, ciudad);
+//    public boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena) throws NegocioException {
 //        
 //    }
+//
+//    @Override
+//    public void guardar(ClientesDTO clientesDTO) throws NegocioException {
+//        Clientes cliente = convertirADominio(clientesDTO);
+//        Clientes clienteGuardado = this.clientesDAO.guardar(cliente, cuidad);
+//    }
+//    private Clientes convertirADominio(ClientesDTO clienteDTO) {
+//        Clientes cliente = new Clientes();
+//        cliente.setNombre(clienteDTO.getNombre());
+//        cliente.setApellidoPaterno(clienteDTO.getApellidoPaterno());
+//        cliente.setApellidoMaterno(clienteDTO.getApellidoMaterno());
+//        cliente.setFechaNacimiento(clienteDTO.getFechaNacimiento());
+//        cliente.setCiudad(clienteDTO.getCiudad());
+//        cliente.setCorreo(clienteDTO.getCorreo());
+//        cliente.setContraseña(clienteDTO.getContraseña());
+//        return cliente;
+//    }
+//
+//    private ClientesDTO convertitClienteDTO(Clientes clientes) {
+//        ClientesDTO clienteDTO = new ClientesDTO();
+//        clienteDTO.setNombre(clientes.getNombre());
+//        clienteDTO.setApellidoPaterno(clientes.getApellidoPaterno());
+//        clienteDTO.setApellidoMaterno(clientes.getApellidoMaterno());
+//        clienteDTO.setFechaNacimiento(clientes.getFechaNacimiento());
+//        clienteDTO.setCiudad(clientes.getCiudad());
+//        clienteDTO.setCorreo(clientes.getCorreo());
+//        clienteDTO.setContraseña(clientes.getContraseña());
+//        return clienteDTO;
+//    }
+//    @Override
+//    public CiudadesDTO guardar(CiudadesDTO ciudadDTO) throws PersistenciaException {
+//        Ciudad ciudad = convertirADominio(ciudadDTO);
+//        Ciudad ciudadGuardada = this.ciudadesDAO.guardar(ciudad);
+//        return convertirCuidadDTO(ciudadGuardada);
+//
+//    }
+//
+//    private Ciudad convertirADominio(CiudadesDTO ciudadesDTO) {
+//        Ciudad ciudad = new Ciudad();
+//        ciudad.setNombre(ciudadesDTO.getNombre());
+//        return ciudad;
+//    }
+//
+//    private CiudadesDTO convertirCuidadDTO(Ciudad cuidad) {
+//        CiudadesDTO cuidadDTO = new CiudadesDTO();
+//        cuidadDTO.setNombre(cuidad.getNombre());
+//        return cuidadDTO;
+//    }
+
     @Override
-    public void guardar(ClientesDTO clientesDTO) throws NegocioException {
+    public boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena) throws NegocioException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-//    @Override
-//    public boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena) throws NegocioException {
-//        try {
-//            // Asumiendo que clientesDAO tiene un método iniciarSesion que acepta Strings
-//            boolean esValido = clientesDAO.iniciarSesion(correo, contrasena);
-//
-//            if (esValido) {
-//                return true;  // Credenciales válidas
-//            } else {
-//                // Mostrar mensaje de error
-//                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos",
-//                        "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
-//                return false;
-//            }
-//        } catch (Exception e) {  // Cambié ESQLException a SQLException
-//            throw new NegocioException("Error al validar el usuario", e);
-//        }
-//    }
+    @Override
+    public ClientesDTO guardar(ClientesDTO clientesDTO) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void editar(ClientesDTO clientesDTO) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ClientesDTO eliminar(int id) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 
 }

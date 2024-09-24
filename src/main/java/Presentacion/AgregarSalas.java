@@ -23,25 +23,27 @@ import javax.swing.JOptionPane;
  * @author Oley
  */
 public class AgregarSalas extends javax.swing.JFrame {
+
     private ConexionBD conexionBD;
- private SucursalesNegocio sucursalesNegocio;
-private SucursalDAO sucursalDAO;
-private SalasDAO  salasDAO;
-private SalasNegocios salasNegocios;
+    private SucursalesNegocio sucursalesNegocio;
+    private SucursalDAO sucursalDAO;
+    private SalasDAO salasDAO;
+    private SalasNegocios salasNegocios;
     private CiudadesNegocio ciudadesNegocio;
-private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     /**
      * Creates new form AgregarSalas
      */
     public AgregarSalas() {
         initComponents();
-conexionBD=new  ConexionBD();
-sucursalDAO = new SucursalDAO(conexionBD);
-sucursalesNegocio = new SucursalesNegocio(sucursalDAO, ciudadesNegocio);
-salasDAO = new SalasDAO(conexionBD);
-salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
+        conexionBD = new ConexionBD();
+        sucursalDAO = new SucursalDAO(conexionBD);
+        sucursalesNegocio = new SucursalesNegocio(sucursalDAO, ciudadesNegocio);
+        salasDAO = new SalasDAO(conexionBD);
+        salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
 
-}
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -97,51 +99,51 @@ salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-   try {
-        String nombreSala = jTextField1.getText();
-        String nombreSucursal = jTextField4.getText();
-        String fechaTexto = jTextField3.getText();
+        try {
+            String nombreSala = jTextField1.getText();
+            String nombreSucursal = jTextField4.getText();
+            String fechaTexto = jTextField3.getText();
 
-        // Validar campos vacíos
-        if (nombreSala.isEmpty() || nombreSucursal.isEmpty() || jTextField2.getText().isEmpty() || fechaTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            // Validar campos vacíos
+            if (nombreSala.isEmpty() || nombreSucursal.isEmpty() || jTextField2.getText().isEmpty() || fechaTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            int cantidadAsientos = Integer.parseInt(jTextField2.getText());
+            LocalDateTime fechaLimpieza = LocalDateTime.parse(fechaTexto, formatter);
+
+            SalasDTO salasDTO = new SalasDTO();
+            salasDTO.setNombre(nombreSala);
+            salasDTO.setCantidadAsientos(cantidadAsientos);
+            salasDTO.setTiempoLimpieza(fechaLimpieza);
+
+            SucursalesDTO sucursalDTO = sucursalesNegocio.buscarSucursalPorNombre(nombreSucursal);
+            if (sucursalDTO == null) {
+                JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            salasDTO.setSucursales(sucursalDTO);
+
+            salasNegocios.guardarSucursalesConSalas(salasDTO, nombreSala); // Cambia este método según tu lógica
+
+            // Mensaje de éxito
+            JOptionPane.showMessageDialog(this, "Sala añadida exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            // Limpiar campos
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, introduce un número válido en cantidad de asientos.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Usa 'yyyy-MM-dd HH:mm:ss'.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar la sala: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Se ha producido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        int cantidadAsientos = Integer.parseInt(jTextField2.getText());
-        LocalDateTime fechaLimpieza = LocalDateTime.parse(fechaTexto, formatter);
-        
-        SalasDTO salasDTO = new SalasDTO();
-        salasDTO.setNombre(nombreSala);
-        salasDTO.setCantidadAsientos(cantidadAsientos);
-        salasDTO.setTiempoLimpieza(fechaLimpieza);
-        
-        SucursalesDTO sucursalDTO = sucursalesNegocio.buscarSucursalPorNombre(nombreSucursal);
-        if (sucursalDTO == null) {
-            JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        salasDTO.setSucursales(sucursalDTO);
-
-        salasNegocios.guardarSucursalesConSalas(salasDTO, nombreSala); // Cambia este método según tu lógica
-        
-        // Mensaje de éxito
-        JOptionPane.showMessageDialog(this, "Sala añadida exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        
-        // Limpiar campos
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Por favor, introduce un número válido en cantidad de asientos.", "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (DateTimeParseException e) {
-        JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Usa 'yyyy-MM-dd HH:mm:ss'.", "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (NegocioException e) {
-        JOptionPane.showMessageDialog(this, "Error al guardar la sala: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Se ha producido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

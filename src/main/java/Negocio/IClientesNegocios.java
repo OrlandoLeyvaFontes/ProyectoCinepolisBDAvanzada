@@ -4,7 +4,6 @@
  */
 package Negocio;
 
-import Persistencia.PersistenciaException;
 import dtoCinepolis.ClientesDTO;
 
 /**
@@ -13,7 +12,22 @@ import dtoCinepolis.ClientesDTO;
  */
 public interface IClientesNegocios {
 
-//    boolean iniciarSesion(String correo, String contrasena) throws NegocioException;
+    boolean iniciarSesion(ClientesDTO correo, ClientesDTO contrasena) throws NegocioException;
 
-    void guardar(ClientesDTO clientesDTO) throws NegocioException;
+    ClientesDTO guardar(ClientesDTO clientesDTO) throws NegocioException;
+    
+    public void editar(ClientesDTO clientesDTO) throws NegocioException;
+    
+    ClientesDTO eliminar(int id) throws NegocioException;
+    
+    
+//    CiudadesDTO guardar(CiudadesDTO ciudad) throws PersistenciaException;
+//
+//    List< CuidadTablaDTO> buscarCuidadTabla(CuidadFiltroTablaDTO filtro) throws NegocioException;
+//
+//    public void editar(CiudadesDTO ciudadesDTO) throws NegocioException;
+//
+//    CiudadesDTO eliminar(int id) throws NegocioException;
+//
+//    public CiudadesDTO buscarCiudadPorNombre(String nombreCiudad) throws NegocioException;
 }

@@ -21,6 +21,11 @@ public class AgregarCiudades extends javax.swing.JFrame {
     /**
      * Creates new form AñadirCiudades
      */
+    
+    
+    public AgregarCiudades() {
+    }
+
     public AgregarCiudades(CiudadesNegocio ciudadesNegocio) {
         this.ciudadesNegocio = ciudadesNegocio;
         initComponents();
@@ -83,10 +88,7 @@ public class AgregarCiudades extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

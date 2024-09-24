@@ -4,10 +4,16 @@
  */
 package Presentacion;
 
+import Entidad.Ciudad;
 import Negocio.ClientesNegocio;
+import Negocio.IClientesNegocios;
+import Persistencia.ClientesDAO;
+import Persistencia.ConexionBD;
 import Persistencia.IClientesDAO;
+import Persistencia.IConexionBD;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.ClientesDTO;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -21,38 +27,50 @@ import javax.swing.JOptionPane;
  */
 public class AgregarClientes extends javax.swing.JFrame {
 
-    private ClientesNegocio clientesNegocios;
+    private ClientesNegocio clienteNegocio;
 
     /**
      * Creates new form AñadirClientes
      */
     public AgregarClientes(IClientesDAO clientesDAO) {
-        this.clientesNegocios = new ClientesNegocio(clientesDAO);
+
+        this.setResizable(false);
+        IConexionBD conexionBD = new ConexionBD();
+        IClientesDAO clienteDAO = new ClientesDAO(conexionBD);
+        ClientesNegocio clienteNegocio = new ClientesNegocio(clienteDAO);
         initComponents();
+
+//        initComponents();
+//        this.setLocationRelativeTo(null);
+//        this.setResizable(false);
+//        IConexionBD conexionBD = new ConexionBD();
+//        IClienteDAO clienteDAO = new ClienteDAO(conexionBD);
+//        clienteNegocio = new ClienteNegocio(clienteDAO);
     }
 
     public AgregarClientes() {
     }
 
     private ClientesDTO crearClientesDTO() throws DateTimeParseException {
-        String nombre = jTextField1.getText();
-        String apellidoPaterno = jTextField2.getText();
-        String apellidoMaterno = jTextField3.getText();
-        String fechaNacimientoTexto = jTextField4.getText();
+        String nombre = txtNombres.getText();
+        String apellidoPaterno = txtApellidoPaterno.getText();
+        String apellidoMaterno = txtApellidoMaterno.getText();
+        String fechaNacimientoTexto = txtFechaNacimiento.getText();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime fechaNacimiento = LocalDateTime.parse(fechaNacimientoTexto, formatter);
+        // Cambiar el formateador a solo manejar fechas
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoTexto, formatter);  // Cambiar a LocalDate
 
-        String ciudad = jTextField5.getText();
-        String correo = jTextField6.getText();
-        String contraseña = jTextField7.getText();
+        String ciudad = txtCiudad.getText();
+        String correo = txtCorreo.getText();
+        String contraseña = txtContrasena.getText();
 
         ClientesDTO clientesDTO = new ClientesDTO();
         clientesDTO.setNombre(nombre);
         clientesDTO.setApellidoPaterno(apellidoPaterno);
         clientesDTO.setApellidoMaterno(apellidoMaterno);
-        clientesDTO.setFechaNacimiento(fechaNacimiento);
-//        clientesDTO.setCiudad(ciudad);
+        clientesDTO.setFechaNacimiento(fechaNacimiento); // Ahora es LocalDate
+        // clientesDTO.setCiudad(ciudad); // Si quieres agregar la ciudad, descomenta esta línea
         clientesDTO.setCorreo(correo);
         clientesDTO.setContraseña(contraseña);
 
@@ -70,19 +88,19 @@ public class AgregarClientes extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNombres = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtApellidoPaterno = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtApellidoMaterno = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtFechaNacimiento = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtCiudad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        txtContrasena = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -94,31 +112,37 @@ public class AgregarClientes extends javax.swing.JFrame {
 
         jLabel2.setText("Nombre:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 52, 260, 30));
+        getContentPane().add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 52, 260, 30));
 
         jLabel3.setText("Apellido Paterno:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 102, 240, 30));
+        getContentPane().add(txtApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 102, 240, 30));
 
         jLabel4.setText("Apellido Materno:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 240, 30));
+
+        txtApellidoMaterno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtApellidoMaternoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 240, 30));
 
         jLabel5.setText("Fecha Nacimiento:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 230, 30));
+        getContentPane().add(txtFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 230, 30));
 
         jLabel6.setText("Ciudad:");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 240, 30));
+        getContentPane().add(txtCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 240, 30));
 
         jLabel7.setText("Correo:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, -1));
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 282, 240, 30));
+        getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 282, 240, 30));
 
         jLabel8.setText("Contraseña:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
-        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 322, 240, 30));
+        getContentPane().add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 322, 240, 30));
 
         jButton1.setText("Regresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -144,6 +168,36 @@ public class AgregarClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+            String nombres = txtNombres.getText();
+            String apellidoPaterno = txtApellidoPaterno.getText();
+            String apellidoMaterno = txtApellidoMaterno.getText();
+
+            // Obtener el texto del campo y definir el formato
+            String fechaNacimientoTexto = txtFechaNacimiento.getText();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            // Parsear el texto a LocalDate
+            LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoTexto, formatter);
+
+            String correo = txtCorreo.getText();
+            String contrasena = txtContrasena.getText();
+            String ciudad = txtCiudad.getText();
+            
+            if (nombres.equals("") || apellidoPaterno.equals("") || apellidoMaterno.equals("") || fechaNacimiento.equals("") || correo.equals("") || contrasena.equals("") || ciudad.equals(evt)) {
+                JOptionPane.showMessageDialog(null, "Favor de rellenar campos");
+            } else {
+                Ciudad c = new Ciudad(nombres);
+                ClientesDTO clienteDTO = new ClientesDTO(nombres, apellidoPaterno, apellidoMaterno, fechaNacimiento, correo, contrasena, c);
+                
+                try {
+                    clienteNegocio.guardar(clienteDTO);
+                    this.dispose();
+                } catch (Exception e) {
+                }
+            }
+
+
+
 //         try {
 //        ClientesDTO clientesDTO = crearClientesDTO();
 //        clientesNegocios.guardar(clientesDTO);
@@ -157,6 +211,10 @@ public class AgregarClientes extends javax.swing.JFrame {
 //    }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtApellidoMaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoMaternoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidoMaternoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,12 +231,12 @@ public class AgregarClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField txtApellidoMaterno;
+    private javax.swing.JTextField txtApellidoPaterno;
+    private javax.swing.JTextField txtCiudad;
+    private javax.swing.JTextField txtContrasena;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtFechaNacimiento;
+    private javax.swing.JTextField txtNombres;
     // End of variables declaration//GEN-END:variables
 }

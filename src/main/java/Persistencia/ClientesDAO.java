@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 /**
  *
@@ -26,14 +25,14 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public boolean iniciarSesion(Clientes correo, Clientes contrasena) throws PersistenciaException {
+    public boolean iniciarSesion(Clientes clientes) throws PersistenciaException {
         String sqlIniciarSesion = "SELECT * FROM clientes WHERE correo = ? AND contrasena = ?";
 
         try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sqlIniciarSesion)) {
-            prepared.setString(1, correo.getCorreo());
-            prepared.setString(2, contrasena.getContraseña());
+            prepared.setString(1, clientes.getCorreo());
+            prepared.setString(2, clientes.getContraseña());
             ResultSet rs = prepared.executeQuery();
-            
+
             return rs.next();
 
         } catch (SQLException e) {
@@ -50,8 +49,8 @@ public class ClientesDAO implements IClientesDAO {
             prepared.setString(1, clientes.getNombre());
             prepared.setString(2, clientes.getApellidoPaterno());
             prepared.setString(3, clientes.getApellidoMaterno());
-            Timestamp timestamp = Timestamp.valueOf(clientes.getFechaNacimiento());
-            prepared.setTimestamp(4, timestamp);
+            java.sql.Date fechaNacimiento = java.sql.Date.valueOf(clientes.getFechaNacimiento());
+            prepared.setDate(4, fechaNacimiento);
             prepared.setString(5, clientes.getCorreo());
             prepared.setString(6, clientes.getContraseña());
             prepared.setString(7, cuidad.getNombre());
