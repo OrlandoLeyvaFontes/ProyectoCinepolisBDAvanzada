@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 public class PruebasMain {
     public static void main(String[] args) {
      try {
-    // Inicialización de la conexión a la base de datos y DAOs
     ConexionBD conexionBD = new ConexionBD();
     SucursalDAO sucursalesDAO = new SucursalDAO(conexionBD);
     SalasDAO salasDAO = new SalasDAO(conexionBD);
@@ -28,14 +27,13 @@ public class PruebasMain {
     SucursalesNegocio sucursalesNegocio = new SucursalesNegocio(sucursalesDAO, ciudadesNegocio);
     SalasNegocios salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
 
-    // Creación del objeto SalaDTO
     SalasDTO salasDTO = new SalasDTO();
-    salasDTO.setNombre("Sala 1");
+    salasDTO.setNombre("Sala 111");
     salasDTO.setCantidadAsientos(50);
-    LocalDateTime tiempoLimpieza = LocalDateTime.now(); // Ajustar a la fecha actual si es necesario
+    LocalDateTime tiempoLimpieza = LocalDateTime.now(); 
     salasDTO.setTiempoLimpieza(tiempoLimpieza);
-
-    String nombreSucursal = "Soriana";  // Verificar que esta sucursal exista en la base de datos
+    salasDTO.setCostoSugerido(667.7);
+    String nombreSucursal = "Soriana";  
     System.out.println("Buscando sucursal con nombre: " + nombreSucursal);
     
     SucursalesDTO sucursalesDTO1 = sucursalesNegocio.buscarSucursalPorNombre(nombreSucursal);

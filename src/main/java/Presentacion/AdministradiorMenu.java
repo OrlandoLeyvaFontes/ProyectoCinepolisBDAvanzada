@@ -4,16 +4,23 @@
  */
 package Presentacion;
 
+import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
+import Presentacion.MenuAdministrador.Negocios;
+
 /**
  *
  * @author Oley
  */
 public class AdministradiorMenu extends javax.swing.JFrame {
-
+private Negocios negocios;
+ private ICiudadesNegocio ciudadesNegocio;
+    private IClientesNegocios clientesNegocios;  
     /**
      * Creates new form AdministradiorMenu
      */
     public AdministradiorMenu() {
+        this.negocios=negocios;
         initComponents();
     }
 
@@ -73,7 +80,7 @@ public class AdministradiorMenu extends javax.swing.JFrame {
 if(nombre.equals("admin")&& contraseña.equals("admin")){
             javax.swing.JOptionPane.showMessageDialog(this, "Acceso concedido");
 this.setVisible(false);
-MenuAdministrador menuAdministrador=new MenuAdministrador();
+MenuAdministrador menuAdministrador=new MenuAdministrador(negocios);
 menuAdministrador.setVisible(true);
 }else{
             javax.swing.JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos");
@@ -109,7 +116,6 @@ menuAdministrador.setVisible(true);
             java.util.logging.Logger.getLogger(AdministradiorMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

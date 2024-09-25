@@ -4,12 +4,16 @@
  */
 package Presentacion;
 
+import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
+import Negocio.IPeliculasNegocio;
+import Negocio.ISucursalesNegocio;
 import Negocio.PeliculasNegocio;
 import Negocio.SucursalesNegocio;
 import Persistencia.ClientesDAO;
-import Persistencia.ConexionBD;
-import Persistencia.PeliculasDAO;
 import Persistencia.SucursalDAO;
+import static com.sun.source.util.DocTrees.instance;
+import static com.sun.source.util.Trees.instance;
 
 /**
  *
@@ -17,17 +21,34 @@ import Persistencia.SucursalDAO;
  */
 public class MenuAdministrador extends javax.swing.JFrame {
 
-    private PeliculasNegocio peliculasNegocio;
-    private ConexionBD conexionBD;
-    private SucursalesNegocio sucursalesNegocios;
+//    private IPeliculasNegocio peliculasNegocio;
+//    private ISucursalesNegocio sucursalesNegocios;
+// private ICiudadesNegocio ciudadesNegocio;
+//    private IClientesNegocios clientesNegocios;    /**
+    private Negocios negocios;
+    private static MenuAdministrador instance;
 
-    /**
-     * Creates new form MenuAdministrador
-     */
-    public MenuAdministrador() {
-        conexionBD = new ConexionBD();
-        this.peliculasNegocio = new PeliculasNegocio(new PeliculasDAO(conexionBD));
+    public MenuAdministrador(Negocios negocios) {
+        this.negocios = negocios;
         initComponents();
+    }
+public static MenuAdministrador getInstance(Negocios negocios) {
+        if (instance == null) {
+            instance = new MenuAdministrador(negocios);
+        }
+        return instance;
+    }
+    public static class Negocios {
+
+        public IPeliculasNegocio peliculasNegocio;
+        public ISucursalesNegocio sucursalesNegocios;
+        public ICiudadesNegocio ciudadesNegocio;
+        public IClientesNegocios clientesNegocios;
+
+        public Negocios(IClientesNegocios clientesNegocios, ICiudadesNegocio ciudadesNegocio) {
+            this.ciudadesNegocio = ciudadesNegocio;
+            this.clientesNegocios = clientesNegocios;
+        }
     }
 
     /**
@@ -92,16 +113,16 @@ public class MenuAdministrador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.setVisible(false);
-        AgregarPeliculas añadir = new AgregarPeliculas(peliculasNegocio);
-        añadir.setVisible(true);
-
-        // TODO add your handling code here:
+//        this.setVisible(false);
+//        AgregarPeliculas añadir = new AgregarPeliculas(peliculasNegocio);
+//        añadir.setVisible(true);
+//
+//        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        CatalogoSucursales catalogoSucursales=new CatalogoSucursales();
+        CatalogoSucursales catalogoSucursales = new CatalogoSucursales();
         catalogoSucursales.setVisible(true);
 
         // TODO add your handling code here:
@@ -117,22 +138,19 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.setVisible(false);
-CatalogoClientes catalogoClientes =new CatalogoClientes();
+        CatalogoClientes catalogoClientes = new CatalogoClientes(negocios);
         catalogoClientes.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-this.setVisible(false);
-CatalogoSalas catalogoSalas=new CatalogoSalas();
-catalogoSalas.setVisible(true);
-
-
+        this.setVisible(false);
+        CatalogoSalas catalogoSalas = new CatalogoSalas();
+        catalogoSalas.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

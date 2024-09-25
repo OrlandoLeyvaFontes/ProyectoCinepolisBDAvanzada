@@ -17,6 +17,7 @@ public class SalasDTO {
     int cantidadAsientos;
     LocalDateTime tiempoLimpieza;
     SucursalesDTO sucursales;
+    Double CostoSugerido;
 
   
 
@@ -30,14 +31,24 @@ public class SalasDTO {
         this.sucursales = sucursales;
     }
 
-    public SalasDTO(int id, String nombre, int cantidadAsientos, LocalDateTime tiempoLimpieza, SucursalesDTO sucursales) {
+    public SalasDTO(int id, String nombre, int cantidadAsientos, LocalDateTime tiempoLimpieza, SucursalesDTO sucursales, Double CostoSugerido) {
         this.id = id;
         this.nombre = nombre;
         this.cantidadAsientos = cantidadAsientos;
         this.tiempoLimpieza = tiempoLimpieza;
         this.sucursales = sucursales;
+        this.CostoSugerido = CostoSugerido;
     }
 
+    public Double getCostoSugerido() {
+        return CostoSugerido;
+    }
+
+    public void setCostoSugerido(Double CostoSugerido) {
+        this.CostoSugerido = CostoSugerido;
+    }
+
+   
     public SucursalesDTO getSucursales() {
         return sucursales;
     }

@@ -103,10 +103,10 @@ añadirSucursales.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
-this.setVisible(false);
-MenuAdministrador menuAdministrador=new MenuAdministrador();
-menuAdministrador.setVisible(true);
+//
+//this.setVisible(false);
+//MenuAdministrador menuAdministrador=new MenuAdministrador();
+//menuAdministrador.setVisible(true);
 
 
         // TODO add your handling code here:

@@ -50,6 +50,7 @@ private SucursalesNegocio SucursalesNegocio;
         salas.setCantidadAsientos(salasDTO.getCantidadAsientos());
         salas.setTiempoLimpieza(salasDTO.getTiempoLimpieza());
         salas.setSucursales(convertirADTO(salasDTO.getSucursales()));
+        salas.setCostoSugerido(salasDTO.getCostoSugerido());
         return salas;
     }
     private Sucursales convertirADTO(SucursalesDTO sucursalesDTO){

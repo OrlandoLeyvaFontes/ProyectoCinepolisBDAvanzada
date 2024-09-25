@@ -5,6 +5,7 @@
 package Presentacion;
 
 import Negocio.CiudadesNegocio;
+import Negocio.ICiudadesNegocio;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.CiudadesDTO;
 import java.util.logging.Level;
@@ -16,12 +17,12 @@ import java.util.logging.Logger;
  */
 public class AgregarCiudades extends javax.swing.JFrame {
 
-    private CiudadesNegocio ciudadesNegocio;
+    private ICiudadesNegocio ciudadesNegocio;
 
     /**
      * Creates new form AñadirCiudades
      */
-    public AgregarCiudades(CiudadesNegocio ciudadesNegocio) {
+    public AgregarCiudades(ICiudadesNegocio ciudadesNegocio) {
         this.ciudadesNegocio = ciudadesNegocio;
         initComponents();
     }

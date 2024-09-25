@@ -23,25 +23,27 @@ import javax.swing.JOptionPane;
  * @author Oley
  */
 public class AgregarSalas extends javax.swing.JFrame {
+
     private ConexionBD conexionBD;
- private SucursalesNegocio sucursalesNegocio;
-private SucursalDAO sucursalDAO;
-private SalasDAO  salasDAO;
-private SalasNegocios salasNegocios;
+    private SucursalesNegocio sucursalesNegocio;
+    private SucursalDAO sucursalDAO;
+    private SalasDAO salasDAO;
+    private SalasNegocios salasNegocios;
     private CiudadesNegocio ciudadesNegocio;
-private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     /**
      * Creates new form AgregarSalas
      */
     public AgregarSalas() {
         initComponents();
-conexionBD=new  ConexionBD();
-sucursalDAO = new SucursalDAO(conexionBD);
-sucursalesNegocio = new SucursalesNegocio(sucursalDAO, ciudadesNegocio);
-salasDAO = new SalasDAO(conexionBD);
-salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
+        conexionBD = new ConexionBD();
+        sucursalDAO = new SucursalDAO(conexionBD);
+        sucursalesNegocio = new SucursalesNegocio(sucursalDAO, ciudadesNegocio);
+        salasDAO = new SalasDAO(conexionBD);
+        salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
 
-}
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,6 +64,8 @@ salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
         jLabel5 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -69,7 +73,7 @@ salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
         jLabel1.setText("Añadir Sala");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
 
-        jLabel2.setText("Nombre de la sucursal:");
+        jLabel2.setText("Nombre de la sala:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 350, -1));
 
@@ -97,55 +101,63 @@ salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, -1, -1));
+
+        jLabel6.setText("Costo sugerido:");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 292, 350, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     try {
-        String nombreSala = jTextField1.getText();
-        String nombreSucursal = jTextField4.getText();
-        String minutosTexto = jTextField2.getText(); 
+        try {
+            String nombreSala = jTextField1.getText();
+            String nombreSucursal = jTextField4.getText();
+            String minutosTexto = jTextField2.getText();
+            double costoAproximado = Double.parseDouble(jTextField5.getText());
+            if (nombreSala.isEmpty() || nombreSucursal.isEmpty() || minutosTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-        if (nombreSala.isEmpty() || nombreSucursal.isEmpty() || minutosTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            int cantidadAsientos = Integer.parseInt(jTextField2.getText());
+
+            int minutosAAnadir = Integer.parseInt(minutosTexto);
+
+            LocalDateTime fechaLimpieza = LocalDateTime.now().plusMinutes(minutosAAnadir);
+
+            SalasDTO salasDTO = new SalasDTO();
+            salasDTO.setNombre(nombreSala);
+            salasDTO.setCantidadAsientos(cantidadAsientos);
+            salasDTO.setTiempoLimpieza(fechaLimpieza);
+            salasDTO.setCostoSugerido(costoAproximado);
+
+            SucursalesDTO sucursalDTO = sucursalesNegocio.buscarSucursalPorNombre(nombreSucursal);
+            if (sucursalDTO == null) {
+                JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            salasDTO.setSucursales(sucursalDTO);
+
+            salasNegocios.guardarSucursalesConSalas(salasDTO, nombreSucursal);
+
+            JOptionPane.showMessageDialog(this, "Sala añadida exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField4.setText("");
+            this.setVisible(false);
+            CatalogoSalas catalogoSalas=new CatalogoSalas();
+            catalogoSalas.setVisible(true);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, introduce un número válido en cantidad de asientos y minutos.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar la sala: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Se ha producido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        int cantidadAsientos = Integer.parseInt(jTextField2.getText());
-        
-        int minutosAAnadir = Integer.parseInt(minutosTexto);
-        
-        LocalDateTime fechaLimpieza = LocalDateTime.now().plusMinutes(minutosAAnadir); 
-
-        SalasDTO salasDTO = new SalasDTO();
-        salasDTO.setNombre(nombreSala);
-        salasDTO.setCantidadAsientos(cantidadAsientos);
-        salasDTO.setTiempoLimpieza(fechaLimpieza);
-        
-        SucursalesDTO sucursalDTO = sucursalesNegocio.buscarSucursalPorNombre(nombreSucursal);
-        if (sucursalDTO == null) {
-            JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        salasDTO.setSucursales(sucursalDTO);
-
-        salasNegocios.guardarSucursalesConSalas(salasDTO, nombreSucursal);
-        
-        JOptionPane.showMessageDialog(this, "Sala añadida exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        
-        jTextField1.setText("");
-        jTextField2.setText(""); 
-        jTextField4.setText("");
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Por favor, introduce un número válido en cantidad de asientos y minutos.", "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (NegocioException e) {
-        JOptionPane.showMessageDialog(this, "Error al guardar la sala: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Se ha producido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -153,7 +165,6 @@ salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -162,9 +173,11 @@ salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,6 +17,7 @@ public class Salas {
     int cantidadAsientos;
     LocalDateTime tiempoLimpieza;
     Sucursales sucursales;
+    Double CostoSugerido;
 
   
 
@@ -30,14 +31,24 @@ public class Salas {
         this.tiempoLimpieza = tiempoLimpieza;
     }
 
-    public Salas(int id, String nombre, int cantidadAsientos, Sucursales sucursales, LocalDateTime tiempoLimpieza) {
+    public Salas(int id, String nombre, int cantidadAsientos, LocalDateTime tiempoLimpieza, Sucursales sucursales, Double CostoSugerido) {
         this.id = id;
         this.nombre = nombre;
         this.cantidadAsientos = cantidadAsientos;
-        this.sucursales = sucursales;
         this.tiempoLimpieza = tiempoLimpieza;
+        this.sucursales = sucursales;
+        this.CostoSugerido = CostoSugerido;
     }
 
+    public Double getCostoSugerido() {
+        return CostoSugerido;
+    }
+
+    public void setCostoSugerido(Double CostoSugerido) {
+        this.CostoSugerido = CostoSugerido;
+    }
+
+   
     public Sucursales getSucursales() {
         return sucursales;
     }

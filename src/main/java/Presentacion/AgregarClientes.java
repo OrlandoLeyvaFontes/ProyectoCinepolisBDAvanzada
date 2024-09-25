@@ -6,6 +6,7 @@ package Presentacion;
 
 import Negocio.CiudadesNegocio;
 import Negocio.ClientesNegocio;
+import Negocio.ICiudadesNegocio;
 import Negocio.IClientesNegocios;
 import Persistencia.IClientesDAO;
 import Persistencia.PersistenciaException;
@@ -28,27 +29,20 @@ import java.time.LocalDate;
  */
 public class AgregarClientes extends javax.swing.JFrame {
 
-    private IClientesDAO clientesDAO;
-    private ConexionBD conexionBD;
-    private CiudadesNegocio ciudadesNegocio;
-    private ClientesNegocio clientesNegocios;
-    private CiudadesDAO ciudadesDAO;
+    private ICiudadesNegocio ciudadesNegocio;
+    private IClientesNegocios clientesNegocios;
 
     /**
      * Creates new form AñadirClientes
      */
-    public AgregarClientes(IClientesDAO clientesDAO, CiudadesNegocio ciudadesNegocio) {
-        conexionBD = new ConexionBD();
+    public AgregarClientes(ICiudadesNegocio ciudadesNegocio, IClientesNegocios clientesNegocios) {
+        this.ciudadesNegocio = ciudadesNegocio;
+        this.clientesNegocios = clientesNegocios;
 
-        this.clientesNegocios = new ClientesNegocio(clientesDAO, ciudadesNegocio);
-      ciudadesNegocio=new CiudadesNegocio(ciudadesDAO);
-      
-        this.clientesDAO = new ClientesDAO(conexionBD);
         initComponents();
     }
 
-    public AgregarClientes() {
-    }
+    
 
 //    private ClientesDTO crearClientesDTO() throws DateTimeParseException {
 //        String nombre = jTextField1.getText();
@@ -159,40 +153,40 @@ public class AgregarClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       try {
-        String nombre = jTextField1.getText();
-        String apellidoPaterno = jTextField2.getText();
-        String apellidoMaterno = jTextField3.getText();
-        String fechaNacimientoTexto = jTextField4.getText();
+        try {
+            String nombre = jTextField1.getText();
+            String apellidoPaterno = jTextField2.getText();
+            String apellidoMaterno = jTextField3.getText();
+            String fechaNacimientoTexto = jTextField4.getText();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoTexto, formatter);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoTexto, formatter);
 
-        LocalDateTime fechaNacimientoCompleta = fechaNacimiento.atStartOfDay();
+            LocalDateTime fechaNacimientoCompleta = fechaNacimiento.atStartOfDay();
 
-        String ciudad = jTextField5.getText();
-        String correo = jTextField6.getText();
-        String contraseña = jTextField7.getText();
+            String ciudad = jTextField5.getText();
+            String correo = jTextField6.getText();
+            String contraseña = jTextField7.getText();
 
-        ClientesDTO clientesDTO = new ClientesDTO();
-        clientesDTO.setNombre(nombre);
-        clientesDTO.setApellidoPaterno(apellidoPaterno);
-        clientesDTO.setApellidoMaterno(apellidoMaterno);
-        clientesDTO.setFechaNacimiento(fechaNacimientoCompleta); 
-        clientesDTO.setCorreo(correo);
-        clientesDTO.setContraseña(contraseña);
+            ClientesDTO clientesDTO = new ClientesDTO();
+            clientesDTO.setNombre(nombre);
+            clientesDTO.setApellidoPaterno(apellidoPaterno);
+            clientesDTO.setApellidoMaterno(apellidoMaterno);
+            clientesDTO.setFechaNacimiento(fechaNacimientoCompleta);
+            clientesDTO.setCorreo(correo);
+            clientesDTO.setContraseña(contraseña);
 
-        clientesNegocios.guardarClientesConCiudad(clientesDTO, ciudad); 
+            clientesNegocios.guardarClientesConCiudad(clientesDTO, ciudad);
 
-        JOptionPane.showMessageDialog(this, "Cliente guardado exitosamente.");
+            JOptionPane.showMessageDialog(this, "Cliente guardado exitosamente.");
 
-    } catch (DateTimeParseException e) {
-        JOptionPane.showMessageDialog(this, "Error en el formato de la fecha. Debe ser 'dd/MM/yyyy'.", "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (NegocioException e) {
-        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Error en el formato de la fecha. Debe ser 'dd/MM/yyyy'.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed

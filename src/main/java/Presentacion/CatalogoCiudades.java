@@ -5,6 +5,7 @@
 package Presentacion;
 
 import Negocio.CiudadesNegocio;
+import Negocio.ICiudadesNegocio;
 import Negocio.NegocioException;
 import Persistencia.CiudadesDAO;
 import Persistencia.ConexionBD;
@@ -28,16 +29,14 @@ import javax.swing.table.TableColumnModel;
  */
 public class CatalogoCiudades extends javax.swing.JFrame {
 
-    private CiudadesNegocio ciudadesNegocio;
-    private ConexionBD conexionBD;
+    private ICiudadesNegocio ciudadesNegocio;
 private int idCiudadSeleccionada = -1;
     /**
      * Creates new form CatalogoCiudades
      */
     public CatalogoCiudades() {
-        conexionBD = new ConexionBD();
 
-        this.ciudadesNegocio = new CiudadesNegocio(new CiudadesDAO(conexionBD));
+        this.ciudadesNegocio= ciudadesNegocio;
         initComponents();
                 cargarTablaCiudades();
   jTable1.addMouseListener(new MouseAdapter() {
@@ -228,10 +227,10 @@ private int idCiudadSeleccionada = -1;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-  this.setVisible(false);
-        MenuAdministrador administrador=new MenuAdministrador();
-administrador.setVisible(true);
-
+//  this.setVisible(false);
+//        MenuAdministrador administrador=new MenuAdministrador();
+//administrador.setVisible(true);
+//
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed

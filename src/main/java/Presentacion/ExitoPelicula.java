@@ -47,9 +47,9 @@ public class ExitoPelicula extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.setVisible(false);
-        MenuAdministrador menu = new MenuAdministrador();
-        menu.setVisible(true);
+//        this.setVisible(false);
+//        MenuAdministrador menu = new MenuAdministrador();
+//        menu.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

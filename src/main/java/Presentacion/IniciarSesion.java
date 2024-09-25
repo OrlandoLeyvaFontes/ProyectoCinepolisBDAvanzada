@@ -171,36 +171,35 @@ public class IniciarSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_txtContrasenaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String correo = txtCorreo.getText();
-        String contrasena = txtContrasena.getText();
-
-        // Validación de campos
-        if (correo.isEmpty() || contrasena.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor complete todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        try {
-            boolean sesionIniciada = clienteNegocio.iniciarSesion(correo, contrasena);
-            if (sesionIniciada) {
-                JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                SucursalesDisponibles sd = new SucursalesDisponibles();
-                sd.setVisible(true);
-                this.dispose(); // Cierra la ventana de inicio de sesión
-            }
-        } catch (NegocioException ex) {
-            Logger.getLogger(IniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Ocurrió un error en la autenticación", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        // Limpiar campos después del intento
-        txtCorreo.setText("");
-        txtContrasena.setText("");
+//        String correo = txtCorreo.getText();
+//        String contrasena = txtContrasena.getText();
+//
+//        // Validación de campos
+//        if (correo.isEmpty() || contrasena.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Por favor complete todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+//
+//        try {
+//            boolean sesionIniciada = clienteNegocio.iniciarSesion(correo, contrasena);
+//            if (sesionIniciada) {
+//                JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+//                SucursalesDisponibles sd = new SucursalesDisponibles();
+//                sd.setVisible(true);
+//                this.dispose(); // Cierra la ventana de inicio de sesión
+//            }
+//        } catch (NegocioException ex) {
+//            Logger.getLogger(IniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
+//            JOptionPane.showMessageDialog(this, "Ocurrió un error en la autenticación", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//
+//        // Limpiar campos después del intento
+//        txtCorreo.setText("");
+//        txtContrasena.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        AgregarClientes ac = new AgregarClientes();
-        ac.setVisible(true);
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
