@@ -18,7 +18,6 @@ public class Peliculas {
     String paisOrigen;
     String texto;
     String linkTrailer;
-    String rutaImagen;
 
     public Peliculas() {
     }
@@ -29,7 +28,7 @@ public class Peliculas {
         this.genero = genero;
     }
 
-    public Peliculas(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen) {
+    public Peliculas(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer) {
         this.titulo = titulo;
         this.clasificacion = clasificacion;
         this.genero = genero;
@@ -37,10 +36,9 @@ public class Peliculas {
         this.paisOrigen = paisOrigen;
         this.texto = texto;
         this.linkTrailer = linkTrailer;
-        this.rutaImagen = rutaImagen;
     }
 
-    public Peliculas(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
+    public Peliculas(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer) {
         this.id = id;
         this.titulo = titulo;
         this.clasificacion = clasificacion;
@@ -48,6 +46,7 @@ public class Peliculas {
         this.duracionMinutos = duracionMinutos;
         this.paisOrigen = paisOrigen;
         this.texto = texto;
+        this.linkTrailer = linkTrailer;
     }
 
     public int getId() {
@@ -112,14 +111,6 @@ public class Peliculas {
 
     public void setLinkTrailer(String linkTrailer) {
         this.linkTrailer = linkTrailer;
-    }
-
-    public String getRutaImagen() {
-        return rutaImagen;
-    }
-
-    public void setRutaImagen(String rutaImagen) {
-        this.rutaImagen = rutaImagen;
     }
 
 }

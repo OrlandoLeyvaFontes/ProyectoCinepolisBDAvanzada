@@ -4,6 +4,7 @@
  */
 package Presentacion;
 
+import Negocio.NegocioException;
 import Negocio.PeliculasNegocio;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
@@ -28,7 +29,7 @@ public class AgregarPeliculas extends javax.swing.JFrame {
         initComponents();
     }
 
-    private void agregarPelicula() throws PersistenciaException {
+    private void agregarPelicula() throws PersistenciaException, NegocioException {
         String titulo = jTextField1.getText();
         String genero = jTextField2.getText();
         int duracionMinutos = Integer.parseInt(jTextField3.getText());
@@ -38,12 +39,8 @@ public class AgregarPeliculas extends javax.swing.JFrame {
         String link=jTextField7.getText();
         PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, texto,link);
 
-        try {
-            peliculasNegocio.guardar(peliculaDTO);
-            JOptionPane.showMessageDialog(this, "Película guardada exitosamente.");
-        } catch (PersistenciaException e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar la película: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        peliculasNegocio.guardar(peliculaDTO);
+        JOptionPane.showMessageDialog(this, "Película guardada exitosamente.");
     }
 
     /**
@@ -138,6 +135,8 @@ public class AgregarPeliculas extends javax.swing.JFrame {
         try {
             agregarPelicula();
         } catch (PersistenciaException ex) {
+            Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NegocioException ex) {
             Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setVisible(false);

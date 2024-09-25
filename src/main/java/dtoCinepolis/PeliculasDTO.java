@@ -18,8 +18,20 @@ public class PeliculasDTO {
     String paisOrigen;
     String texto;
     String linkTrailer;
+    String rutaImagen;
 
     public PeliculasDTO() {
+    }
+
+    public PeliculasDTO(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen) {
+        this.titulo = titulo;
+        this.clasificacion = clasificacion;
+        this.genero = genero;
+        this.duracionMinutos = duracionMinutos;
+        this.paisOrigen = paisOrigen;
+        this.texto = texto;
+        this.linkTrailer = linkTrailer;
+        this.rutaImagen = rutaImagen;
     }
 
     public PeliculasDTO(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer) {
@@ -31,8 +43,9 @@ public class PeliculasDTO {
         this.texto = texto;
         this.linkTrailer = linkTrailer;
     }
+    
 
-    public PeliculasDTO(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
+    public PeliculasDTO(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen) {
         this.id = id;
         this.titulo = titulo;
         this.clasificacion = clasificacion;
@@ -40,6 +53,8 @@ public class PeliculasDTO {
         this.duracionMinutos = duracionMinutos;
         this.paisOrigen = paisOrigen;
         this.texto = texto;
+        this.linkTrailer = linkTrailer;
+        this.rutaImagen = rutaImagen;
     }
 
     public int getId() {
@@ -104,6 +119,14 @@ public class PeliculasDTO {
 
     public void setLinkTrailer(String linkTrailer) {
         this.linkTrailer = linkTrailer;
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
     }
 
 }

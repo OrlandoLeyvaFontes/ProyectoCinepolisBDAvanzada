@@ -7,6 +7,8 @@ package Negocio;
 import Entidad.Peliculas;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -14,6 +16,18 @@ import dtoCinepolis.PeliculasDTO;
  */
 public interface IPeliculasNegocio {
 
-    void guardar(PeliculasDTO peliculaDTO) throws PersistenciaException;
+    ArrayList<PeliculasDTO> leer() throws NegocioException;
+    public void guardar(PeliculasDTO peliculaDTO) throws NegocioException;
+    public void actualizar(PeliculasDTO peliculasDTO) throws NegocioException;
+    void eliminar(int id) throws NegocioException;
+    
+    
+//        ArrayList<PeliculasDTO> leer() throws PersistenciaException;
+//
+//    void guardar(Peliculas pelicula) throws PersistenciaException;
+//
+//    public void actualizar(Peliculas peliculas) throws PersistenciaException;
+//
+//    void elimiar(int id) throws PersistenciaException;
 
 }

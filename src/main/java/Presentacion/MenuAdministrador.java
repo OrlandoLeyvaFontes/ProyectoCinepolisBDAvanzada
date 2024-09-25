@@ -8,6 +8,7 @@ import Negocio.PeliculasNegocio;
 import Negocio.SucursalesNegocio;
 import Persistencia.ClientesDAO;
 import Persistencia.ConexionBD;
+import Persistencia.IPeliculasDAO;
 import Persistencia.PeliculasDAO;
 import Persistencia.SucursalDAO;
 
@@ -26,7 +27,8 @@ public class MenuAdministrador extends javax.swing.JFrame {
      */
     public MenuAdministrador() {
         conexionBD = new ConexionBD();
-        this.peliculasNegocio = new PeliculasNegocio(new PeliculasDAO(conexionBD));
+        IPeliculasDAO peliculasDAO = new PeliculasDAO(conexionBD);
+        this.peliculasNegocio = new PeliculasNegocio(conexionBD, peliculasDAO);
         initComponents();
     }
 
@@ -101,7 +103,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        CatalogoSucursales catalogoSucursales=new CatalogoSucursales();
+        CatalogoSucursales catalogoSucursales = new CatalogoSucursales();
         catalogoSucursales.setVisible(true);
 
         // TODO add your handling code here:
@@ -117,18 +119,16 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.setVisible(false);
-CatalogoClientes catalogoClientes =new CatalogoClientes();
+        CatalogoClientes catalogoClientes = new CatalogoClientes();
         catalogoClientes.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-this.setVisible(false);
-CatalogoSalas catalogoSalas=new CatalogoSalas();
-catalogoSalas.setVisible(true);
-
-
+        this.setVisible(false);
+        CatalogoSalas catalogoSalas = new CatalogoSalas();
+        catalogoSalas.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -160,6 +160,7 @@ catalogoSalas.setVisible(true);
         }
         //</editor-fold>
 
+<<<<<<< Updated upstream
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -168,6 +169,8 @@ catalogoSalas.setVisible(true);
         });
     }
 
+=======
+>>>>>>> Stashed changes
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
