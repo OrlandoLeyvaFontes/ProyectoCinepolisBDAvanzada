@@ -65,18 +65,30 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
     public void guardar(Peliculas pelicula) throws PersistenciaException {
-        String sql = "INSERT INTO Peliculas (titulo, clasificacion, genero, duracionMinutos, sinopsis, paisOrigen, linkTrailer, rutaImagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sql)) {            
-            prepared.setString(1, pelicula.getTitulo());
-            prepared.setString(2, pelicula.getClasificacion());
-            prepared.setString(3, pelicula.getGenero());
-            prepared.setInt(4, pelicula.getDuracionMinutos());
-            prepared.setString(5, pelicula.getSinopsis());
-            prepared.setString(6, pelicula.getPaisOrigen());
-            prepared.setString(7, pelicula.getLinkTrailer());
-            prepared.setString(8, pelicula.getRutaImagen());
-            prepared.executeUpdate();
+        Connection con = null;
+        try {
+            con = conexionBD.crearConexion();
+            String guardar = "INSERT INTO Peliculas (titulo, clasificacion, genero, duracionMinutos, sinopsis, paisOrigen, linkTrailer, rutaImagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement st = con.prepareStatement(guardar);
+
+            st.setString(1, pelicula.getTitulo());
+            st.setString(2, pelicula.getClasificacion());
+            st.setString(3, pelicula.getGenero());
+            st.setInt(4, pelicula.getDuracionMinutos());
+            st.setString(5, pelicula.getSinopsis());
+            st.setString(6, pelicula.getPaisOrigen());
+            st.setString(7, pelicula.getLinkTrailer());
+            st.setString(8, pelicula.getRutaImagen());
+            int resultado = st.executeUpdate();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Película editada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró una película con ese ID.");
+            }
+            st.close();
+            con.close();
             JOptionPane.showMessageDialog(null, "Película guardada exitosamente.");
+
         } catch (SQLException e) {
             // Agregar información sobre el error SQL
             throw new PersistenciaException("Error al guardar la pelicula: " + e.getMessage(), e);
@@ -85,19 +97,30 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
     public void actualizar(Peliculas peliculas) throws PersistenciaException {
-        String consulta = "UPDATE peliculas SET titulo = ?, clasificacion = ?, genero = ?, duracionMinutos = ?, sinopsis = ?, duracionMinutos = ?, linkTrailer = ?, rutaImagen = ? WHERE id = ?";
+        Connection con = null;
+        try {
+            con = conexionBD.crearConexion();
+            String editar = "UPDATE peliculas SET titulo = ?, clasificacion = ?, genero = ?, duracionMinutos = ?, sinopsis = ?, paisOrigen = ?, linkTrailer = ?, rutaImagen = ? WHERE id = ?";
+            PreparedStatement st = con.prepareStatement(editar);
+            st.setString(1, peliculas.getTitulo());
+            st.setString(2, peliculas.getClasificacion());
+            st.setString(3, peliculas.getGenero());
+            st.setInt(4, peliculas.getDuracionMinutos());
+            st.setString(5, peliculas.getSinopsis());
+            st.setString(6, peliculas.getPaisOrigen());  // Ahora actualiza correctamente paisOrigen
+            st.setString(7, peliculas.getLinkTrailer());
+            st.setString(8, peliculas.getRutaImagen());
+            st.setInt(9, peliculas.getId());
 
-        try (Connection connection = conexionBD.crearConexion(); PreparedStatement stmt = connection.prepareStatement(consulta)) {
-            stmt.setString(1, peliculas.getTitulo());
-            stmt.setString(2, peliculas.getClasificacion());
-            stmt.setString(3, peliculas.getGenero());
-            stmt.setInt(4, peliculas.getDuracionMinutos());
-            stmt.setString(5, peliculas.getTitulo());
-            stmt.setString(6, peliculas.getPaisOrigen());
-            stmt.setString(7, peliculas.getLinkTrailer());
-            stmt.setString(8, peliculas.getRutaImagen()); 
-            stmt.setInt(9, peliculas.getId());
-            stmt.executeUpdate();
+            int resultado = st.executeUpdate();
+
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Película editada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró una película con ese ID.");
+            }
+            st.close();
+            con.close();
         } catch (SQLException e) {
             throw new PersistenciaException("Error al actualizar la pelicula: " + e.getMessage(), e);
         }
@@ -116,6 +139,11 @@ public class PeliculasDAO implements IPeliculasDAO {
             st.setBoolean(1, true);
             st.setInt(2, id);
             int resultado = st.executeUpdate();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Película editada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró una película con ese ID.");
+            }
             st.close();
             con.close();
         } catch (SQLException ex) {

@@ -166,7 +166,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         this.setVisible(false);
-        EliminarPelicula ep = new EliminarPelicula(peliculasNegocio);
+        eliminarPelicula ep = new eliminarPelicula(peliculasNegocio);
         ep.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 

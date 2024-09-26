@@ -8,6 +8,8 @@ import Negocio.NegocioException;
 import Negocio.PeliculasNegocio;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,51 +26,24 @@ public class modificarPelicula extends javax.swing.JFrame {
         initComponents();
     }
 
-    private void modificarPelicula() {
-        try {
-            int idPelicula = Integer.parseInt(txtID.getText());
-            String titulo = txtTitulo.getText();
-            String clasificacion = txtClasificacion.getText();
-            String genero = txtGenero.getText();
-            int duracionMinutos = Integer.parseInt(txtDuracion.getText());
-            String sinopsis = txtSinopsis.getText();
-            String paisOrigen = txtOrigen.getText();            
-            String linkTrailer = txtLinkTrailer.getText();
-            String rutaImagen = txtRutaImagen.getText();
-            
-            // Crear el objeto DTO
-            PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, sinopsis, linkTrailer, rutaImagen);
+    private void modificarPelicula() throws NegocioException {
+        int idPelicula = Integer.parseInt(txtID.getText());
+        String titulo = txtTitulo.getText();
+        String clasificacion = txtClasificacion.getText();
+        String genero = txtGenero.getText();
+        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
+        String sinopsis = txtSinopsis.getText();
+        String paisOrigen = txtOrigen.getText();        
+        String linkTrailer = txtLinkTrailer.getText();
+    String rutaImagen = txtRutaImagen.getText();
 
-            // Llama al método en la capa de negocio para actualizar
-            peliculasNegocio.actualizar(peliculaDTO);
+        // Crear el objeto DTO
+        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, sinopsis, linkTrailer, rutaImagen);
+        peliculaDTO.setId(idPelicula);
 
-            // Mostrar mensaje de éxito
-            JOptionPane.showMessageDialog(this, "Película actualizada exitosamente.");
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Error: Por favor ingresa números válidos en los campos correspondientes.", "Error de formato", JOptionPane.ERROR_MESSAGE);
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al actualizar la película: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private boolean validarCampos() {
-        if (txtTitulo.getText().isEmpty() || txtGenero.getText().isEmpty()
-                || txtDuracion.getText().isEmpty() || txtClasificacion.getText().isEmpty()
-                || txtOrigen.getText().isEmpty() || txtSinopsis.getText().isEmpty()
-                || txtLinkTrailer.getText().isEmpty() || txtRutaImagen.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, rellena todos los campos.");
-            return false;
-        }
-
-        try {
-            Integer.parseInt(txtDuracion.getText()); // Validar que la duración sea un número
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "La duración debe ser un número.");
-            return false;
-        }
-
-        return true;
+        // Llama al método en la capa de negocio para actualizar
+        peliculasNegocio.actualizar(peliculaDTO);
+        
     }
 
     /**
@@ -298,8 +273,14 @@ public class modificarPelicula extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (validarCampos()) {
-            modificarPelicula();  // Llama al método para modificar la película
+        try {
+            modificarPelicula();
+        } catch (NegocioException ex) {
+            Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error de negocio: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
+            // Captura la excepción si hay un error en el formato de la duración
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para la duración.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

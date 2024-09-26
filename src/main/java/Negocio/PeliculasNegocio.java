@@ -25,10 +25,6 @@ public class PeliculasNegocio implements IPeliculasNegocio {
 
     @Override
     public void guardar(PeliculasDTO peliculaDTO) throws NegocioException {
-        if (peliculaDTO.getRutaImagen() == null || peliculaDTO.getRutaImagen().isEmpty()) {
-            throw new NegocioException("La ruta de la imagen no puede estar vacía.");
-        }
-
         try (Connection cn = conexionBD.crearConexion()) {
             cn.setAutoCommit(false);
 

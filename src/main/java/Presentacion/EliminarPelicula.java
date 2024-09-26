@@ -6,34 +6,31 @@ package Presentacion;
 
 import Negocio.NegocioException;
 import Negocio.PeliculasNegocio;
+import Persistencia.PersistenciaException;
+import dtoCinepolis.PeliculasDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author rober
  */
-public class EliminarPelicula extends javax.swing.JFrame {
+public class eliminarPelicula extends javax.swing.JFrame {
 
     private PeliculasNegocio peliculasNegocio;
 
     /**
      * Creates new form EliminarPelicula
      */
-    public EliminarPelicula(PeliculasNegocio peliculasNegocio) {
+    public eliminarPelicula(PeliculasNegocio peliculasNegocio) {
         this.peliculasNegocio = peliculasNegocio;
         initComponents();
     }
 
-    public void eliminarPelicula() {
-        try {
-            int idPelicula = Integer.parseInt(txtID.getText());
-            peliculasNegocio.eliminar(idPelicula);
-            JOptionPane.showMessageDialog(this, "Película eliminada exitosamente.");
-
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al actualizar la película: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
+    public void eliminarPelicula() throws NegocioException {
+        int idPelicula = Integer.parseInt(txtID.getText());
+        peliculasNegocio.eliminar(idPelicula);
     }
 
     private boolean validarCampos() {
@@ -125,8 +122,14 @@ public class EliminarPelicula extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (validarCampos()) {
+        try {
             eliminarPelicula();
+        } catch (NegocioException ex) {
+            Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error de negocio: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
+            // Captura la excepción si hay un error en el formato de la duración
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para el id.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
