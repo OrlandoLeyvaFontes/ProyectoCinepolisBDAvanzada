@@ -11,7 +11,6 @@ import Negocio.IClientesNegocios;
 import Persistencia.CiudadesDAO;
 import Persistencia.ClientesDAO;
 import Persistencia.ConexionBD;
-import Presentacion.MenuAdministrador.Negocios;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,16 +18,15 @@ import javax.swing.JOptionPane;
  * @author Oley
  */
 public class CatalogoClientes extends javax.swing.JFrame {
-  private  Negocios negocios;
     private ICiudadesNegocio ciudadesNegocio;
     private IClientesNegocios clientesNegocios;
-
+ private ConexionBD conexionBD;
     /**
      * Creates new form CatalogoClientes
      */
-    public CatalogoClientes(Negocios negocios) {
-       this.negocios=negocios;
-        initComponents();
+    public CatalogoClientes() {
+conexionBD = new ConexionBD();
+initComponents();
     }
 
     /**

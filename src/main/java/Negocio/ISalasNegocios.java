@@ -6,6 +6,7 @@ package Negocio;
 
 import dtoCinepolis.SalaFiltroTablaDTO;
 import dtoCinepolis.SalasDTO;
+import dtoCinepolis.SalasFiltroTablaDTO;
 import dtoCinepolis.SalasTablaDTO;
 import dtoCinepolis.SucursalesDTO;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 public interface ISalasNegocios {
     void guardarSucursalesConSalas(SalasDTO salasDTO , String nombre ) throws NegocioException;
     
-    List<SalasTablaDTO> buscarSalaTabla(SalaFiltroTablaDTO filtro) throws NegocioException;
+     List<SalasTablaDTO> buscarSalaTabla(SalaFiltroTablaDTO filtro) throws NegocioException;
     
     void editar(SalasDTO salasDTO) throws NegocioException;
     

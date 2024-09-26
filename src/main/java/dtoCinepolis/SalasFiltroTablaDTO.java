@@ -22,6 +22,10 @@ public class SalasFiltroTablaDTO {
         this.filtro = filtro;
     }
 
+    public SalasFiltroTablaDTO(int limit) {
+        this.limit = limit;
+    }
+
     public int getLimit() {
         return limit;
     }

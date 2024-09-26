@@ -10,9 +10,12 @@ import Persistencia.PersistenciaException;
 import Persistencia.SalasDAO;
 import dtoCinepolis.SalaFiltroTablaDTO;
 import dtoCinepolis.SalasDTO;
+import dtoCinepolis.SalasFiltroTablaDTO;
 import dtoCinepolis.SalasTablaDTO;
 import dtoCinepolis.SucursalesDTO;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -125,17 +128,24 @@ public class SalasNegocios implements ISalasNegocios {
 
     @Override
     public List<SalasTablaDTO> buscarSalaTabla(SalaFiltroTablaDTO filtro) throws NegocioException {
-        try {
-            List<SalasTablaDTO> salasLista = salasDAO.buscarSalaTabla(filtro);
-            if (salasLista == null) {
-                throw new NegocioException("No se encontraron registros con los filtros");
-
-            }
-            return salasLista;
-        } catch (PersistenciaException e) {
-            throw new NegocioException(e.getMessage());
-
-        }
-
+      if (filtro == null) {
+        throw new NegocioException("El filtro recibido es null");
     }
+
+    List<SalasTablaDTO> salasLista = null;  
+
+    try {
+        salasLista = salasDAO.buscarSalaTabla(filtro);
+    } catch (PersistenciaException ex) {
+        Logger.getLogger(SalasNegocios.class.getName()).log(Level.SEVERE, null, ex);
+        throw new NegocioException("Error al buscar las salas con el filtro", ex); // Lanza la excepción
+    }
+
+    if (salasLista == null || salasLista.isEmpty()) {
+        throw new NegocioException("No se encontraron registros con los filtros");
+    }
+
+    return salasLista;
+    }
+    
 }

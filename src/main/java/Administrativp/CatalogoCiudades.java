@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Presentacion;
+package Administrativp;
 
 import Negocio.CiudadesNegocio;
 import Negocio.ICiudadesNegocio;
 import Negocio.NegocioException;
 import Persistencia.CiudadesDAO;
 import Persistencia.ConexionBD;
+import Presentacion.OpcionesCiudades;
 import dtoCinepolis.CuidadFiltroTablaDTO;
 import dtoCinepolis.CuidadTablaDTO;
 import java.util.List;
@@ -34,9 +35,9 @@ private int idCiudadSeleccionada = -1;
     /**
      * Creates new form CatalogoCiudades
      */
-    public CatalogoCiudades() {
+    public CatalogoCiudades(ICiudadesNegocio ciudadesNegocio) {
 
-        this.ciudadesNegocio= ciudadesNegocio;
+          this.ciudadesNegocio = ciudadesNegocio; 
         initComponents();
                 cargarTablaCiudades();
   jTable1.addMouseListener(new MouseAdapter() {

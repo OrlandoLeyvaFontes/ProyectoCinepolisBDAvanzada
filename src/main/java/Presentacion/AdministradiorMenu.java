@@ -6,21 +6,24 @@ package Presentacion;
 
 import Negocio.ICiudadesNegocio;
 import Negocio.IClientesNegocios;
-import Presentacion.MenuAdministrador.Negocios;
+import Negocio.PeliculasNegocio;
+import Negocio.SucursalesNegocio;
+import Persistencia.ConexionBD;
 
 /**
  *
  * @author Oley
  */
 public class AdministradiorMenu extends javax.swing.JFrame {
-private Negocios negocios;
- private ICiudadesNegocio ciudadesNegocio;
-    private IClientesNegocios clientesNegocios;  
+ 
+    private PeliculasNegocio peliculasNegocio;
+    private ConexionBD conexionBD;
+    private SucursalesNegocio sucursalesNegocios;
+
     /**
      * Creates new form AdministradiorMenu
      */
     public AdministradiorMenu() {
-        this.negocios=negocios;
         initComponents();
     }
 
@@ -80,7 +83,7 @@ private Negocios negocios;
 if(nombre.equals("admin")&& contraseña.equals("admin")){
             javax.swing.JOptionPane.showMessageDialog(this, "Acceso concedido");
 this.setVisible(false);
-MenuAdministrador menuAdministrador=new MenuAdministrador(negocios);
+MenuAdministrador menuAdministrador=new MenuAdministrador(peliculasNegocio);
 menuAdministrador.setVisible(true);
 }else{
             javax.swing.JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos");

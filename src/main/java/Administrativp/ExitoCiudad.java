@@ -2,14 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Presentacion;
+package Administrativp;
+
+import Negocio.ICiudadesNegocio;
 
 /**
  *
  * @author Oley
  */
 public class ExitoCiudad extends javax.swing.JFrame {
-
+private  ICiudadesNegocio ciudadesNegocio;
     /**
      * Creates new form ExitoCiudad
      */
@@ -47,10 +49,10 @@ public class ExitoCiudad extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//this.setVisible(false);
-//        MenuAdministrador administrador=new MenuAdministrador();
-//administrador.setVisible(true);
-//
+this.setVisible(false);
+        Amdministrador administrador=new Amdministrador(ciudadesNegocio);
+administrador.setVisible(true);
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -149,7 +149,7 @@ public class AgregarSalas extends javax.swing.JFrame {
             jTextField2.setText("");
             jTextField4.setText("");
             this.setVisible(false);
-            CatalogoSalas catalogoSalas=new CatalogoSalas();
+            CatalogoSalas catalogoSalas=new CatalogoSalas(salasNegocios);
             catalogoSalas.setVisible(true);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Por favor, introduce un número válido en cantidad de asientos y minutos.", "Error", JOptionPane.ERROR_MESSAGE);

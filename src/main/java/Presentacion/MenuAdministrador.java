@@ -4,13 +4,18 @@
  */
 package Presentacion;
 
+import Administrativp.CatalogoCiudades;
 import Negocio.ICiudadesNegocio;
 import Negocio.IClientesNegocios;
 import Negocio.IPeliculasNegocio;
+import Negocio.ISalasNegocios;
 import Negocio.ISucursalesNegocio;
 import Negocio.PeliculasNegocio;
+import Negocio.SalasNegocios;
 import Negocio.SucursalesNegocio;
 import Persistencia.ClientesDAO;
+import Persistencia.ConexionBD;
+import Persistencia.PeliculasDAO;
 import Persistencia.SucursalDAO;
 import static com.sun.source.util.DocTrees.instance;
 import static com.sun.source.util.Trees.instance;
@@ -21,34 +26,15 @@ import static com.sun.source.util.Trees.instance;
  */
 public class MenuAdministrador extends javax.swing.JFrame {
 
-//    private IPeliculasNegocio peliculasNegocio;
-//    private ISucursalesNegocio sucursalesNegocios;
-// private ICiudadesNegocio ciudadesNegocio;
-//    private IClientesNegocios clientesNegocios;    /**
-    private Negocios negocios;
-    private static MenuAdministrador instance;
-
-    public MenuAdministrador(Negocios negocios) {
-        this.negocios = negocios;
+    private PeliculasNegocio peliculasNegocio;
+    private ConexionBD conexionBD;
+    private SucursalesNegocio sucursalesNegocios;
+private SalasNegocios salasNegocios;
+private ICiudadesNegocio ciudadesNegocio;
+    public MenuAdministrador(PeliculasNegocio peliculasNegocio) {
+        conexionBD = new ConexionBD();
+        this.peliculasNegocio = new PeliculasNegocio(new PeliculasDAO(conexionBD));
         initComponents();
-    }
-public static MenuAdministrador getInstance(Negocios negocios) {
-        if (instance == null) {
-            instance = new MenuAdministrador(negocios);
-        }
-        return instance;
-    }
-    public static class Negocios {
-
-        public IPeliculasNegocio peliculasNegocio;
-        public ISucursalesNegocio sucursalesNegocios;
-        public ICiudadesNegocio ciudadesNegocio;
-        public IClientesNegocios clientesNegocios;
-
-        public Negocios(IClientesNegocios clientesNegocios, ICiudadesNegocio ciudadesNegocio) {
-            this.ciudadesNegocio = ciudadesNegocio;
-            this.clientesNegocios = clientesNegocios;
-        }
     }
 
     /**
@@ -130,7 +116,7 @@ public static MenuAdministrador getInstance(Negocios negocios) {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.setVisible(false);
-        CatalogoCiudades catalogo = new CatalogoCiudades();
+        CatalogoCiudades catalogo = new CatalogoCiudades(ciudadesNegocio);
         catalogo.setVisible(true);
 
         // TODO add your handling code here:
@@ -138,7 +124,7 @@ public static MenuAdministrador getInstance(Negocios negocios) {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.setVisible(false);
-        CatalogoClientes catalogoClientes = new CatalogoClientes(negocios);
+        CatalogoClientes catalogoClientes = new CatalogoClientes();
         catalogoClientes.setVisible(true);
 
         // TODO add your handling code here:
@@ -146,7 +132,7 @@ public static MenuAdministrador getInstance(Negocios negocios) {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         this.setVisible(false);
-        CatalogoSalas catalogoSalas = new CatalogoSalas();
+        CatalogoSalas catalogoSalas = new CatalogoSalas(salasNegocios);
         catalogoSalas.setVisible(true);
 
         // TODO add your handling code here:
