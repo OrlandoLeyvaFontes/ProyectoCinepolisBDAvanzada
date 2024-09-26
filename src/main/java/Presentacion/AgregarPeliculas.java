@@ -6,6 +6,7 @@ package Presentacion;
 
 import Negocio.NegocioException;
 import Negocio.PeliculasNegocio;
+import Persistencia.PeliculasDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
 import java.util.logging.Level;
@@ -20,27 +21,42 @@ public class AgregarPeliculas extends javax.swing.JFrame {
 
     private PeliculasNegocio peliculasNegocio;
 
-    /**
-     * Creates new form AñadirPeliculas
-     */
     public AgregarPeliculas(PeliculasNegocio peliculasNegocio) {
         this.peliculasNegocio = peliculasNegocio;
-
         initComponents();
     }
 
     private void agregarPelicula() throws PersistenciaException, NegocioException {
-        String titulo = jTextField1.getText();
-        String genero = jTextField2.getText();
-        int duracionMinutos = Integer.parseInt(jTextField3.getText());
-        String clasificacion = jTextField5.getText();
-        String paisOrigen = jTextField4.getText();
-        String texto = jTextField6.getText();
-        String link=jTextField7.getText();
-        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, texto,link);
+        String titulo = txtTitulo.getText();
+        String genero = txtGenero.getText();
+        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
+        String clasificacion = txtClasificacion.getText();
+        String paisOrigen = txtOrigen.getText();
+        String texto = txtSinopsis.getText();
+        String link = txtLinkTrailer.getText();
+        String rutaImagen = txtRutaImagen.getText();
+
+        // Verificar que la ruta de la imagen no esté vacía
+        if (rutaImagen == null || rutaImagen.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La ruta de la imagen no puede estar vacía.");
+            return; // Salir del método si la ruta está vacía
+        }
+
+        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, texto, link, rutaImagen);
 
         peliculasNegocio.guardar(peliculaDTO);
         JOptionPane.showMessageDialog(this, "Película guardada exitosamente.");
+    }
+
+    private void limpiarCampos() {
+        txtTitulo.setText("");
+        txtGenero.setText("");
+        txtDuracion.setText("");
+        txtOrigen.setText("");
+        txtClasificacion.setText("");
+        txtSinopsis.setText("");
+        txtLinkTrailer.setText("");
+        txtRutaImagen.setText("");
     }
 
     /**
@@ -54,21 +70,23 @@ public class AgregarPeliculas extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTitulo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtGenero = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtDuracion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtOrigen = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtClasificacion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtSinopsis = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        txtLinkTrailer = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtRutaImagen = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -78,27 +96,27 @@ public class AgregarPeliculas extends javax.swing.JFrame {
 
         jLabel2.setText("titulo:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 250, -1));
+        getContentPane().add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 250, -1));
 
         jLabel3.setText("Genero:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 82, 250, 30));
+        getContentPane().add(txtGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 82, 250, 30));
 
         jLabel4.setText("Duracion:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 122, 250, 30));
+        getContentPane().add(txtDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 122, 250, 30));
 
         jLabel5.setText("Origen:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 162, 250, 30));
+        getContentPane().add(txtOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 162, 250, 30));
 
         jLabel6.setText("Clasificacion:");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 240, 30));
+        getContentPane().add(txtClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 240, 30));
 
         jLabel7.setText("Sipnosis:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, -1));
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 242, 250, 30));
+        getContentPane().add(txtSinopsis, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 242, 250, 30));
 
         jButton1.setText("Regresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +124,7 @@ public class AgregarPeliculas extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, -1));
 
         jButton2.setText("Continuar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -114,11 +132,21 @@ public class AgregarPeliculas extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 360, -1, -1));
 
         jLabel8.setText("Link trailer:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, -1));
-        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 282, 230, 30));
+        getContentPane().add(txtLinkTrailer, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 282, 230, 30));
+
+        jLabel9.setText("Ruta Imagen");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, -1, -1));
+
+        txtRutaImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRutaImagenActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtRutaImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 230, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -127,28 +155,31 @@ public class AgregarPeliculas extends javax.swing.JFrame {
         this.setVisible(false);
         MenuAdministrador menu = new MenuAdministrador();
         menu.setVisible(true);
-
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            agregarPelicula();
+            agregarPelicula(); // Llama al método que agrega la película
+            // Si se agrega correctamente, puedes mostrar un mensaje o realizar alguna otra acción
+            this.setVisible(false); // Oculta la ventana actual
+            ExitoPelicula exito = new ExitoPelicula(); // Crea una instancia de la ventana de éxito
+            exito.setVisible(true); // Muestra la ventana de éxito
         } catch (PersistenciaException ex) {
             Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error al guardar la película: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (NegocioException ex) {
             Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error de negocio: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
+            // Captura la excepción si hay un error en el formato de la duración
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para la duración.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
         }
-        this.setVisible(false);
-        ExitoPelicula exito = new ExitoPelicula();
-        exito.setVisible(true);
-
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void txtRutaImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaImagenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRutaImagenActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -161,12 +192,14 @@ public class AgregarPeliculas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField txtClasificacion;
+    private javax.swing.JTextField txtDuracion;
+    private javax.swing.JTextField txtGenero;
+    private javax.swing.JTextField txtLinkTrailer;
+    private javax.swing.JTextField txtOrigen;
+    private javax.swing.JTextField txtRutaImagen;
+    private javax.swing.JTextField txtSinopsis;
+    private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

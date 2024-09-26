@@ -10,17 +10,26 @@ package dtoCinepolis;
  */
 public class PeliculasDTO {
 
-    int id;
-    String titulo;
-    String clasificacion;
-    String genero;
-    int duracionMinutos;
-    String paisOrigen;
-    String texto;
-    String linkTrailer;
-    String rutaImagen;
+    private int id;
+    private String titulo;
+    private String clasificacion;
+    private String genero;
+    private int duracionMinutos;
+    private String paisOrigen;
+    private String texto;
+    private String linkTrailer;
+    private String rutaImagen;
+    private boolean estaEliminado;
 
     public PeliculasDTO() {
+    }
+
+    public PeliculasDTO(int id) {
+        this.id = id;
+    }
+
+    public PeliculasDTO(String titulo) {
+        this.titulo = titulo;
     }
 
     public PeliculasDTO(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen) {
@@ -34,7 +43,7 @@ public class PeliculasDTO {
         this.rutaImagen = rutaImagen;
     }
 
-    public PeliculasDTO(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer) {
+    public PeliculasDTO(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen, boolean estaEliminado) {
         this.titulo = titulo;
         this.clasificacion = clasificacion;
         this.genero = genero;
@@ -42,8 +51,9 @@ public class PeliculasDTO {
         this.paisOrigen = paisOrigen;
         this.texto = texto;
         this.linkTrailer = linkTrailer;
+        this.rutaImagen = rutaImagen;
+        this.estaEliminado = estaEliminado;
     }
-    
 
     public PeliculasDTO(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen) {
         this.id = id;
@@ -57,16 +67,29 @@ public class PeliculasDTO {
         this.rutaImagen = rutaImagen;
     }
 
+    public PeliculasDTO(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen, boolean estaEliminado) {
+        this.id = id;
+        this.titulo = titulo;
+        this.clasificacion = clasificacion;
+        this.genero = genero;
+        this.duracionMinutos = duracionMinutos;
+        this.paisOrigen = paisOrigen;
+        this.texto = texto;
+        this.linkTrailer = linkTrailer;
+        this.rutaImagen = rutaImagen;
+        this.estaEliminado = estaEliminado;
+    }
+
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
-        this.id = this.id;
+        this.id = id;
     }
 
     public String getTitulo() {
-        return this.titulo;
+        return titulo;
     }
 
     public void setTitulo(String titulo) {
@@ -74,7 +97,7 @@ public class PeliculasDTO {
     }
 
     public String getClasificacion() {
-        return this.clasificacion;
+        return clasificacion;
     }
 
     public void setClasificacion(String clasificacion) {
@@ -82,7 +105,7 @@ public class PeliculasDTO {
     }
 
     public String getGenero() {
-        return this.genero;
+        return genero;
     }
 
     public void setGenero(String genero) {
@@ -90,7 +113,7 @@ public class PeliculasDTO {
     }
 
     public int getDuracionMinutos() {
-        return this.duracionMinutos;
+        return duracionMinutos;
     }
 
     public void setDuracionMinutos(int duracionMinutos) {
@@ -98,7 +121,7 @@ public class PeliculasDTO {
     }
 
     public String getPaisOrigen() {
-        return this.paisOrigen;
+        return paisOrigen;
     }
 
     public void setPaisOrigen(String paisOrigen) {
@@ -106,7 +129,7 @@ public class PeliculasDTO {
     }
 
     public String getTexto() {
-        return this.texto;
+        return texto;
     }
 
     public void setTexto(String texto) {
@@ -127,6 +150,14 @@ public class PeliculasDTO {
 
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
+    }
+
+    public boolean isEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
     }
 
 }

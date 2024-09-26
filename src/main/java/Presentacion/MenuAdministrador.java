@@ -11,6 +11,8 @@ import Persistencia.ConexionBD;
 import Persistencia.IPeliculasDAO;
 import Persistencia.PeliculasDAO;
 import Persistencia.SucursalDAO;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,10 +28,15 @@ public class MenuAdministrador extends javax.swing.JFrame {
      * Creates new form MenuAdministrador
      */
     public MenuAdministrador() {
-        conexionBD = new ConexionBD();
-        IPeliculasDAO peliculasDAO = new PeliculasDAO(conexionBD);
-        this.peliculasNegocio = new PeliculasNegocio(conexionBD, peliculasDAO);
-        initComponents();
+        try {
+            conexionBD = new ConexionBD();
+            IPeliculasDAO peliculasDAO = new PeliculasDAO(conexionBD);
+            this.peliculasNegocio = new PeliculasNegocio(conexionBD, peliculasDAO);
+            initComponents();
+        } catch (SQLException ex) {
+            ex.printStackTrace(); // Imprime el error en la consola
+            JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -46,6 +53,8 @@ public class MenuAdministrador extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -56,7 +65,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 131, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
 
         jButton2.setText("Catalogo Sucursales");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +89,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
 
         jButton5.setText("Catalogo Salas");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -88,7 +97,23 @@ public class MenuAdministrador extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, -1, -1));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, -1, -1));
+
+        jButton6.setText("Editar Peliculas");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+
+        jButton7.setText("Eliminar Pelicula");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -133,49 +158,37 @@ public class MenuAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        this.setVisible(false);
+        modificarPelicula mp = new modificarPelicula(peliculasNegocio);
+        mp.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
-<<<<<<< Updated upstream
-        /* Create and display the form */
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        this.setVisible(false);
+        EliminarPelicula ep = new EliminarPelicula(peliculasNegocio);
+        ep.setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    public static void main(String[] args) {
+        // Ejecutar el formulario del menú administrador en el hilo de la interfaz gráfica (Event Dispatch Thread)
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuAdministrador().setVisible(true);
+                // Crear y mostrar el formulario del menú administrador
+                MenuAdministrador menu = new MenuAdministrador();
+                menu.setVisible(true);  // Hacer visible el JFrame
+                menu.setLocationRelativeTo(null);  // Centrar la ventana
             }
         });
     }
 
-=======
->>>>>>> Stashed changes
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     // End of variables declaration//GEN-END:variables
 }

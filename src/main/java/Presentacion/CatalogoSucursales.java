@@ -15,12 +15,12 @@ import javax.swing.JOptionPane;
  * @author Oley
  */
 public class CatalogoSucursales extends javax.swing.JFrame {
-   
+
     /**
      * Creates new form CatalogoSucursales
      */
     public CatalogoSucursales() {
-  initComponents();
+        initComponents();
     }
 
     /**
@@ -93,26 +93,22 @@ public class CatalogoSucursales extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-this.setVisible(false);
-AgregarSucursales añadirSucursales=new AgregarSucursales();
-añadirSucursales.setVisible(true);
-        
-        
-        
-        
+        this.setVisible(false);
+        AgregarSucursales añadirSucursales = new AgregarSucursales();
+        añadirSucursales.setVisible(true);
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-this.setVisible(false);
-MenuAdministrador menuAdministrador=new MenuAdministrador();
-menuAdministrador.setVisible(true);
-
+        this.setVisible(false);
+        MenuAdministrador menuAdministrador = new MenuAdministrador();
+        menuAdministrador.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

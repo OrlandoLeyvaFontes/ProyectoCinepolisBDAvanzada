@@ -10,43 +10,18 @@ package Entidad;
  */
 public class Peliculas {
 
-    int id;
-    String titulo;
-    String clasificacion;
-    String genero;
-    int duracionMinutos;
-    String paisOrigen;
-    String texto;
-    String linkTrailer;
+    private int id;
+    private String titulo;
+    private String clasificacion;
+    private String genero;
+    private int duracionMinutos;
+    private String paisOrigen;
+    private String texto;
+    private String linkTrailer;
+    private String rutaImagen;
+    private boolean estaEliminado = false;
 
     public Peliculas() {
-    }
-
-    public Peliculas(String titulo, String clasificacion, String genero) {
-        this.titulo = titulo;
-        this.clasificacion = clasificacion;
-        this.genero = genero;
-    }
-
-    public Peliculas(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer) {
-        this.titulo = titulo;
-        this.clasificacion = clasificacion;
-        this.genero = genero;
-        this.duracionMinutos = duracionMinutos;
-        this.paisOrigen = paisOrigen;
-        this.texto = texto;
-        this.linkTrailer = linkTrailer;
-    }
-
-    public Peliculas(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer) {
-        this.id = id;
-        this.titulo = titulo;
-        this.clasificacion = clasificacion;
-        this.genero = genero;
-        this.duracionMinutos = duracionMinutos;
-        this.paisOrigen = paisOrigen;
-        this.texto = texto;
-        this.linkTrailer = linkTrailer;
     }
 
     public int getId() {
@@ -111,6 +86,22 @@ public class Peliculas {
 
     public void setLinkTrailer(String linkTrailer) {
         this.linkTrailer = linkTrailer;
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
+    }
+
+    public boolean isEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
     }
 
 }
