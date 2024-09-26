@@ -137,9 +137,7 @@ public class CatalogoFunciones extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
-        AgregarFunciones agregar = new AgregarFunciones();
-        agregar.setVisible(true);
-        this.dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
     /**
