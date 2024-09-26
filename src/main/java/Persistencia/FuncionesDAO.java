@@ -60,7 +60,6 @@ public class FuncionesDAO implements IFuncionesDAO {
                     rs.getString("nombre"),
                     rs.getInt("costo"),
                     rs.getObject("horaInicio", LocalTime.class),
-                    rs.getInt("salas"), 
                     rs.getBoolean("estaEliminado")
                 );
             }

@@ -19,17 +19,25 @@ public class FuncionesDTO {
     boolean estaEliminado;
     Salas salas;
 
+    public FuncionesDTO(String nombre, int costo, LocalTime horaInicio, boolean estaEliminado) {
+        this.nombre = nombre;
+        this.costo = costo;
+        this.horaInicio = horaInicio;
+        this.estaEliminado = estaEliminado;
+    }
+    
     public FuncionesDTO(String nombre, int costo, LocalTime horaInicio, boolean estaEliminado, Salas salas) {
         this.nombre = nombre;
         this.costo = costo;
         this.horaInicio = horaInicio;
         this.estaEliminado = estaEliminado;
-        this.salas = salas;
+        this.salas=salas;
     }
-
-    public FuncionesDTO() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public FuncionesDTO(){
+        
     }
+    
 
     public String getNombre() {
         return nombre;
