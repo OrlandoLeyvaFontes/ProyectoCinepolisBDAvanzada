@@ -4,6 +4,7 @@
  */
 package Presentacion;
 
+import Administrativp.CatalogoSalas;
 import Administrativp.CatalogoCiudades;
 import Negocio.ICiudadesNegocio;
 import Negocio.IClientesNegocios;
@@ -121,7 +122,7 @@ private ICiudadesNegocio ciudadesNegocio;
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
-
+//
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.setVisible(false);
         CatalogoClientes catalogoClientes = new CatalogoClientes();
@@ -131,9 +132,9 @@ private ICiudadesNegocio ciudadesNegocio;
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        this.setVisible(false);
-        CatalogoSalas catalogoSalas = new CatalogoSalas(salasNegocios);
-        catalogoSalas.setVisible(true);
+//        this.setVisible(false);
+//        CatalogoSalas catalogoSalas = new CatalogoSalas(salasNegocios);
+//        catalogoSalas.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed

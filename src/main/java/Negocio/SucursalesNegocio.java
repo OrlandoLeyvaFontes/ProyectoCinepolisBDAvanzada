@@ -6,6 +6,7 @@ package Negocio;
 
 import Entidad.Ciudad;
 import Entidad.Sucursales;
+import Persistencia.ISucursalDAO;
 import Persistencia.PersistenciaException;
 import Persistencia.SucursalDAO;
 import dtoCinepolis.CiudadesDTO;
@@ -17,10 +18,10 @@ import dtoCinepolis.SucursalesDTO;
  */
 public class SucursalesNegocio implements ISucursalesNegocio {
 
-    private SucursalDAO sucursalesDAO;
-    private CiudadesNegocio ciudadesNegocio;
+    private final ISucursalDAO sucursalesDAO;
+    private final ICiudadesNegocio ciudadesNegocio;
 
-    public SucursalesNegocio(SucursalDAO sucursalesDAO, CiudadesNegocio ciudadesNegocio) {
+    public SucursalesNegocio(ISucursalDAO sucursalesDAO, ICiudadesNegocio ciudadesNegocio) {
         this.sucursalesDAO = sucursalesDAO;
         this.ciudadesNegocio = ciudadesNegocio;
     }

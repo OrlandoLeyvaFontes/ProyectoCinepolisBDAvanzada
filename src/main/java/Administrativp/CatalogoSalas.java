@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Presentacion;
+package Administrativp;
 
 import Negocio.ISalasNegocios;
+import Negocio.ISucursalesNegocio;
 import Negocio.NegocioException;
 import dtoCinepolis.SalaFiltroTablaDTO;
 import dtoCinepolis.SalasFiltroTablaDTO;
@@ -22,12 +23,14 @@ import javax.swing.table.DefaultTableModel;
 public class CatalogoSalas extends javax.swing.JFrame {
 
     private ISalasNegocios salasNegocios;
+    private ISucursalesNegocio sucursalesNegocio;
 private int idSalasSeleccionada = -1;
 
     /**
      * Creates new form CatalogoSalas
      */
-    public CatalogoSalas(ISalasNegocios salasNegocios) {
+    public CatalogoSalas(ISalasNegocios salasNegocios,ISucursalesNegocio sucursalesNegocio) {
+        this.sucursalesNegocio=sucursalesNegocio;
         this.salasNegocios=salasNegocios;
         initComponents();
         
@@ -181,9 +184,8 @@ private int idSalasSeleccionada = -1;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         this.setVisible(false);
-        AgregarSalas agregarSalas = new AgregarSalas();
-        agregarSalas.setVisible(true);
-
+       AgregarSalas agregarSalas = new AgregarSalas(sucursalesNegocio, salasNegocios);
+    agregarSalas.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 

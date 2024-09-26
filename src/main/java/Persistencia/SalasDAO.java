@@ -21,9 +21,9 @@ import java.util.List;
  */
 public class SalasDAO implements ISalasDAO {
 
-    private final ConexionBD ConexionBD;
+    private  IConexionBD ConexionBD;
 
-    public SalasDAO(ConexionBD ConexionBD) {
+    public SalasDAO(IConexionBD ConexionBD) {
         this.ConexionBD = ConexionBD;
     }
 

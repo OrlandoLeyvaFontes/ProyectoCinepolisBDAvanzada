@@ -6,6 +6,7 @@ package Negocio;
 
 import Entidad.Salas;
 import Entidad.Sucursales;
+import Persistencia.ISalasDAO;
 import Persistencia.PersistenciaException;
 import Persistencia.SalasDAO;
 import dtoCinepolis.SalaFiltroTablaDTO;
@@ -23,19 +24,19 @@ import java.util.logging.Logger;
  */
 public class SalasNegocios implements ISalasNegocios {
 
-    private SalasDAO salasDAO;
-    private SucursalesNegocio SucursalesNegocio;
+    private final ISalasDAO salasDAO;
+    private final ISucursalesNegocio sucursalesNegocio;
 
-    public SalasNegocios(SalasDAO salasDAO, SucursalesNegocio SucursalesNegocio) {
+    public SalasNegocios(ISalasDAO salasDAO, ISucursalesNegocio SucursalesNegocio) {
         this.salasDAO = salasDAO;
-        this.SucursalesNegocio = SucursalesNegocio;
+        this.sucursalesNegocio = SucursalesNegocio;
     }
 
     @Override
     public void guardarSucursalesConSalas(SalasDTO salasDTO, String nombre) throws NegocioException {
         try {
             String nombreNormalizado = nombre.trim().toLowerCase();
-            SucursalesDTO sucursalesDTO1 = SucursalesNegocio.buscarSucursalPorNombre(nombreNormalizado);
+            SucursalesDTO sucursalesDTO1 = sucursalesNegocio.buscarSucursalPorNombre(nombreNormalizado);
             if (sucursalesDTO1 == null) {
                 throw new NegocioException("Sucursal no encontrada: " + nombre);
             }

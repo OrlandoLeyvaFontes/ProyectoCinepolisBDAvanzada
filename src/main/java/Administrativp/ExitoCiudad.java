@@ -5,6 +5,8 @@
 package Administrativp;
 
 import Negocio.ICiudadesNegocio;
+import Negocio.ISalasNegocios;
+import Negocio.ISucursalesNegocio;
 
 /**
  *
@@ -12,6 +14,8 @@ import Negocio.ICiudadesNegocio;
  */
 public class ExitoCiudad extends javax.swing.JFrame {
 private  ICiudadesNegocio ciudadesNegocio;
+private ISucursalesNegocio sucursalesNeggocio;
+private  ISalasNegocios salasNegocios;
     /**
      * Creates new form ExitoCiudad
      */
@@ -50,7 +54,7 @@ private  ICiudadesNegocio ciudadesNegocio;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 this.setVisible(false);
-        Amdministrador administrador=new Amdministrador(ciudadesNegocio);
+        Amdministrador administrador=new Amdministrador(ciudadesNegocio,sucursalesNeggocio,salasNegocios);
 administrador.setVisible(true);
 
 

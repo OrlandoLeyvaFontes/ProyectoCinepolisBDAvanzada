@@ -23,4 +23,6 @@ public interface ISucursalDAO {
 
     Sucursales eliminar(int id) throws PersistenciaException;
 
+     Sucursales buscarSucursalPorNombre(String nombre) throws PersistenciaException;
+
 }

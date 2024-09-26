@@ -2,11 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Presentacion;
+package Administrativp;
 
+import Negocio.ICiudadesNegocio;
+import Negocio.ISalasNegocios;
 import Negocio.PeliculasNegocio;
 import Negocio.SucursalesNegocio;
 import Persistencia.ConexionBD;
+import Presentacion.MenuAdministrador;
 
 /**
  *
@@ -17,8 +20,9 @@ public class ExitoSucursal extends javax.swing.JFrame {
      * Creates new form ExitoSucursal
      */
         private PeliculasNegocio peliculasNegocio;
-    private ConexionBD conexionBD;
     private SucursalesNegocio sucursalesNegocios;
+    private ICiudadesNegocio ciudadesNegocio;
+    private ISalasNegocios salasNegocios;
     public ExitoSucursal() {
         initComponents();
     }
@@ -55,7 +59,7 @@ public class ExitoSucursal extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
          this.setVisible(false);
-        MenuAdministrador menu = new MenuAdministrador(peliculasNegocio);
+        Amdministrador menu = new Amdministrador(ciudadesNegocio,sucursalesNegocios, salasNegocios);
         menu.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

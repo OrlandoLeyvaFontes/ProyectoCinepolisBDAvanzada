@@ -26,6 +26,11 @@ public class SucursalesDTO {
         this.estaEliminado = estaEliminado;
     }
 
+    public SucursalesDTO(String nombre, CiudadesDTO ciudad) {
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+    }
+
     public SucursalesDTO(int id, String nombre, CiudadesDTO ciudad, boolean estaEliminado) {
         this.id = id;
         this.nombre = nombre;

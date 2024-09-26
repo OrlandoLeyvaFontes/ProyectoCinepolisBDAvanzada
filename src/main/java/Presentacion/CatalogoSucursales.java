@@ -4,6 +4,7 @@
  */
 package Presentacion;
 
+import Administrativp.AgregarSucursales;
 import Negocio.CiudadesNegocio;
 import Persistencia.CiudadesDAO;
 import Persistencia.ConexionBD;
@@ -93,12 +94,12 @@ public class CatalogoSucursales extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-this.setVisible(false);
-AgregarSucursales añadirSucursales=new AgregarSucursales();
-añadirSucursales.setVisible(true);
-        
-        
-        
+//this.setVisible(false);
+//AgregarSucursales añadirSucursales=new AgregarSucursales();
+//añadirSucursales.setVisible(true);
+//        
+//        
+//        
         
     }//GEN-LAST:event_jButton2ActionPerformed
 

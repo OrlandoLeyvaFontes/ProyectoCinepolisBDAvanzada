@@ -2,9 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Presentacion;
+package Administrativp;
 
+import Administrativp.CatalogoSalas;
 import Negocio.CiudadesNegocio;
+import Negocio.ICiudadesNegocio;
+import Negocio.ISalasNegocios;
+import Negocio.ISucursalesNegocio;
 import Negocio.NegocioException;
 import Negocio.SalasNegocios;
 import Negocio.SucursalesNegocio;
@@ -24,24 +28,18 @@ import javax.swing.JOptionPane;
  */
 public class AgregarSalas extends javax.swing.JFrame {
 
-    private ConexionBD conexionBD;
-    private SucursalesNegocio sucursalesNegocio;
-    private SucursalDAO sucursalDAO;
-    private SalasDAO salasDAO;
-    private SalasNegocios salasNegocios;
-    private CiudadesNegocio ciudadesNegocio;
+    private ISucursalesNegocio sucursalesNegocio;
+    private ISalasNegocios salasNegocios;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
      * Creates new form AgregarSalas
      */
-    public AgregarSalas() {
+    public AgregarSalas(ISucursalesNegocio sucursalesNegocio, ISalasNegocios salasNegocios) {
+        this.sucursalesNegocio=sucursalesNegocio;
+        this.salasNegocios=salasNegocios;
         initComponents();
-        conexionBD = new ConexionBD();
-        sucursalDAO = new SucursalDAO(conexionBD);
-        sucursalesNegocio = new SucursalesNegocio(sucursalDAO, ciudadesNegocio);
-        salasDAO = new SalasDAO(conexionBD);
-        salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
+        
 
     }
 
@@ -111,53 +109,57 @@ public class AgregarSalas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            String nombreSala = jTextField1.getText();
-            String nombreSucursal = jTextField4.getText();
-            String minutosTexto = jTextField2.getText();
-            double costoAproximado = Double.parseDouble(jTextField5.getText());
-            if (nombreSala.isEmpty() || nombreSucursal.isEmpty() || minutosTexto.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+      try {
+        String nombreSala = jTextField1.getText().trim();
+        String nombreSucursal = jTextField4.getText().trim();
+        String minutosTexto = jTextField2.getText().trim();
+        String costoTexto = jTextField5.getText().trim();
 
-            int cantidadAsientos = Integer.parseInt(jTextField2.getText());
-
-            int minutosAAnadir = Integer.parseInt(minutosTexto);
-
-            LocalDateTime fechaLimpieza = LocalDateTime.now().plusMinutes(minutosAAnadir);
-
-            SalasDTO salasDTO = new SalasDTO();
-            salasDTO.setNombre(nombreSala);
-            salasDTO.setCantidadAsientos(cantidadAsientos);
-            salasDTO.setTiempoLimpieza(fechaLimpieza);
-            salasDTO.setCostoSugerido(costoAproximado);
-
-            SucursalesDTO sucursalDTO = sucursalesNegocio.buscarSucursalPorNombre(nombreSucursal);
-            if (sucursalDTO == null) {
-                JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            salasDTO.setSucursales(sucursalDTO);
-
-            salasNegocios.guardarSucursalesConSalas(salasDTO, nombreSucursal);
-
-            JOptionPane.showMessageDialog(this, "Sala añadida exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jTextField4.setText("");
-            this.setVisible(false);
-            CatalogoSalas catalogoSalas=new CatalogoSalas(salasNegocios);
-            catalogoSalas.setVisible(true);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, introduce un número válido en cantidad de asientos y minutos.", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar la sala: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Se ha producido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        // Validaciones
+        if (nombreSala.isEmpty() || nombreSucursal.isEmpty() || minutosTexto.isEmpty() || costoTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        int cantidadAsientos = Integer.parseInt(jTextField2.getText());
+        if (cantidadAsientos <= 0) {
+            JOptionPane.showMessageDialog(this, "La cantidad de asientos debe ser un número positivo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int minutosAAnadir = Integer.parseInt(minutosTexto);
+        LocalDateTime fechaLimpieza = LocalDateTime.now().plusMinutes(minutosAAnadir);
+
+        double costoAproximado = Double.parseDouble(costoTexto);
+
+        SalasDTO salasDTO = new SalasDTO();
+        salasDTO.setNombre(nombreSala);
+        salasDTO.setCantidadAsientos(cantidadAsientos);
+        salasDTO.setTiempoLimpieza(fechaLimpieza);
+        salasDTO.setCostoSugerido(costoAproximado);
+
+        SucursalesDTO sucursalDTO = sucursalesNegocio.buscarSucursalPorNombre(nombreSucursal);
+        if (sucursalDTO == null) {
+            JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        salasDTO.setSucursales(sucursalDTO);
+        salasNegocios.guardarSucursalesConSalas(salasDTO, nombreSucursal);
+
+        JOptionPane.showMessageDialog(this, "Sala añadida exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        this.setVisible(false);
+        CatalogoSalas catalogoSalas = new CatalogoSalas(salasNegocios, sucursalesNegocio);
+        catalogoSalas.setVisible(true);
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, introduce un número válido en cantidad de asientos y costo.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (NegocioException e) {
+        JOptionPane.showMessageDialog(this, "Error al guardar la sala: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Se ha producido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
