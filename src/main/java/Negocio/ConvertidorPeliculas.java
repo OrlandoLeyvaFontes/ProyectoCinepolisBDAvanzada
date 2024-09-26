@@ -24,7 +24,7 @@ public class ConvertidorPeliculas {
         pelicula.setGenero(peliculasDTO.getGenero());
         pelicula.setPaisOrigen(peliculasDTO.getPaisOrigen());
         pelicula.setDuracionMinutos(peliculasDTO.getDuracionMinutos());
-        pelicula.setTexto(peliculasDTO.getTexto());
+        pelicula.setSinopsis(peliculasDTO.getSinopsis());
         pelicula.setLinkTrailer(peliculasDTO.getLinkTrailer());
         return pelicula;
     }
@@ -36,7 +36,7 @@ public class ConvertidorPeliculas {
         peliculasDTO.setGenero(peliculas.getClasificacion());
         peliculasDTO.setPaisOrigen(peliculas.getPaisOrigen());
         peliculasDTO.setDuracionMinutos(peliculas.getDuracionMinutos());
-        peliculasDTO.setTexto(peliculas.getTexto());
+        peliculasDTO.setSinopsis(peliculasDTO.getSinopsis());
         peliculasDTO.setLinkTrailer(peliculas.getLinkTrailer());
         return peliculasDTO;
     }

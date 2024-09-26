@@ -28,24 +28,18 @@ public class AgregarPeliculas extends javax.swing.JFrame {
 
     private void agregarPelicula() throws PersistenciaException, NegocioException {
         String titulo = txtTitulo.getText();
+        String clasificacion = txtClasificacion.getText();
         String genero = txtGenero.getText();
         int duracionMinutos = Integer.parseInt(txtDuracion.getText());
-        String clasificacion = txtClasificacion.getText();
-        String paisOrigen = txtOrigen.getText();
-        String texto = txtSinopsis.getText();
-        String link = txtLinkTrailer.getText();
+        String sinopsis = txtSinopsis.getText();
+        String paisOrigen = txtOrigen.getText();            
+        String linkTrailer = txtLinkTrailer.getText();
         String rutaImagen = txtRutaImagen.getText();
 
-        // Verificar que la ruta de la imagen no esté vacía
-        if (rutaImagen == null || rutaImagen.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La ruta de la imagen no puede estar vacía.");
-            return; // Salir del método si la ruta está vacía
-        }
-
-        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, texto, link, rutaImagen);
+        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, sinopsis, linkTrailer, rutaImagen);
 
         peliculasNegocio.guardar(peliculaDTO);
-        JOptionPane.showMessageDialog(this, "Película guardada exitosamente.");
+
     }
 
     private void limpiarCampos() {
@@ -103,20 +97,20 @@ public class AgregarPeliculas extends javax.swing.JFrame {
         getContentPane().add(txtGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 82, 250, 30));
 
         jLabel4.setText("Duracion:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
-        getContentPane().add(txtDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 122, 250, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
+        getContentPane().add(txtDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 250, 30));
 
         jLabel5.setText("Origen:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
-        getContentPane().add(txtOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 162, 250, 30));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
+        getContentPane().add(txtOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 250, 30));
 
         jLabel6.setText("Clasificacion:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
-        getContentPane().add(txtClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 240, 30));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+        getContentPane().add(txtClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 240, 30));
 
         jLabel7.setText("Sipnosis:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, -1));
-        getContentPane().add(txtSinopsis, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 242, 250, 30));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, -1, -1));
+        getContentPane().add(txtSinopsis, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 250, 30));
 
         jButton1.setText("Regresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -124,7 +118,7 @@ public class AgregarPeliculas extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, -1, -1));
 
         jButton2.setText("Continuar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -132,21 +126,21 @@ public class AgregarPeliculas extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 360, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 390, -1, -1));
 
         jLabel8.setText("Link trailer:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, -1));
-        getContentPane().add(txtLinkTrailer, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 282, 230, 30));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, -1, -1));
+        getContentPane().add(txtLinkTrailer, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 230, 30));
 
         jLabel9.setText("Ruta Imagen");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
 
         txtRutaImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRutaImagenActionPerformed(evt);
             }
         });
-        getContentPane().add(txtRutaImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 230, -1));
+        getContentPane().add(txtRutaImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 230, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -159,11 +153,7 @@ public class AgregarPeliculas extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            agregarPelicula(); // Llama al método que agrega la película
-            // Si se agrega correctamente, puedes mostrar un mensaje o realizar alguna otra acción
-            this.setVisible(false); // Oculta la ventana actual
-            ExitoPelicula exito = new ExitoPelicula(); // Crea una instancia de la ventana de éxito
-            exito.setVisible(true); // Muestra la ventana de éxito
+            agregarPelicula();
         } catch (PersistenciaException ex) {
             Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Error al guardar la película: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

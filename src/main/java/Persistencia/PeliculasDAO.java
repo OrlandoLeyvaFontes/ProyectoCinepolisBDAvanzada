@@ -47,7 +47,7 @@ public class PeliculasDAO implements IPeliculasDAO {
                 peliculaDTO.setClasificacion(rs.getString("clasificacion")); // Cambiado para asignar correctamente
                 peliculaDTO.setGenero(rs.getString("genero")); // Añadido
                 peliculaDTO.setDuracionMinutos(rs.getInt("duracionMinutos"));
-                peliculaDTO.setTexto(rs.getString("sinopsis")); // Asegúrate de que el nombre sea correcto
+                peliculaDTO.setSinopsis(rs.getString("sinopsis")); // Asegúrate de que el nombre sea correcto
                 peliculaDTO.setLinkTrailer(rs.getString("linkTrailer"));
                 peliculaDTO.setRutaImagen(rs.getString("rutaImagen"));
                 lista.add(peliculaDTO);
@@ -65,18 +65,18 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
     public void guardar(Peliculas pelicula) throws PersistenciaException {
-        String sql = "INSERT INTO Peliculas (id, titulo, clasificacion, genero, duracionMinutos, sinopsis, paisOrigen, linkTrailer, rutaImagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sql)) {
-            prepared.setInt(1, pelicula.getId());
-            prepared.setString(2, pelicula.getTitulo());
-            prepared.setString(3, pelicula.getClasificacion());
-            prepared.setString(4, pelicula.getGenero());
-            prepared.setInt(5, pelicula.getDuracionMinutos());
-            prepared.setString(6, pelicula.getTexto());
-            prepared.setString(7, pelicula.getPaisOrigen());
-            prepared.setString(8, pelicula.getLinkTrailer());
-            prepared.setString(9, pelicula.getRutaImagen());
+        String sql = "INSERT INTO Peliculas (titulo, clasificacion, genero, duracionMinutos, sinopsis, paisOrigen, linkTrailer, rutaImagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sql)) {            
+            prepared.setString(1, pelicula.getTitulo());
+            prepared.setString(2, pelicula.getClasificacion());
+            prepared.setString(3, pelicula.getGenero());
+            prepared.setInt(4, pelicula.getDuracionMinutos());
+            prepared.setString(5, pelicula.getSinopsis());
+            prepared.setString(6, pelicula.getPaisOrigen());
+            prepared.setString(7, pelicula.getLinkTrailer());
+            prepared.setString(8, pelicula.getRutaImagen());
             prepared.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Película guardada exitosamente.");
         } catch (SQLException e) {
             // Agregar información sobre el error SQL
             throw new PersistenciaException("Error al guardar la pelicula: " + e.getMessage(), e);
@@ -85,18 +85,18 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
     public void actualizar(Peliculas peliculas) throws PersistenciaException {
-        String consulta = "UPDATE peliculas SET titulo = ?, clasificacion = ?, genero = ?, paisOrigen = ?, duracionMinutos = ?, sinopsis = ?, linkTrailer = ?, rutaImagen = ? WHERE id = ?";
+        String consulta = "UPDATE peliculas SET titulo = ?, clasificacion = ?, genero = ?, duracionMinutos = ?, sinopsis = ?, duracionMinutos = ?, linkTrailer = ?, rutaImagen = ? WHERE id = ?";
 
         try (Connection connection = conexionBD.crearConexion(); PreparedStatement stmt = connection.prepareStatement(consulta)) {
             stmt.setString(1, peliculas.getTitulo());
             stmt.setString(2, peliculas.getClasificacion());
             stmt.setString(3, peliculas.getGenero());
-            stmt.setString(4, peliculas.getPaisOrigen());
-            stmt.setInt(5, peliculas.getDuracionMinutos());
-            stmt.setString(6, peliculas.getTexto());
+            stmt.setInt(4, peliculas.getDuracionMinutos());
+            stmt.setString(5, peliculas.getTitulo());
+            stmt.setString(6, peliculas.getPaisOrigen());
             stmt.setString(7, peliculas.getLinkTrailer());
-            stmt.setString(8, peliculas.getRutaImagen()); // Añadir rutaImagen
-            stmt.setInt(9, peliculas.getId()); // Asegúrate de establecer el ID
+            stmt.setString(8, peliculas.getRutaImagen()); 
+            stmt.setInt(9, peliculas.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new PersistenciaException("Error al actualizar la pelicula: " + e.getMessage(), e);

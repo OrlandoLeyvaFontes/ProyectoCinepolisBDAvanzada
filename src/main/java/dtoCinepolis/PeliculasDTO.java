@@ -16,7 +16,7 @@ public class PeliculasDTO {
     private String genero;
     private int duracionMinutos;
     private String paisOrigen;
-    private String texto;
+    private String sinopsis;
     private String linkTrailer;
     private String rutaImagen;
     private boolean estaEliminado;
@@ -32,49 +32,37 @@ public class PeliculasDTO {
         this.titulo = titulo;
     }
 
-    public PeliculasDTO(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen) {
+    public PeliculasDTO(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String sinopsis, String linkTrailer, String rutaImagen) {
         this.titulo = titulo;
         this.clasificacion = clasificacion;
         this.genero = genero;
         this.duracionMinutos = duracionMinutos;
         this.paisOrigen = paisOrigen;
-        this.texto = texto;
+        this.sinopsis = sinopsis;
         this.linkTrailer = linkTrailer;
         this.rutaImagen = rutaImagen;
     }
 
-    public PeliculasDTO(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen, boolean estaEliminado) {
+    public PeliculasDTO(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String sinopsis, String linkTrailer, String rutaImagen, boolean estaEliminado) {
         this.titulo = titulo;
         this.clasificacion = clasificacion;
         this.genero = genero;
         this.duracionMinutos = duracionMinutos;
         this.paisOrigen = paisOrigen;
-        this.texto = texto;
+        this.sinopsis = sinopsis;
         this.linkTrailer = linkTrailer;
         this.rutaImagen = rutaImagen;
         this.estaEliminado = estaEliminado;
     }
 
-    public PeliculasDTO(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen) {
+    public PeliculasDTO(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String sinopsis, String linkTrailer, String rutaImagen, boolean estaEliminado) {
         this.id = id;
         this.titulo = titulo;
         this.clasificacion = clasificacion;
         this.genero = genero;
         this.duracionMinutos = duracionMinutos;
         this.paisOrigen = paisOrigen;
-        this.texto = texto;
-        this.linkTrailer = linkTrailer;
-        this.rutaImagen = rutaImagen;
-    }
-
-    public PeliculasDTO(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen, boolean estaEliminado) {
-        this.id = id;
-        this.titulo = titulo;
-        this.clasificacion = clasificacion;
-        this.genero = genero;
-        this.duracionMinutos = duracionMinutos;
-        this.paisOrigen = paisOrigen;
-        this.texto = texto;
+        this.sinopsis = sinopsis;
         this.linkTrailer = linkTrailer;
         this.rutaImagen = rutaImagen;
         this.estaEliminado = estaEliminado;
@@ -128,12 +116,12 @@ public class PeliculasDTO {
         this.paisOrigen = paisOrigen;
     }
 
-    public String getTexto() {
-        return texto;
+    public String getSinopsis() {
+        return sinopsis;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
     }
 
     public String getLinkTrailer() {

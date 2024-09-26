@@ -16,7 +16,7 @@ public class Peliculas {
     private String genero;
     private int duracionMinutos;
     private String paisOrigen;
-    private String texto;
+    private String sinopsis;
     private String linkTrailer;
     private String rutaImagen;
     private boolean estaEliminado = false;
@@ -72,12 +72,12 @@ public class Peliculas {
         this.paisOrigen = paisOrigen;
     }
 
-    public String getTexto() {
-        return texto;
+    public String getSinopsis() {
+        return sinopsis;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
     }
 
     public String getLinkTrailer() {
