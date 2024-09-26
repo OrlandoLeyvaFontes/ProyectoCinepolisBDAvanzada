@@ -175,7 +175,7 @@ public class CiudadesDAO implements ICiudadesDAO {
 
             if (resultSet.next()) {
                 ciudad = new Ciudad();
-                ciudad.setId(resultSet.getInt("id")); // Asegúrate de que "id" es el nombre correcto de la columna
+                ciudad.setId(resultSet.getInt("id")); 
                 ciudad.setNombre(resultSet.getString("nombre"));
             }
 

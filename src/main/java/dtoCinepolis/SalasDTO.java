@@ -18,6 +18,7 @@ public class SalasDTO {
     LocalDateTime tiempoLimpieza;
     SucursalesDTO sucursales;
     Double CostoSugerido;
+    private boolean estaEliminado;
 
   
 
@@ -31,6 +32,16 @@ public class SalasDTO {
         this.sucursales = sucursales;
     }
 
+    public SalasDTO(int id, String nombre, int cantidadAsientos, LocalDateTime tiempoLimpieza, SucursalesDTO sucursales, Double CostoSugerido, boolean estaEliminado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.cantidadAsientos = cantidadAsientos;
+        this.tiempoLimpieza = tiempoLimpieza;
+        this.sucursales = sucursales;
+        this.CostoSugerido = CostoSugerido;
+        this.estaEliminado = estaEliminado;
+    }
+
     public SalasDTO(int id, String nombre, int cantidadAsientos, LocalDateTime tiempoLimpieza, SucursalesDTO sucursales, Double CostoSugerido) {
         this.id = id;
         this.nombre = nombre;
@@ -38,6 +49,14 @@ public class SalasDTO {
         this.tiempoLimpieza = tiempoLimpieza;
         this.sucursales = sucursales;
         this.CostoSugerido = CostoSugerido;
+    }
+
+    public boolean isEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
     }
 
     public Double getCostoSugerido() {
