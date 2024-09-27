@@ -19,6 +19,7 @@ public class Peliculas {
     String texto;
     String linkTrailer;
     String rutaImagen;
+    String sinopsis;
 
     public Peliculas() {
     }
@@ -29,7 +30,7 @@ public class Peliculas {
         this.genero = genero;
     }
 
-    public Peliculas(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen) {
+    public Peliculas(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen, String Sinopsis) {
         this.titulo = titulo;
         this.clasificacion = clasificacion;
         this.genero = genero;
@@ -38,7 +39,10 @@ public class Peliculas {
         this.texto = texto;
         this.linkTrailer = linkTrailer;
         this.rutaImagen = rutaImagen;
+        this.sinopsis=sinopsis;
     }
+
+    
 
     public Peliculas(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
         this.id = id;
@@ -50,6 +54,14 @@ public class Peliculas {
         this.texto = texto;
     }
 
+    
+    public String getSinopsis() {
+        return sinopsis;
+    }
+
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
+    }
     public int getId() {
         return id;
     }

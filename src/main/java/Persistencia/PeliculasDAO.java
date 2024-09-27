@@ -5,9 +5,13 @@
 package Persistencia;
 
 import Entidad.Peliculas;
+import dtoCinepolis.PeliculasDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,9 +25,6 @@ public class PeliculasDAO implements IPeliculasDAO {
         this.conexionBD = conexionBD;
     }
 
-    @Override
-<<<<<<< Updated upstream
-=======
     public ArrayList<PeliculasDTO> leer() throws PersistenciaException {
         PeliculasDTO peliculaDTO;
         Connection con = null;
@@ -60,8 +61,6 @@ public class PeliculasDAO implements IPeliculasDAO {
     }
 
     
-    @Override
->>>>>>> Stashed changes
     public void guardar(Peliculas pelicula) throws PersistenciaException {
         String sql = "INSERT INTO peliculas (titulo, clasificacion, genero,  paisOrigen, duracionMinutos,sinopsis,linkTrailer) VALUES (?, ?, ?, ?, ?, ?,?)";
         try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sql)) {
