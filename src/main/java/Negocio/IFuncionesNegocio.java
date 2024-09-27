@@ -17,6 +17,5 @@ public interface IFuncionesNegocio {
 
     FuncionesDTO eliminar(int id) throws PersistenciaException;
 
-    FuncionesDTO buscarPorNombre(String nombre) throws PersistenciaException;
 
 }

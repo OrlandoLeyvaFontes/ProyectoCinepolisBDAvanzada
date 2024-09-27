@@ -12,59 +12,36 @@ import java.time.LocalTime;
  */
 public class Funciones {
 
-    String nombre;
-    int costo;
-    LocalTime horaInicio;
-    boolean estaEliminado;
-    Salas salas;
+     private int id;
+    private String nombrePelicula;
+    private LocalTime horaInicio;
+    private double precio;
+    private int sala;
+    private boolean estaEliminado;
 
-    public Funciones(String nombre, int costo, LocalTime horaInicio, boolean estaEliminado) {
-        this.nombre = nombre;
-        this.costo = costo;
+    public Funciones(int id, String nombrePelicula, LocalTime horaInicio, double precio, int sala, boolean estaEliminado) {
+        this.id = id;
+        this.nombrePelicula = nombrePelicula;
         this.horaInicio = horaInicio;
-        this.estaEliminado = false;
+        this.precio = precio;
+        this.sala = sala;
+        this.estaEliminado = estaEliminado;
     }
 
-    public Funciones(String nombre, int costo, LocalTime horaInicio, Salas salas, boolean estaEliminado) {
-        this.nombre = nombre;
-        this.costo = costo;
-        this.horaInicio = horaInicio;
-        this.salas = salas;
-        this.estaEliminado = false;
+    public int getId() {
+        return id;
     }
 
-    public Salas getSalas() {
-        return salas;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setSalas(Salas salas) {
-        this.salas = salas;
+    public String getNombrePelicula() {
+        return nombrePelicula;
     }
 
-    public Funciones(String nombre, int costo, LocalTime horaInicio) {
-        this.nombre = nombre;
-        this.costo = costo;
-        this.horaInicio = horaInicio;
-    }
-
-    public Funciones() {
-
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String Nombre) {
-        this.nombre = Nombre;
-    }
-
-    public int getCosto() {
-        return costo;
-    }
-
-    public void setCosto(int costo) {
-        this.costo = costo;
+    public void setNombrePelicula(String nombrePelicula) {
+        this.nombrePelicula = nombrePelicula;
     }
 
     public LocalTime getHoraInicio() {
@@ -75,6 +52,22 @@ public class Funciones {
         this.horaInicio = horaInicio;
     }
 
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getSala() {
+        return sala;
+    }
+
+    public void setSala(int sala) {
+        this.sala = sala;
+    }
+
     public boolean isEstaEliminado() {
         return estaEliminado;
     }
@@ -82,5 +75,6 @@ public class Funciones {
     public void setEstaEliminado(boolean estaEliminado) {
         this.estaEliminado = estaEliminado;
     }
-
+    
+    
 }

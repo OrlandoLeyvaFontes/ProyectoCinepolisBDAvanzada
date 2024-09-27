@@ -11,11 +11,20 @@ import java.time.LocalDate;
  * @author aleja
  */
 public class FuncionesTablaDTO {
-    
+
+    int id;
     String nombre;
     LocalDate horaInicio;
     int costo;
-    boolean estaEliminado;
+    int IdSala;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;
@@ -41,12 +50,14 @@ public class FuncionesTablaDTO {
         this.costo = costo;
     }
 
-    public boolean isEstaEliminado() {
-        return estaEliminado;
+    public int getIdSala() {
+        return IdSala;
     }
 
-    public void setEstaEliminado(boolean estaEliminado) {
-        this.estaEliminado = estaEliminado;
+    public void setIdSala(int IdSala) {
+        this.IdSala = IdSala;
     }
+
+   
 
 }

@@ -22,35 +22,44 @@ public class FuncionesNegocio implements IFuncionesNegocio {
     }
 
     public FuncionesDTO guardar(FuncionesDTO funcionDTO) throws PersistenciaException {
+        // Convertir DTO a entidad
         Funciones funcion = convertirAEntidad(funcionDTO);
+        // Guardar la entidad en la base de datos
         Funciones funcionGuardada = funcionesDAO.guardar(funcion);
+        // Convertir la entidad guardada de nuevo a DTO para devolver
         return convertirADTO(funcionGuardada);
     }
 
     @Override
     public FuncionesDTO eliminar(int id) throws PersistenciaException {
+        // Eliminar la función por ID
         Funciones funcionEliminada = funcionesDAO.eliminar(id);
+        // Devolver el DTO de la función eliminada
         return convertirADTO(funcionEliminada);
     }
 
-    @Override
-    public FuncionesDTO buscarPorNombre(String nombre) throws PersistenciaException {
-        Funciones funcion = funcionesDAO.buscarPorNombre(nombre);
-        return convertirADTO(funcion);
-    }
-
-    private FuncionesDTO convertirFuncionDTO(Funciones funcion) {
-        FuncionesDTO funcionesDTO = new FuncionesDTO();
-        funcionesDTO.setNombre(funcion.getNombre());
-        return funcionesDTO;
-    }
-
     private Funciones convertirAEntidad(FuncionesDTO dto) {
-        return new Funciones(dto.getNombre(), dto.getCosto(), dto.getHoraInicio(), dto.isEstaEliminado());
+        // Crear y devolver una nueva entidad Funciones a partir del DTO
+        return new Funciones(
+                dto.getId(), // Asegúrate de que el ID esté incluido en el DTO
+                dto.getNombrePelicula(),
+                dto.getHoraInicio(),
+                dto.getPrecio(),
+                dto.getSala(),
+                dto.isEstaEliminado()
+        );
     }
 
     private FuncionesDTO convertirADTO(Funciones funcion) {
-        return new FuncionesDTO(funcion.getNombre(), funcion.getCosto(), funcion.getHoraInicio(), funcion.isEstaEliminado(), funcion.getSalas());
+        // Crear y devolver un nuevo DTO FuncionesDTO a partir de la entidad
+        return new FuncionesDTO(
+                funcion.getId(),
+                funcion.getNombrePelicula(),
+                funcion.getHoraInicio(),
+                funcion.getPrecio(),
+                funcion.getSala(),
+                funcion.isEstaEliminado()
+        );
     }
 
 }
