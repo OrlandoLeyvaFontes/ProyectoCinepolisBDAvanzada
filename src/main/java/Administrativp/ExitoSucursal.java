@@ -9,6 +9,7 @@ import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
 import Negocio.PeliculasNegocio;
 import Negocio.SucursalesNegocio;
+import Negocio.IFuncionesNegocio;
 import Persistencia.ConexionBD;
 
 /**
@@ -23,6 +24,8 @@ public class ExitoSucursal extends javax.swing.JFrame {
     private SucursalesNegocio sucursalesNegocios;
     private ICiudadesNegocio ciudadesNegocio;
     private ISalasNegocios salasNegocios;
+    private IFuncionesNegocio funcionesNegocio;
+    
     public ExitoSucursal() {
         initComponents();
     }
@@ -59,7 +62,7 @@ public class ExitoSucursal extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
          this.setVisible(false);
-        Amdministrador menu = new Amdministrador(ciudadesNegocio,sucursalesNegocios, salasNegocios,peliculasNegocio);
+        Amdministrador menu = new Amdministrador(ciudadesNegocio,sucursalesNegocios, salasNegocios,peliculasNegocio, funcionesNegocio);
         menu.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

@@ -6,6 +6,8 @@ package Administrativp;
 
 import Negocio.CiudadesNegocio;
 import Negocio.ICiudadesNegocio;
+import Negocio.FuncionesNegocio;
+import Negocio.IFuncionesNegocio;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
 import Negocio.ISucursalesNegocio;
@@ -22,6 +24,8 @@ import Persistencia.ISucursalDAO;
 import Persistencia.PeliculasDAO;
 import Persistencia.SalasDAO;
 import Persistencia.SucursalDAO;
+import Persistencia.FuncionesDAO;
+import Persistencia.IFuncionesDAO;
 import java.sql.SQLException;
 
 /**
@@ -41,9 +45,10 @@ public class Main {
         ISucursalesNegocio sucursalesNegocio = new SucursalesNegocio(sucursalesDAO, ciudadesNegocio);
         ISalasNegocios salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
         IPeliculasNegocio peliculasNegocio = new PeliculasNegocio(peliculasDAO);
-
+        IFuncionesDAO funcionesDAO = new FuncionesDAO(conexionBD);
+        IFuncionesNegocio funcionesNegocio = new FuncionesNegocio(funcionesDAO);
        
-        AdministradorCuenta administrador = new AdministradorCuenta(ciudadesNegocio, sucursalesNegocio, salasNegocios,peliculasNegocio);
+        AdministradorCuenta administrador = new AdministradorCuenta(ciudadesNegocio, sucursalesNegocio, salasNegocios,peliculasNegocio, funcionesNegocio);
         administrador.setVisible(true);
    
 }

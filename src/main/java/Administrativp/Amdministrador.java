@@ -8,6 +8,7 @@ import Negocio.ICiudadesNegocio;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
 import Negocio.ISucursalesNegocio;
+import Negocio.IFuncionesNegocio;
 
 /**
  *
@@ -19,14 +20,17 @@ public class Amdministrador extends javax.swing.JFrame {
     private ISucursalesNegocio sucursalesNegocio;
     private ISalasNegocios salasNegocios;
   private IPeliculasNegocio peliculasNegocio;
+  private IFuncionesNegocio funcionesNegocio;
+  
     /**
      * Creates new form Amdministrador
      */
-    public Amdministrador(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio, ISalasNegocios salasNegocios,IPeliculasNegocio peliculasNegocio) {
+    public Amdministrador(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio, ISalasNegocios salasNegocios,IPeliculasNegocio peliculasNegocio, IFuncionesNegocio funcionesNegocio) {
         this.ciudadesNegocios = ciudadesNegocio;
         this.sucursalesNegocio = sucursalesNegocio;
         this.salasNegocios = salasNegocios;
         this.peliculasNegocio=peliculasNegocio;
+        this.funcionesNegocio=funcionesNegocio;
         initComponents();
     }
 
@@ -44,6 +48,7 @@ public class Amdministrador extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         btnAgregarFuncion = new javax.swing.JButton();
+        btnCatalogoFuncion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -87,6 +92,14 @@ public class Amdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnAgregarFuncion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 130, -1));
+
+        btnCatalogoFuncion.setText("Catalogo Funcion");
+        btnCatalogoFuncion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCatalogoFuncionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCatalogoFuncion, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, -1, 20));
 
         pack();
         setLocationRelativeTo(null);
@@ -132,9 +145,16 @@ public class Amdministrador extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAgregarFuncionActionPerformed
 
+    private void btnCatalogoFuncionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogoFuncionActionPerformed
+        CatalogoFunciones continuar = new CatalogoFunciones();
+        continuar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCatalogoFuncionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarFuncion;
+    private javax.swing.JButton btnCatalogoFuncion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

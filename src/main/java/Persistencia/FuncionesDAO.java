@@ -7,10 +7,12 @@ package Persistencia;
 import Entidad.Funciones;
 import dtoCinepolis.FuncionesDTO;
 import dtoCinepolis.FuncionesFiltroTablaDTO;
+import dtoCinepolis.FuncionesTablaDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.List;
  * @author aleja
  */
 public class FuncionesDAO implements IFuncionesDAO {
-    
+
     private final IConexionBD conexionBD;
 
     public FuncionesDAO(IConexionBD conexionBD) {
@@ -69,12 +71,12 @@ public class FuncionesDAO implements IFuncionesDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 funcion = new Funciones( // Se corrigió el uso de la variable
-                    rs.getInt("id"), // Obtener el ID correctamente
-                    rs.getString("nombrePelicula"), // Asegúrate de que este campo exista en la base de datos
-                    rs.getObject("horaInicio", LocalTime.class),
-                    rs.getDouble("costo"), // Se cambió "costo" a "precio"
-                    rs.getInt("IdSala"),
-                    rs.getBoolean("estaEliminado")
+                        rs.getInt("id"), // Obtener el ID correctamente
+                        rs.getString("nombrePelicula"), // Asegúrate de que este campo exista en la base de datos
+                        rs.getObject("horaInicio", LocalTime.class),
+                        rs.getDouble("costo"), // Se cambió "costo" a "precio"
+                        rs.getInt("IdSala"),
+                        rs.getBoolean("estaEliminado")
                 );
             }
         } catch (SQLException e) {
@@ -83,61 +85,56 @@ public class FuncionesDAO implements IFuncionesDAO {
         return funcion;
     }
 
- 
-//   @Override
-//public List<FuncionesDTO> buscarFuncionesTabla(FuncionesFiltroTablaDTO filtro) throws PersistenciaException {
-//    List<FuncionesDTO> funcionesLista = new ArrayList<>();
-//    String sql = """
-//        SELECT id, nombre_pelicula, hora_inicio, precio, sala, esta_eliminado
-//        FROM funciones
-//        WHERE nombre_pelicula LIKE ?
-//        LIMIT ?
-//        OFFSET ?
-//    """;
-
-//    try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sql)) {
-//
-//        prepared.setString(1, "%" + filtro.getNombrePelicula() + "%");
-//        prepared.setInt(2, filtro.getLimit());
-//        prepared.setInt(3, filtro.getOffset());
-//
-//        try (ResultSet resultado = prepared.executeQuery()) {
-//            while (resultado.next()) {
-//                FuncionesDTO funcionDTO = new FuncionesDTO();
-//
-//                funcionDTO.setId(resultado.getInt("id"));
-//                funcionDTO.setNombrePelicula(resultado.getString("nombre_pelicula"));
-//                
-//                // Asumiendo que hora_inicio es un campo de tipo Time
-//                Time horaInicio = resultado.getTime("hora_inicio");
-//                if (horaInicio != null) {
-//                    funcionDTO.setHoraInicio(horaInicio.toLocalTime());
-//                }
-//                
-//                funcionDTO.setPrecio(resultado.getDouble("precio"));
-//                funcionDTO.setSala(resultado.getString("sala"));
-//                funcionDTO.setEstaEliminado(resultado.getBoolean("esta_eliminado"));
-//
-//                funcionesLista.add(funcionDTO);
-//            }
-//        }
-//
-//    } catch (SQLException ex) {
-//        throw new PersistenciaException("Error al buscar funciones", ex);
-//    }
-//
-//    return funcionesLista;
-//}
-
     @Override
-    public List<FuncionesDTO> buscarFunciones(FuncionesFiltroTablaDTO filtro) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<FuncionesTablaDTO> buscarFuncionesTabla(FuncionesFiltroTablaDTO filtro) throws PersistenciaException {
+    List<FuncionesTablaDTO> funcionesLista = new ArrayList<>();
+    String sql = """
+                  SELECT id, nombre_pelicula, hora_inicio, precio, sala, esta_eliminado
+                  FROM funciones
+                  WHERE nombre_pelicula LIKE ? 
+                  LIMIT ? 
+                  OFFSET ?
+                  """;
+    
+    try (Connection conexion = conexionBD.crearConexion(); PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+        // Establecer los parámetros de búsqueda en la consulta
+        ps.setString(1, "%" + filtro.getFiltro() + "%");
+        ps.setInt(2, filtro.getLimit());
+        ps.setInt(3, filtro.getOffset());
+
+        // Ejecutar la consulta y procesar los resultados
+        try (ResultSet resultado = ps.executeQuery()) {
+            while (resultado.next()) {
+                FuncionesTablaDTO funcionDTO = new FuncionesTablaDTO();
+                
+                funcionDTO.setId(resultado.getInt("id"));
+                funcionDTO.setNombrePelicula(resultado.getString("nombre_pelicula"));
+
+                // Conversión del campo hora_inicio de Time a LocalTime
+                Time horaInicioBD = resultado.getTime("hora_inicio");
+                if (horaInicioBD != null) {
+                    funcionDTO.setHoraInicio(horaInicioBD.toLocalTime());
+                }
+
+                funcionDTO.setPrecio(resultado.getDouble("precio"));
+                funcionDTO.setSala(resultado.getInt("sala"));
+                funcionDTO.setEstaEliminado(resultado.getBoolean("esta_eliminado"));
+
+                // Agregar la función a la lista
+                funcionesLista.add(funcionDTO);
+            }
+        }
+    } catch (SQLException e) {
+        throw new PersistenciaException("Ocurrió un error al leer la base de datos, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.", e);
     }
+    
+    return funcionesLista;
+}
 
     @Override
-    public List<FuncionesDTO> buscarFuncionesTabla(FuncionesFiltroTablaDTO filtro) throws PersistenciaException {
+    public List<FuncionesDTO> buscarFunciones(FuncionesFiltroTablaDTO filtro) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
-

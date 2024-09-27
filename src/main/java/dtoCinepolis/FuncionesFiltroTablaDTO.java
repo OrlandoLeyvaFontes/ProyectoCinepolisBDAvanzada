@@ -14,6 +14,9 @@ public class FuncionesFiltroTablaDTO {
     private int offset; // Número de resultados a omitir
     private String filtro; // Filtro para la búsqueda
 
+    public FuncionesFiltroTablaDTO() {
+    }
+
     public FuncionesFiltroTablaDTO(int limit, int offset, String filtro) {
         setLimit(limit); // Usar el setter para validación
         setOffset(offset); // Usar el setter para validación
@@ -25,9 +28,6 @@ public class FuncionesFiltroTablaDTO {
     }
 
     public void setLimit(int limit) {
-        if (limit < 0) {
-            throw new IllegalArgumentException("Limit cannot be negative");
-        }
         this.limit = limit;
     }
 
@@ -36,9 +36,6 @@ public class FuncionesFiltroTablaDTO {
     }
 
     public void setOffset(int offset) {
-        if (offset < 0) {
-            throw new IllegalArgumentException("Offset cannot be negative");
-        }
         this.offset = offset;
     }
 

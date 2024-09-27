@@ -7,6 +7,7 @@ package Persistencia;
 import Entidad.Funciones;
 import dtoCinepolis.FuncionesDTO;
 import dtoCinepolis.FuncionesFiltroTablaDTO;
+import dtoCinepolis.FuncionesTablaDTO;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public interface IFuncionesDAO {
 
      public Funciones buscarPorId(int id) throws PersistenciaException;
 
-    public List<FuncionesDTO> buscarFunciones(FuncionesFiltroTablaDTO filtro)throws PersistenciaException;
+    List<FuncionesTablaDTO> buscarFuncionesTabla(FuncionesFiltroTablaDTO filtro) throws PersistenciaException;
 
-    public List<FuncionesDTO> buscarFuncionesTabla(FuncionesFiltroTablaDTO filtro) throws PersistenciaException;
+    public List<FuncionesDTO> buscarFunciones(FuncionesFiltroTablaDTO filtro);
 }

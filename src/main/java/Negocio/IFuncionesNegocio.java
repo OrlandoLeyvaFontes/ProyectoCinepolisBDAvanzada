@@ -6,6 +6,9 @@ package Negocio;
 
 import Persistencia.PersistenciaException;
 import dtoCinepolis.FuncionesDTO;
+import dtoCinepolis.FuncionesFiltroTablaDTO;
+import dtoCinepolis.FuncionesTablaDTO;
+import java.util.List;
 
 /**
  *
@@ -17,5 +20,5 @@ public interface IFuncionesNegocio {
 
     FuncionesDTO eliminar(int id) throws PersistenciaException;
 
-
+    List<FuncionesTablaDTO> buscarFuncionesTabla(FuncionesFiltroTablaDTO filtro) throws NegocioException;
 }

@@ -8,6 +8,7 @@ import Negocio.ICiudadesNegocio;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
 import Negocio.ISucursalesNegocio;
+import Negocio.IFuncionesNegocio;
 
 /**
  *
@@ -18,14 +19,16 @@ public class AdministradorCuenta extends javax.swing.JFrame {
   private ISucursalesNegocio sucursalesNegocio;
   private ISalasNegocios salasNegocios;
   private IPeliculasNegocio peliculasNegocio;
+  private IFuncionesNegocio funcionesNegocio;
     /**
      * Creates new form AdministradorCuenta
      */
-    public AdministradorCuenta(ICiudadesNegocio ciudadesNegocio,ISucursalesNegocio sucursalesNegocio,ISalasNegocios salasNegocios,IPeliculasNegocio peliculasNegocio) {
+    public AdministradorCuenta(ICiudadesNegocio ciudadesNegocio,ISucursalesNegocio sucursalesNegocio,ISalasNegocios salasNegocios,IPeliculasNegocio peliculasNegocio, IFuncionesNegocio funcionesNegocio) {
         this.ciudadesNegocio=ciudadesNegocio;
         this.sucursalesNegocio=sucursalesNegocio;
         this.salasNegocios=salasNegocios;
         this.peliculasNegocio=peliculasNegocio;
+        this.funcionesNegocio=funcionesNegocio;
         initComponents();
     }
 
@@ -88,7 +91,7 @@ public class AdministradorCuenta extends javax.swing.JFrame {
                  
         }
         this.setVisible(false);
-        Amdministrador amdministrador=new Amdministrador(ciudadesNegocio,sucursalesNegocio,salasNegocios,peliculasNegocio);
+        Amdministrador amdministrador=new Amdministrador(ciudadesNegocio,sucursalesNegocio,salasNegocios,peliculasNegocio, funcionesNegocio);
         amdministrador.setVisible(true);
 
 

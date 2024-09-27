@@ -32,44 +32,27 @@ public class PeliculasNegocio implements IPeliculasNegocio {
         }
     }
 
+    @Override
     public void guardar(PeliculasDTO peliculaDTO) throws NegocioException {
-    Connection cn = null; // Mueve la declaración aquí
-    try {
-        cn = conexionBD.crearConexion();
-        cn.setAutoCommit(false);
-        Peliculas pelicula = convertirADTO(peliculaDTO);
-        
-        if (reglasNegocio(peliculaDTO)) {
-            this.peliculaDAO.guardar(pelicula);
-            cn.commit();
-        } else {
-            JOptionPane.showMessageDialog(null, "No cumple con las reglas del Negocio");
-            cn.rollback(); // Asegúrate de hacer rollback si no cumple las reglas
-        }
-
-    } catch (PersistenciaException e) {
-        throw new NegocioException("Error al guardar la pelicula en la base de datos", e);
-
-    } catch (SQLException ex) {
-        Logger.getLogger(PeliculasNegocio.class.getName()).log(Level.SEVERE, "SQL Error: " + ex.getMessage(), ex);
-        if (cn != null) {
-            try {
-                cn.rollback(); // Asegúrate de hacer rollback si hay un error
-            } catch (SQLException rollbackEx) {
-                Logger.getLogger(PeliculasNegocio.class.getName()).log(Level.SEVERE, "Rollback Error: " + rollbackEx.getMessage(), rollbackEx);
+        try {
+            cn = conexionBD.crearConexion();
+            cn.setAutoCommit(false);
+            Peliculas pelicula = convertirADTO(peliculaDTO);
+            if (reglasNegocio(peliculaDTO)) {
+                this.peliculaDAO.guardar(pelicula);
+                cn.commit();
+            } else {
+                JOptionPane.showMessageDialog(null, "No cumple con las reglas del Negocio");
             }
-        }
 
-    } finally {
-        if (cn != null) {
-            try {
-                cn.close(); // Cierra la conexión al final
-            } catch (SQLException closeEx) {
-                Logger.getLogger(PeliculasNegocio.class.getName()).log(Level.SEVERE, "Close Connection Error: " + closeEx.getMessage(), closeEx);
-            }
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al guardar la pelicula en la base de datos", e);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PeliculasNegocio.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
-}
 
     @Override
     public void eliminar(int id) throws NegocioException {

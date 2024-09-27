@@ -26,27 +26,34 @@ import javax.swing.JOptionPane;
 public class AgregarFunciones extends javax.swing.JFrame {
 
     private IFuncionesNegocio funcionesNegocio;
-
-    public AgregarFunciones(IFuncionesNegocio funcionesNegocio) {
-        initComponents();
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.funcionesNegocio = funcionesNegocio; // Guarda la lógica de negocio
-    }
-
-    AgregarFunciones() {
-        initComponents();
-    }
-
-    private void guardarFuncion(FuncionesDTO nuevaFuncion) throws NegocioException, PersistenciaException {
-        funcionesNegocio.guardar(nuevaFuncion); // Usa el nuevo objeto FuncionesDTO
-        JOptionPane.showMessageDialog(this, "Función guardada con éxito.");
-        initComponents();
-    }
+    
 
     /**
      * Creates new form AgregarFunciones
      */
+    public AgregarFunciones(IFuncionesNegocio funcionesNegocio) {
+        this.funcionesNegocio = funcionesNegocio; // Guarda la lógica de negocio
+        initComponents();
+    }
+
+    AgregarFunciones() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void guardarFuncion(FuncionesDTO nuevaFuncion) throws PersistenciaException {
+        funcionesNegocio.guardar(nuevaFuncion); // Usa el nuevo objeto FuncionesDTO
+        JOptionPane.showMessageDialog(this, "Función guardada con éxito.");
+        limpiarCampos();
+    }
+
+    private void limpiarCampos() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -245,7 +252,7 @@ public class AgregarFunciones extends javax.swing.JFrame {
         nuevaFuncion.setSala(sala);
         try {
             guardarFuncion(nuevaFuncion);
-        } catch (NegocioException | PersistenciaException ex) {
+        } catch (PersistenciaException ex) {
             Logger.getLogger(AgregarFunciones.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Error al guardar la funcion: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -261,42 +268,7 @@ public class AgregarFunciones extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarFunciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarFunciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarFunciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarFunciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            IFuncionesDAO funcionesDAO = new FuncionesDAO(new ConexionBD());
-            IFuncionesNegocio funcionesNegocio = new FuncionesNegocio(funcionesDAO);
-            new AgregarFunciones(funcionesNegocio).setVisible(true);
-
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAgregar;
     private javax.swing.JLabel jLabel1;

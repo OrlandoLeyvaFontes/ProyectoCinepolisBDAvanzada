@@ -8,6 +8,7 @@ import Negocio.ICiudadesNegocio;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
 import Negocio.ISucursalesNegocio;
+import Negocio.IFuncionesNegocio;
 
 /**
  *
@@ -18,6 +19,8 @@ private  ICiudadesNegocio ciudadesNegocio;
 private ISucursalesNegocio sucursalesNeggocio;
 private  ISalasNegocios salasNegocios;
 private IPeliculasNegocio peliculasNegocio;
+private IFuncionesNegocio funcionesNegocio;
+
     /**
      * Creates new form ExitoCiudad
      */
@@ -56,7 +59,7 @@ private IPeliculasNegocio peliculasNegocio;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 this.setVisible(false);
-        Amdministrador administrador=new Amdministrador(ciudadesNegocio,sucursalesNeggocio,salasNegocios,peliculasNegocio);
+        Amdministrador administrador=new Amdministrador(ciudadesNegocio,sucursalesNeggocio,salasNegocios,peliculasNegocio, funcionesNegocio);
 administrador.setVisible(true);
 
 

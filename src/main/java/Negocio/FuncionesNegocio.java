@@ -5,6 +5,7 @@
 package Negocio;
 
 import Entidad.Funciones;
+import Persistencia.FuncionesDAO;
 import Persistencia.IFuncionesDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.FuncionesDTO;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import dtoCinepolis.FuncionesFiltroTablaDTO;
+import dtoCinepolis.FuncionesTablaDTO;
 
 /**
  *
@@ -25,12 +27,10 @@ public class FuncionesNegocio implements IFuncionesNegocio {
         this.funcionesDAO = funcionesDAO;
     }
 
+    @Override
     public FuncionesDTO guardar(FuncionesDTO funcionDTO) throws PersistenciaException {
-        // Convertir DTO a entidad
         Funciones funcion = convertirAEntidad(funcionDTO);
-        // Guardar la entidad en la base de datos
         Funciones funcionGuardada = funcionesDAO.guardar(funcion);
-        // Convertir la entidad guardada de nuevo a DTO para devolver
         return convertirADTO(funcionGuardada);
     }
 
@@ -66,35 +66,16 @@ public class FuncionesNegocio implements IFuncionesNegocio {
         );
     }
 
-    public List<FuncionesDTO> buscarFunciones(FuncionesFiltroTablaDTO filtro) throws NegocioException, PersistenciaException {
-        if (filtro == null) {
-            throw new NegocioException("El filtro recibido es null");
+    @Override
+    public List<FuncionesTablaDTO> buscarFuncionesTabla(FuncionesFiltroTablaDTO filtro) throws NegocioException {
+        List<FuncionesTablaDTO> funcionesLista;
+        try {
+            funcionesLista = funcionesDAO.buscarFuncionesTabla(filtro);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(FuncionesNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error al buscar funciones: " + ex.getMessage(), ex); // Lanzar la excepción
         }
-
-        List<FuncionesDTO> funcionesLista;
-
-        funcionesLista = funcionesDAO.buscarFunciones(filtro);
-
-        if (funcionesLista == null || funcionesLista.isEmpty()) {
-            throw new NegocioException("No se encontraron registros con los filtros");
-        }
-
         return funcionesLista;
     }
 
-    public List<FuncionesDTO> buscarFuncionesTabla(FuncionesFiltroTablaDTO filtro) throws NegocioException, PersistenciaException {
-        if (filtro == null) {
-            throw new NegocioException("El filtro recibido es null");
-        }
-
-        List<FuncionesDTO> funcionesLista = null;
-
-        funcionesLista = funcionesDAO.buscarFuncionesTabla(filtro);
-
-        if (funcionesLista == null || funcionesLista.isEmpty()) {
-            throw new NegocioException("No se encontraron registros con los filtros");
-        }
-
-        return funcionesLista;
-    }
 }
