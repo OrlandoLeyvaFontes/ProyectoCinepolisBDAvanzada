@@ -80,7 +80,7 @@ public class Amdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         this.setVisible(false);
         AgregarSucursales agregarSucursales = new AgregarSucursales(ciudadesNegocios, sucursalesNegocio);
         agregarSucursales.setVisible(true);
@@ -89,9 +89,9 @@ public class Amdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+
         this.setVisible(false);
-        CatalogoSalas catalogoSalas = new CatalogoSalas(salasNegocios,sucursalesNegocio);
+        CatalogoSalas catalogoSalas = new CatalogoSalas(salasNegocios, sucursalesNegocio);
         catalogoSalas.setVisible(true);
 
         // TODO add your handling code here:

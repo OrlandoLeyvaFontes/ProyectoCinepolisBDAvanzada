@@ -35,6 +35,7 @@ public class CiudadesNegocio implements ICiudadesNegocio {
     private Ciudad convertirADominio(CiudadesDTO ciudadesDTO) {
         Ciudad ciudad = new Ciudad();
         ciudad.setNombre(ciudadesDTO.getNombre());
+        ciudad.setEstaEliminado(ciudadesDTO.isEstaEliminado());
         return ciudad;
     }
 

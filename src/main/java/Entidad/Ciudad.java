@@ -12,7 +12,7 @@ public class Ciudad {
 
     int id;
     String nombre;
-    private boolean estaEliminado;
+     boolean estaEliminado;
 
     public Ciudad() {
     }
@@ -43,4 +43,13 @@ public class Ciudad {
         this.nombre = nombre;
     }
 
+    public boolean isEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
+    }
+
+    
 }

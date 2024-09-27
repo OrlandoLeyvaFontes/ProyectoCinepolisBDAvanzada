@@ -29,7 +29,7 @@ public class AgregarCiudades extends javax.swing.JFrame {
 
     private void agregarCiudad() throws PersistenciaException {
         String nombre = jTextField1.getText();
-        CiudadesDTO ciudadesDTO = new CiudadesDTO(nombre);
+        CiudadesDTO ciudadesDTO = new CiudadesDTO(nombre,false);
         ciudadesNegocio.guardar(ciudadesDTO);
     }
 

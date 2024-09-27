@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
  * @author Oley
  */
 public class AgregarSucursales extends javax.swing.JFrame {
+
     private ICiudadesNegocio ciudadesNegocio;
     private ISucursalesNegocio sucursalesNegocio;
 
@@ -35,29 +36,30 @@ public class AgregarSucursales extends javax.swing.JFrame {
      * Creates new form AñadirSucursales
      */
     public AgregarSucursales(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio) {
- this.sucursalesNegocio = sucursalesNegocio;
+        this.sucursalesNegocio = sucursalesNegocio;
         this.ciudadesNegocio = ciudadesNegocio;
         initComponents();
 
-       
     }
-    private void agregarSucursal(ICiudadesNegocio ciudadesNegocio,ISucursalesNegocio sucursalesNegocio) throws PersistenciaException {
-    String nombreSucursal = jTextField1.getText();
-    String nombreCiudad = jTextField2.getText();   
-    
-    try {
-        CiudadesDTO ciudad = ciudadesNegocio.buscarCiudadPorNombre(nombreCiudad);
-        
-        if (ciudad != null) {
-            SucursalesDTO sucursalesDTO = new SucursalesDTO(nombreSucursal, ciudad);
-            sucursalesNegocio.guardarSucursalConCiudadPorNombre(sucursalesDTO, nombreCiudad);
-        } else {
-            JOptionPane.showMessageDialog(this, "La ciudad no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+
+    private void agregarSucursal(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio) throws PersistenciaException {
+        String nombreSucursal = jTextField1.getText();
+        String nombreCiudad = jTextField2.getText();
+
+        try {
+            CiudadesDTO ciudad = ciudadesNegocio.buscarCiudadPorNombre(nombreCiudad);
+
+            if (ciudad != null) {
+                SucursalesDTO sucursalesDTO = new SucursalesDTO(nombreSucursal, ciudad);
+                sucursalesNegocio.guardarSucursalConCiudadPorNombre(sucursalesDTO, nombreCiudad);
+            } else {
+                JOptionPane.showMessageDialog(this, "La ciudad no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (NegocioException e) {
-        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -123,13 +125,13 @@ public class AgregarSucursales extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      
-    try {
-        agregarSucursal(ciudadesNegocio, sucursalesNegocio);
-    } catch (PersistenciaException ex) {
-        Logger.getLogger(AgregarSucursales.class.getName()).log(Level.SEVERE, null, ex);
-    }
-        
+
+        try {
+            agregarSucursal(ciudadesNegocio, sucursalesNegocio);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(AgregarSucursales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
