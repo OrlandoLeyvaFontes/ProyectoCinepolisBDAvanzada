@@ -29,7 +29,7 @@ public class FuncionesDAO implements IFuncionesDAO {
 
     @Override
     public Funciones guardar(Funciones funcion) throws PersistenciaException {
-        String sql = "INSERT INTO funciones(id, nombrePelicula, horaInicio, precio, Sala, estaEliminado) VALUES(?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO funciones(id, nombrePelicula, HoraInicio, Precio, IdSala, estaEliminado) VALUES(?, ?, ?, ?, ?, ?)";
         try (Connection conexion = conexionBD.crearConexion(); PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, funcion.getId());
             ps.setString(2, funcion.getNombrePelicula());
