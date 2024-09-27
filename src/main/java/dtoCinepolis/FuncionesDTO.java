@@ -13,46 +13,40 @@ import java.time.LocalTime;
  */
 public class FuncionesDTO {
 
-    String nombre;
-    int costo;
-    LocalTime horaInicio;
-    boolean estaEliminado;
-    Salas salas;
+    private int id;
+    private String nombrePelicula;
+    private LocalTime horaInicio;
+    private double precio;
+    private int sala;
+    private boolean estaEliminado;
 
-    public FuncionesDTO(String nombre, int costo, LocalTime horaInicio, boolean estaEliminado) {
-        this.nombre = nombre;
-        this.costo = costo;
+    public FuncionesDTO(int id, String nombrePelicula, LocalTime horaInicio, double precio, int sala, boolean estaEliminado) {
+        this.id = id;
+        this.nombrePelicula = nombrePelicula;
         this.horaInicio = horaInicio;
+        this.precio = precio;
+        this.sala = sala;
         this.estaEliminado = estaEliminado;
     }
-    
-    public FuncionesDTO(String nombre, int costo, LocalTime horaInicio, boolean estaEliminado, Salas salas) {
-        this.nombre = nombre;
-        this.costo = costo;
-        this.horaInicio = horaInicio;
-        this.estaEliminado = estaEliminado;
-        this.salas=salas;
-    }
-    
-    public FuncionesDTO(){
-        
-    }
-    
 
-    public String getNombre() {
-        return nombre;
+    public FuncionesDTO() {
+
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public int getId() {
+        return id;
     }
 
-    public int getCosto() {
-        return costo;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setCosto(int costo) {
-        this.costo = costo;
+    public String getNombrePelicula() {
+        return nombrePelicula;
+    }
+
+    public void setNombrePelicula(String nombrePelicula) {
+        this.nombrePelicula = nombrePelicula;
     }
 
     public LocalTime getHoraInicio() {
@@ -63,6 +57,22 @@ public class FuncionesDTO {
         this.horaInicio = horaInicio;
     }
 
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getSala() {
+        return sala;
+    }
+
+    public void setSala(int sala) {
+        this.sala = sala;
+    }
+
     public boolean isEstaEliminado() {
         return estaEliminado;
     }
@@ -71,13 +81,4 @@ public class FuncionesDTO {
         this.estaEliminado = estaEliminado;
     }
 
-    public Salas getSalas() {
-        return salas;
-    }
-
-    public void setSalas(Salas salas) {
-        this.salas = salas;
-    }
-    
-    
 }

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public interface IPeliculasDAO {
 
     public IConexionBD getConexionBD();
+    
+    ArrayList<PeliculasDTO> leer() throws PersistenciaException;
 
     void guardar(Peliculas pelicula) throws PersistenciaException;
     

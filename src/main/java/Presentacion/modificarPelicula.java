@@ -32,26 +32,6 @@ public class ModificarPelicula extends javax.swing.JFrame {
         IPeliculasDAO peliculaDAO = new PeliculasDAO(conexionBD);
         peliculasNegocio = new PeliculasNegocio(peliculaDAO);
     }
-//
-//    private void modificarPelicula() throws NegocioException {
-//        int idPelicula = Integer.parseInt(txtID.getText());
-//        String titulo = txtTitulo.getText();
-//        String clasificacion = txtClasificacion.getText();
-//        String genero = txtGenero.getText();
-//        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
-//        String sinopsis = txtSinopsis.getText();
-//        String paisOrigen = txtOrigen.getText();        
-//        String linkTrailer = txtLinkTrailer.getText();
-//    String rutaImagen = txtRutaImagen.getText();
-//
-//        // Crear el objeto DTO
-//        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, sinopsis, linkTrailer, rutaImagen);
-//        peliculaDTO.setId(idPelicula);
-//
-//        // Llama al método en la capa de negocio para actualizar
-//        peliculasNegocio.actualizar(peliculaDTO);
-//        
-//    }
 
     /**
      * This method is called from within the constructor to initialize the form.

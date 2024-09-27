@@ -23,50 +23,61 @@ public class FuncionesDAO implements IFuncionesDAO {
         this.conexionBD = conexionBD;
     }
 
+    @Override
     public Funciones guardar(Funciones funcion) throws PersistenciaException {
-        String sql = "INSERT INTO funciones(nombre, costo, horaInicio, estaEliminado) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO funciones(id, nombrePelicula, horaInicio, precio, Sala, estaEliminado) VALUES(?, ?, ?, ?, ?, ?)";
         try (Connection conexion = conexionBD.crearConexion(); PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, funcion.getNombre());
-            ps.setInt(2, funcion.getCosto());
+            ps.setInt(1, funcion.getId());
+            ps.setString(2, funcion.getNombrePelicula());
             ps.setObject(3, funcion.getHoraInicio());
-            ps.setBoolean(4, funcion.isEstaEliminado());
+            ps.setDouble(4, funcion.getPrecio());
+            ps.setInt(5, funcion.getSala());
+            ps.setBoolean(6, funcion.isEstaEliminado());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenciaException("Error al guardar la funcion", e);
+            throw new PersistenciaException("Error al guardar la función", e);
         }
-        return funcion;
+        return funcion; // Retorna la función guardada
     }
 
+    @Override
     public Funciones eliminar(int id) throws PersistenciaException {
         String sql = "UPDATE funciones SET estaEliminado = 1 WHERE id = ?";
-        Funciones funcionEliminada = null;
+        Funciones funcionEliminada = buscarPorId(id); // Buscar antes de eliminar
+        if (funcionEliminada == null) {
+            throw new PersistenciaException("No se encontró la función con el id: " + id);
+        }
+
         try (Connection conexion = conexionBD.crearConexion(); PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new PersistenciaException("Error al eliminar la función", e);
         }
-        return funcionEliminada;
+        return funcionEliminada; // Devolver la función que fue eliminada
     }
 
-    public Funciones buscarPorNombre(String nombre) throws PersistenciaException {
-        String sql = "SELECT * FROM funciones WHERE nombre = ?";
+    public Funciones buscarPorId(int id) throws PersistenciaException {
+        String sql = "SELECT * FROM funciones WHERE id = ?";
         Funciones funcion = null;
         try (Connection conexion = conexionBD.crearConexion(); PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, nombre);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                funcion = new Funciones(
-                    rs.getString("nombre"),
-                    rs.getInt("costo"),
+                funcion = new Funciones( // Se corrigió el uso de la variable
+                    rs.getInt("id"), // Obtener el ID correctamente
+                    rs.getString("nombrePelicula"), // Asegúrate de que este campo exista en la base de datos
                     rs.getObject("horaInicio", LocalTime.class),
+                    rs.getDouble("costo"), // Se cambió "costo" a "precio"
+                    rs.getInt("IdSala"),
                     rs.getBoolean("estaEliminado")
                 );
             }
         } catch (SQLException e) {
-            throw new PersistenciaException("Error al buscar la funcion por nombre", e);
+            throw new PersistenciaException("Error al buscar la función por id", e);
         }
         return funcion;
     }
 
 }
+

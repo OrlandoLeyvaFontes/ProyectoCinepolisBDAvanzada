@@ -16,5 +16,5 @@ public interface IFuncionesDAO {
 
     Funciones eliminar(int id) throws PersistenciaException;
 
-    Funciones buscarPorNombre(String nombre) throws PersistenciaException;
+     public Funciones buscarPorId(int id) throws PersistenciaException;
 }

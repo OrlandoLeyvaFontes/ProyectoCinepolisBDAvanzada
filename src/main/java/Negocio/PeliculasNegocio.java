@@ -24,6 +24,15 @@ public class PeliculasNegocio implements IPeliculasNegocio {
     }
 
     @Override
+    public ArrayList<PeliculasDTO> leer() throws NegocioException {
+        try {
+            return peliculaDAO.leer();
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al leer los clientes desde la base de datos", e);
+        }
+    }
+
+    @Override
     public void guardar(PeliculasDTO peliculaDTO) throws NegocioException {
         try {
             cn = conexionBD.crearConexion();
