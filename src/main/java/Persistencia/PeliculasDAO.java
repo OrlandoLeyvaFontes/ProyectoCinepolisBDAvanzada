@@ -46,7 +46,6 @@ public class PeliculasDAO implements IPeliculasDAO {
                 peliculaDTO.setDuracionMinutos(rs.getInt("duracionMinutos"));
                 peliculaDTO.setSinopsis(rs.getString("sinopsis")); // Asegúrate de que el nombre sea correcto
                 peliculaDTO.setLinkTrailer(rs.getString("linkTrailer"));
-                peliculaDTO.setRutaImagen(rs.getString("rutaImagen"));
                 lista.add(peliculaDTO);
             }
 

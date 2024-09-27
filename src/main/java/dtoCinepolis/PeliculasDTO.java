@@ -18,6 +18,7 @@ public class PeliculasDTO {
     String paisOrigen;
     String texto;
     String linkTrailer;
+    String sinopsis;
 
     public PeliculasDTO() {
     }
@@ -30,6 +31,7 @@ public class PeliculasDTO {
         this.paisOrigen = paisOrigen;
         this.texto = texto;
         this.linkTrailer = linkTrailer;
+        this.sinopsis=sinopsis;
     }
 
     public PeliculasDTO(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
@@ -41,6 +43,15 @@ public class PeliculasDTO {
         this.paisOrigen = paisOrigen;
         this.texto = texto;
     }
+    
+    public String getSinopsis() {
+        return sinopsis;
+    }
+
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
+    }
+    
 
     public int getId() {
         return this.id;
