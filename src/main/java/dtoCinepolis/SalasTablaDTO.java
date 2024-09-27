@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
  */
 public class SalasTablaDTO {
 
+    int id;
+
     String nombre;
     int cantidadAsientos;
     LocalDateTime tiempoLimpieza;
@@ -57,6 +59,14 @@ public class SalasTablaDTO {
 
     public void setCostoSugerido(Double CostoSugerido) {
         this.CostoSugerido = CostoSugerido;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

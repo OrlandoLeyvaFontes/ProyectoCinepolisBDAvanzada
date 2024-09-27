@@ -24,28 +24,33 @@ public class CatalogoSalas extends javax.swing.JFrame {
 
     private ISalasNegocios salasNegocios;
     private ISucursalesNegocio sucursalesNegocio;
-private int idSalasSeleccionada = -1;
+    private int idSalasSeleccionada = -1;
 
     /**
      * Creates new form CatalogoSalas
      */
-    public CatalogoSalas(ISalasNegocios salasNegocios,ISucursalesNegocio sucursalesNegocio) {
-        this.sucursalesNegocio=sucursalesNegocio;
-        this.salasNegocios=salasNegocios;
+    public CatalogoSalas(ISalasNegocios salasNegocios, ISucursalesNegocio sucursalesNegocio) {
+        this.sucursalesNegocio = sucursalesNegocio;
+        this.salasNegocios = salasNegocios;
         initComponents();
-        
+
         cargarTablaSalas();
-  jTable1.addMouseListener(new MouseAdapter() {
-    public void mouseClicked(MouseEvent e) {
-        if (e.getClickCount() == 1) { 
-            int row = jTable1.getSelectedRow();
-            if (row != -1) {
-               idSalasSeleccionada = (int) jTable1.getValueAt(row, 0); 
-                System.out.println("ID Ciudad seleccionada: " + idSalasSeleccionada);
+        jTable1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    int row = jTable1.getSelectedRow();
+                    if (row != -1) {
+                        idSalasSeleccionada = (int) jTable1.getValueAt(row, 4);
+                        System.out.println("ID Ciudad seleccionada: " + idSalasSeleccionada);
+                    }
                 }
+            }
+        });
     }
-    }
-    });
+
+    private void abrirDetallesSalas(int idSalas) {
+        DetallesSalas detallesSalas = new DetallesSalas(idSalas,salasNegocios, sucursalesNegocio);
+        detallesSalas.setVisible(true);
     }
 
     /**
@@ -60,11 +65,12 @@ private int idSalasSeleccionada = -1;
         }
         DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
         salasLista.forEach(row -> {
-            Object[] fila = new Object[4];
+            Object[] fila = new Object[5];
             fila[0] = row.getNombre();
             fila[1] = row.getCantidadAsientos();
-            fila[2]=row.getTiempoLimpieza();
-            fila[3]=row.getCantidadAsientos();
+            fila[2] = row.getTiempoLimpieza();
+            fila[3] = row.getCantidadAsientos();
+            fila[4]=row.getId();
             modeloTabla.addRow(fila);
         });
     }
@@ -74,9 +80,23 @@ private int idSalasSeleccionada = -1;
         modeloTabla.setRowCount(0);
     }
 
+    private int getIdSelecionadoTablaSalas() {
+        int indiceFilasSelecionada = this.jTable1.getSelectedRow();
+        if (indiceFilasSelecionada != -1) {
+            DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
+
+            int indiceColumnaId = 0;
+            int idSocioSeleccionado = (int) modelo.getValueAt(indiceFilasSelecionada,
+                    indiceColumnaId);
+            return idSocioSeleccionado;
+        } else {
+            return 0;
+        }
+    }
+
     private void cargarTablaSalas() {
         try {
-            SalaFiltroTablaDTO filtroTablaDTO=obtenerFiltrosTablas();
+            SalaFiltroTablaDTO filtroTablaDTO = obtenerFiltrosTablas();
             List<SalasTablaDTO> salasLista = salasNegocios.buscarSalaTabla(filtroTablaDTO);
             BorrarRegistroTablaSalas();
             AgregarRegistroTablaSalas(salasLista);
@@ -137,17 +157,17 @@ private int idSalasSeleccionada = -1;
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "nombre", "Cantidad Asientos", "Tiempo limpieza", "costo sugerido"
+                "nombre", "Cantidad Asientos", "Tiempo limpieza", "costo sugerido", "id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Double.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -159,12 +179,17 @@ private int idSalasSeleccionada = -1;
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 170));
 
         jButton3.setText("<--");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, -1, 20));
 
         jButton4.setText("-->");
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, -1, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, -1, -1));
 
         jButton5.setText("Detalles");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, -1, -1));
 
         jButton6.setText("Regresar");
@@ -184,8 +209,8 @@ private int idSalasSeleccionada = -1;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         this.setVisible(false);
-       AgregarSalas agregarSalas = new AgregarSalas(sucursalesNegocio, salasNegocios);
-    agregarSalas.setVisible(true);
+        AgregarSalas agregarSalas = new AgregarSalas(sucursalesNegocio, salasNegocios);
+        agregarSalas.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -205,9 +230,21 @@ private int idSalasSeleccionada = -1;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         cargarTablaSalas();
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (idSalasSeleccionada != -1) {
+            System.out.println("ID sala antes de abrir: " + idSalasSeleccionada);
+            abrirDetallesSalas(idSalasSeleccionada);
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona una sala de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

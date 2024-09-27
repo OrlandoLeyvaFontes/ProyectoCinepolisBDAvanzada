@@ -28,10 +28,9 @@ public class CiudadesDAO implements ICiudadesDAO {
 
     @Override
     public Ciudad guardar(Ciudad ciudad) throws PersistenciaException {
-        String sql = "INSERT INTO ciudades(nombre,estaEliminado) VALUES(?,?)";
+        String sql = "INSERT INTO ciudades(nombre) VALUES(?)";
         try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sql)) {
             prepared.setString(1, ciudad.getNombre());
-            prepared.setBoolean(2, ciudad.isEstaEliminado());
             prepared.executeUpdate();
 
         } catch (SQLException e) {
