@@ -5,7 +5,6 @@
 package Administrativp;
 
 import Negocio.IFuncionesNegocio;
-import Presentacion.AgregarFunciones;
 import dtoCinepolis.FuncionesFiltroTablaDTO;
 import dtoCinepolis.FuncionesTablaDTO;
 import java.awt.event.MouseAdapter;
@@ -187,8 +186,8 @@ public class CatalogoFunciones extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
-//        AgregarFunciones agregar = new AgregarFunciones();
-//        agregar.setVisible(true);
+       AgregarFunciones agregar = new AgregarFunciones();
+        agregar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnAgregarActionPerformed
 

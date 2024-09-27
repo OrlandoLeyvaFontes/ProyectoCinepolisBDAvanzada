@@ -16,6 +16,7 @@ import dtoCinepolis.PeliculasDTO;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,10 +26,19 @@ import javax.swing.JOptionPane;
 public class AgregarPeliculas extends javax.swing.JFrame {
 
     private IPeliculasNegocio peliculasNegocio;
+    IPeliculasDAO peliculasDAO = new PeliculasDAO(new ConexionBD());
 
     public AgregarPeliculas(IPeliculasNegocio peliculasNegocio) {
         initComponents();
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.peliculasNegocio = peliculasNegocio;
+    }
+
+    private void guardarPelicula(PeliculasDTO nuevaPelicula) throws NegocioException, PersistenciaException {
+        peliculasNegocio.guardar(nuevaPelicula); // Usa el nuevo objeto FuncionesDTO
+        JOptionPane.showMessageDialog(this, "Pelicula guardada con éxito.");
+        initComponents();
     }
 
     /**
@@ -104,7 +114,7 @@ public class AgregarPeliculas extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 390, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, -1, -1));
 
         jLabel8.setText("Link trailer:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, -1, -1));
@@ -132,16 +142,51 @@ public class AgregarPeliculas extends javax.swing.JFrame {
         String clasificacion = txtClasificacion.getText();
         String genero = txtGenero.getText();
         String paisOrigen = txtOrigen.getText();
-        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
+        String duracionTexto = txtDuracion.getText();
         String sinopsis = txtSinopsis.getText();
         String linkTrailer = txtLinkTrailer.getText();
         String rutaImagen = txtRutaImagen.getText();
+
+        if (titulo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El titulo es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (clasificacion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La clasificacion es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (genero.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El genero es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (paisOrigen.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El pais de origen es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (sinopsis.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La sinopsis es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (linkTrailer.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El link del trailer es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (rutaImagen.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La imaguen es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (duracionTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La duracion es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int duracionMinutos = Integer.parseInt(duracionTexto);
 
         PeliculasDTO peliculasDTO = new PeliculasDTO(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, linkTrailer, rutaImagen);
         try {
             peliculasNegocio.guardar(peliculasDTO);
         } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al guardar la pelicula: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -149,7 +194,7 @@ public class AgregarPeliculas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRutaImagenActionPerformed
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

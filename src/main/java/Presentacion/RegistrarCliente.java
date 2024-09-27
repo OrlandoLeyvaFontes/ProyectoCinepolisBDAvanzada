@@ -4,7 +4,9 @@
  */
 package Presentacion;
 
+import Administrativp.AgregarFunciones;
 import Negocio.ClientesNegocio;
+import Negocio.ICiudadesNegocio;
 import Negocio.IClientesNegocios;
 import Negocio.NegocioException;
 import Persistencia.ClientesDAO;
@@ -26,6 +28,7 @@ import javax.swing.JOptionPane;
 public class RegistrarCliente extends javax.swing.JFrame {
 
     private IClientesNegocios clienteNegocio;
+    private ICiudadesNegocio ciudadesNegocio;
     
 
     /**
@@ -37,6 +40,12 @@ public class RegistrarCliente extends javax.swing.JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.clienteNegocio = clienteNegocio; // Guarda la lógica de negocio
+    }
+    
+    public RegistrarCliente(ICiudadesNegocio ciudadesNegocio, IClientesNegocios clientesNegocios) {
+        initComponents();
+        this.clienteNegocio = clienteNegocio;
+        this.ciudadesNegocio=ciudadesNegocio;
     }
 
     private void guardarCliente(ClientesDTO nuevoCliente) throws NegocioException, PersistenciaException {
@@ -257,6 +266,9 @@ public class RegistrarCliente extends javax.swing.JFrame {
         jTextField5.setText("");
         jTextField6.setText("");
         jTextField7.setText("");
+        ExitoCliente continuar = new ExitoCliente();
+        continuar.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     /**
