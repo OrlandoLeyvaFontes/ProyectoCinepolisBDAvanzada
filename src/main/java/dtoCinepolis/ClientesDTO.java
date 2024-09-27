@@ -4,7 +4,6 @@
  */
 package dtoCinepolis;
 
-import Entidad.Ciudad;
 import java.time.LocalDate;
 
 /**
@@ -20,12 +19,12 @@ public class ClientesDTO {
     LocalDate fechaNacimiento;
     String correo;
     String contraseña;
-    CiudadesDTO ciudad;
+    String ciudad;
 
     public ClientesDTO() {
     }
 
-    public ClientesDTO(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, CiudadesDTO ciudad) {
+    public ClientesDTO(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, String ciudad) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -35,7 +34,7 @@ public class ClientesDTO {
         this.ciudad = ciudad;
     }
 
-    public ClientesDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, CiudadesDTO ciudad) {
+    public ClientesDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, String ciudad) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -46,17 +45,13 @@ public class ClientesDTO {
         this.ciudad = ciudad;
     }
 
-    public CiudadesDTO getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(CiudadesDTO ciudad) {
-        this.ciudad = ciudad;
-    }
-
-   
-
-    
+//    public CiudadesDTO getCiudad() {
+//        return ciudad;
+//    }
+//
+//    public void setCiudad(CiudadesDTO ciudad) {
+//        this.ciudad = ciudad;
+//    }
 
     public int getId() {
         return id;
@@ -112,5 +107,14 @@ public class ClientesDTO {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    
+    public void setCiudad(String ciudad) {
+         this.ciudad=ciudad;
     }
 }

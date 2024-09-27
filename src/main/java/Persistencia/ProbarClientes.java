@@ -32,7 +32,7 @@ public class ProbarClientes {
         clientes.setFechaNacimiento(fechaNacimiento);
         clientes.setCorreo("juan.perez@example.com");
         clientes.setContraseña("contrasena123");
-        clientes.setCiudad(ciudad);
+//        clientes.setCiudad(ciudad);
 
         try {
             clientesDAO.guardar(clientes);

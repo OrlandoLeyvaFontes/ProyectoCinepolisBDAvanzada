@@ -4,8 +4,12 @@
  */
 package Presentacion;
 
+import Negocio.ClientesNegocio;
 import Negocio.IClientesNegocios;
 import Negocio.NegocioException;
+import Persistencia.ClientesDAO;
+import Persistencia.ConexionBD;
+import Persistencia.IClientesDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.ClientesDTO;
 import java.time.LocalDate;
@@ -14,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author aleja
@@ -21,22 +26,25 @@ import javax.swing.JOptionPane;
 public class RegistrarCliente extends javax.swing.JFrame {
 
     private IClientesNegocios clienteNegocio;
+    
+
     /**
      * Creates new form RegistrarCliente
+     * @param clientesNegocio
      */
-    public RegistrarCliente() {
-         initComponents();
+    public RegistrarCliente(IClientesNegocios clienteNegocio) {
+        initComponents();
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.clienteNegocio = clienteNegocio; // Guarda la lógica de negocio
     }
 
     private void guardarCliente(ClientesDTO nuevoCliente) throws NegocioException, PersistenciaException {
-        clienteNegocio.guardar(nuevoCliente); // Usa el nuevo objeto FuncionesDTO
+        clienteNegocio.guardarCliente(nuevoCliente); // Usa el nuevo objeto FuncionesDTO
         JOptionPane.showMessageDialog(this, "Cliente guardado con éxito.");
         initComponents();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -218,13 +226,13 @@ public class RegistrarCliente extends javax.swing.JFrame {
         if (correo.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El correo es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
             return;
-        } 
+        }
         if (contraseña.isEmpty()) {
             JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoTexto, formatter);
 
         ClientesDTO nuevoCliente = new ClientesDTO();
@@ -235,13 +243,20 @@ public class RegistrarCliente extends javax.swing.JFrame {
         nuevoCliente.setCiudad(ciudad);
         nuevoCliente.setCorreo(correo);
         nuevoCliente.setContraseña(contraseña);
-        
+
         try {
-            guardarFuncion(nuevaFuncion);
+            guardarCliente(nuevoCliente);
         } catch (NegocioException | PersistenciaException ex) {
             Logger.getLogger(AgregarFunciones.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error al guardar la función: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     /**
@@ -272,10 +287,11 @@ public class RegistrarCliente extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistrarCliente().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            IClientesDAO clientesDAO = new ClientesDAO(new ConexionBD());
+            IClientesNegocios clienteNegocio = new ClientesNegocio(clientesDAO);
+            new RegistrarCliente(clienteNegocio).setVisible(true);
+
         });
     }
 

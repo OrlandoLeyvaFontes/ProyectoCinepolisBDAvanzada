@@ -19,7 +19,7 @@ public class Clientes {
     LocalDate fechaNacimiento;
     String correo;
     String contraseña;
-    Ciudad ciudad;
+    String ciudad;
 
     public Clientes() {
     }
@@ -29,7 +29,7 @@ public class Clientes {
         this.contraseña = contraseña;
     }
 
-    public Clientes(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, Ciudad ciudad) {
+    public Clientes(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, String ciudad) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -39,7 +39,7 @@ public class Clientes {
         this.ciudad = ciudad;
     }
 
-    public Clientes(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, Ciudad ciudad) {
+    public Clientes(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, String ciudad) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -50,11 +50,11 @@ public class Clientes {
         this.ciudad = ciudad;
     }
 
-    public Ciudad getCiudad() {
+    public String getCiudad() {
         return ciudad;
     }
 
-    public void setCiudad(Ciudad ciudad) {
+    public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
 

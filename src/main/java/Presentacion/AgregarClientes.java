@@ -172,7 +172,7 @@ public class AgregarClientes extends javax.swing.JFrame {
             clientesDTO.setNombre(nombre);
             clientesDTO.setApellidoPaterno(apellidoPaterno);
             clientesDTO.setApellidoMaterno(apellidoMaterno);
-            clientesDTO.setFechaNacimiento(fechaNacimientoCompleta);
+//            clientesDTO.setFechaNacimiento(fechaNacimientoCompleta);
             clientesDTO.setCorreo(correo);
             clientesDTO.setContraseña(contraseña);
 

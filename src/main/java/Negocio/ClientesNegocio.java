@@ -27,8 +27,12 @@ public class ClientesNegocio implements IClientesNegocios {
         this.ciudadesNegocio = ciudadesNegocio;
     }
 
+    public ClientesNegocio(IClientesDAO clientesDAO) {
+        this.clientesDAO = clientesDAO;
+    }
+
     @Override
-    public boolean iniciarSesion(String  correo, String  contrasena) throws NegocioException {
+    public boolean iniciarSesion(String correo, String contrasena) throws NegocioException {
         try {
             // Asumiendo que clientesDAO tiene un método iniciarSesion que acepta Strings
             boolean esValido = clientesDAO.iniciarSesion(correo, contrasena);
@@ -45,23 +49,36 @@ public class ClientesNegocio implements IClientesNegocios {
             throw new NegocioException("Error al validar el usuario", e);
         }
     }
-    @Override
-    public void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException {
+
+    public void guardarCliente(ClientesDTO clientesDTO) throws NegocioException {
         try {
-            String nombreN = nombre.trim().toLowerCase();
-            CiudadesDTO ciudadesDTO = ciudadesNegocio.buscarCiudadPorNombre(nombreN);
+            // Convertir DTO a entidad
+            Clientes cliente = convertirADTO(clientesDTO);
 
-            if (ciudadesDTO == null) {
-                throw new NegocioException("Ciudad no encontrada: " + nombre);
-            }
-
-            clientesDTO.setCiudad(ciudadesDTO);
-            Clientes clientes = convertirADTO(clientesDTO);
-            clientesDAO.guardar(clientes);
+            // Guardar el cliente
+            clientesDAO.guardar(cliente);
         } catch (PersistenciaException e) {
-            throw new NegocioException("Error al guardar el cliente en la capa de negocio", e);
+            throw new NegocioException("Error al guardar el cliente", e);
         }
     }
+
+//    @Override
+//    public void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException {
+//        try {
+//            String nombreN = nombre.trim().toLowerCase();
+//            CiudadesDTO ciudadesDTO = ciudadesNegocio.buscarCiudadPorNombre(nombreN);
+//
+//            if (ciudadesDTO == null) {
+//                throw new NegocioException("Ciudad no encontrada: " + nombre);
+//            }
+//
+//            clientesDTO.setCiudad(ciudadesDTO);
+//            Clientes clientes = convertirADTO(clientesDTO);
+//            clientesDAO.guardar(clientes);
+//        } catch (PersistenciaException e) {
+//            throw new NegocioException("Error al guardar el cliente en la capa de negocio", e);
+//        }
+//    }
 
     private Clientes convertirADTO(ClientesDTO clientesDTO) {
         if (clientesDTO == null) {
@@ -75,7 +92,8 @@ public class ClientesNegocio implements IClientesNegocios {
         clientes.setFechaNacimiento(clientesDTO.getFechaNacimiento());
         clientes.setCorreo(clientesDTO.getCorreo());
         clientes.setContraseña(clientesDTO.getContraseña());
-        clientes.setCiudad(convertirADTO(clientesDTO.getCiudad()));
+        clientes.setCiudad(clientesDTO.getCiudad());
+//        clientes.setCiudad(convertirADTO(clientesDTO.getCiudad()));
         return clientes;
 
     }
@@ -89,5 +107,10 @@ public class ClientesNegocio implements IClientesNegocios {
         ciudad.setNombre(ciudadesDTO.getNombre());
         return ciudad;
 
+    }
+
+    @Override
+    public void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
