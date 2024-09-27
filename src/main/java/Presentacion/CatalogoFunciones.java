@@ -36,6 +36,7 @@ public class CatalogoFunciones extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         BtnAnterior = new javax.swing.JButton();
         BtnSiguiente = new javax.swing.JButton();
+        BtnEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +73,8 @@ public class CatalogoFunciones extends javax.swing.JFrame {
 
         BtnSiguiente.setText("Siguiente");
 
+        BtnEditar.setText("Editar");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -95,6 +98,8 @@ public class CatalogoFunciones extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(BtnAnterior)
+                        .addGap(201, 201, 201)
+                        .addComponent(BtnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BtnSiguiente))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -117,7 +122,8 @@ public class CatalogoFunciones extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnAnterior)
-                    .addComponent(BtnSiguiente))
+                    .addComponent(BtnSiguiente)
+                    .addComponent(BtnEditar))
                 .addGap(35, 35, 35))
         );
 
@@ -178,6 +184,7 @@ public class CatalogoFunciones extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAgregar;
     private javax.swing.JButton BtnAnterior;
+    private javax.swing.JButton BtnEditar;
     private javax.swing.JButton BtnRegresar;
     private javax.swing.JButton BtnSiguiente;
     private javax.swing.JComboBox<String> jComboBox1;

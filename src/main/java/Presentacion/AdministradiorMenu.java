@@ -13,14 +13,16 @@ import Presentacion.MenuAdministrador.Negocios;
  * @author Oley
  */
 public class AdministradiorMenu extends javax.swing.JFrame {
-private Negocios negocios;
- private ICiudadesNegocio ciudadesNegocio;
-    private IClientesNegocios clientesNegocios;  
+
+    private Negocios negocios;
+    private ICiudadesNegocio ciudadesNegocio;
+    private IClientesNegocios clientesNegocios;
+
     /**
      * Creates new form AdministradiorMenu
      */
     public AdministradiorMenu() {
-        this.negocios=negocios;
+        this.negocios = negocios;
         initComponents();
     }
 
@@ -52,7 +54,7 @@ private Negocios negocios;
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, -1, -1));
 
         jLabel3.setText("MENU ADMINISTRADOR");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
 
         jLabel4.setText("Nombre:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
@@ -74,18 +76,18 @@ private Negocios negocios;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-        String nombre= jTextField1.getText();
-        String contraseña=jTextField2.getText();
-if(nombre.equals("admin")&& contraseña.equals("admin")){
+
+        String nombre = jTextField1.getText();
+        String contraseña = jTextField2.getText();
+        if (nombre.equals("admin") && contraseña.equals("admin")) {
             javax.swing.JOptionPane.showMessageDialog(this, "Acceso concedido");
-this.setVisible(false);
-MenuAdministrador menuAdministrador=new MenuAdministrador(negocios);
-menuAdministrador.setVisible(true);
-}else{
+            this.setVisible(false);
+            MenuAdministrador menuAdministrador = new MenuAdministrador(negocios);
+            menuAdministrador.setVisible(true);
+        } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos");
 
-}
+        }
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
