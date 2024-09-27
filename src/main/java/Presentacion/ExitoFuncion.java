@@ -4,6 +4,8 @@
  */
 package Presentacion;
 
+import Administrativp.CatalogoFunciones;
+
 /**
  *
  * @author aleja
