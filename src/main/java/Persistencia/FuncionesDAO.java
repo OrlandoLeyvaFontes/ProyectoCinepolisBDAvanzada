@@ -89,9 +89,9 @@ public class FuncionesDAO implements IFuncionesDAO {
     public List<FuncionesTablaDTO> buscarFuncionesTabla(FuncionesFiltroTablaDTO filtro) throws PersistenciaException {
     List<FuncionesTablaDTO> funcionesLista = new ArrayList<>();
     String sql = """
-                  SELECT id, nombre_pelicula, hora_inicio, precio, sala, esta_eliminado
+                  SELECT id, nombrePelicula, HoraInicio, Precio, IdSala, estaEliminado
                   FROM funciones
-                  WHERE nombre_pelicula LIKE ? 
+                  WHERE nombrePelicula LIKE ? 
                   LIMIT ? 
                   OFFSET ?
                   """;
@@ -109,17 +109,17 @@ public class FuncionesDAO implements IFuncionesDAO {
                 FuncionesTablaDTO funcionDTO = new FuncionesTablaDTO();
                 
                 funcionDTO.setId(resultado.getInt("id"));
-                funcionDTO.setNombrePelicula(resultado.getString("nombre_pelicula"));
+                funcionDTO.setNombrePelicula(resultado.getString("nombrePelicula"));
 
                 // Conversión del campo hora_inicio de Time a LocalTime
-                Time horaInicioBD = resultado.getTime("hora_inicio");
+                Time horaInicioBD = resultado.getTime("HoraInicio");
                 if (horaInicioBD != null) {
                     funcionDTO.setHoraInicio(horaInicioBD.toLocalTime());
                 }
 
-                funcionDTO.setPrecio(resultado.getDouble("precio"));
-                funcionDTO.setSala(resultado.getInt("sala"));
-                funcionDTO.setEstaEliminado(resultado.getBoolean("esta_eliminado"));
+                funcionDTO.setPrecio(resultado.getDouble("Precio"));
+                funcionDTO.setSala(resultado.getInt("IdSala"));
+                funcionDTO.setEstaEliminado(resultado.getBoolean("estaEliminado"));
 
                 // Agregar la función a la lista
                 funcionesLista.add(funcionDTO);

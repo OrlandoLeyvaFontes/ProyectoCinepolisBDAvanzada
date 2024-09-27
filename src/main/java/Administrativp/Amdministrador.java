@@ -19,18 +19,18 @@ public class Amdministrador extends javax.swing.JFrame {
     private ICiudadesNegocio ciudadesNegocios;
     private ISucursalesNegocio sucursalesNegocio;
     private ISalasNegocios salasNegocios;
-  private IPeliculasNegocio peliculasNegocio;
-  private IFuncionesNegocio funcionesNegocio;
-  
+    private IPeliculasNegocio peliculasNegocio;
+    private IFuncionesNegocio funcionesNegocio;
+
     /**
      * Creates new form Amdministrador
      */
-    public Amdministrador(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio, ISalasNegocios salasNegocios,IPeliculasNegocio peliculasNegocio, IFuncionesNegocio funcionesNegocio) {
+    public Amdministrador(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio, ISalasNegocios salasNegocios, IPeliculasNegocio peliculasNegocio, IFuncionesNegocio funcionesNegocio) {
         this.ciudadesNegocios = ciudadesNegocio;
         this.sucursalesNegocio = sucursalesNegocio;
         this.salasNegocios = salasNegocios;
-        this.peliculasNegocio=peliculasNegocio;
-        this.funcionesNegocio=funcionesNegocio;
+        this.peliculasNegocio = peliculasNegocio;
+        this.funcionesNegocio = funcionesNegocio;
         initComponents();
     }
 
@@ -107,7 +107,7 @@ public class Amdministrador extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.setVisible(false);
-        CatalogoPeliculas catalogoPeliculas=new CatalogoPeliculas(peliculasNegocio);
+        CatalogoPeliculas catalogoPeliculas = new CatalogoPeliculas(peliculasNegocio);
         catalogoPeliculas.setVisible(true);
 
         // TODO add your handling code here:
@@ -140,13 +140,13 @@ public class Amdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnAgregarFuncionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFuncionActionPerformed
-        AgregarFunciones agregar = new AgregarFunciones();
+        AgregarFunciones agregar = new AgregarFunciones(funcionesNegocio);
         agregar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarFuncionActionPerformed
 
     private void btnCatalogoFuncionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogoFuncionActionPerformed
-        CatalogoFunciones continuar = new CatalogoFunciones();
+        CatalogoFunciones continuar = new CatalogoFunciones(funcionesNegocio);
         continuar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCatalogoFuncionActionPerformed

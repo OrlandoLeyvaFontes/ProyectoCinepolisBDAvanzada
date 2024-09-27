@@ -26,7 +26,7 @@ public class CatalogoFunciones extends javax.swing.JFrame {
     private IFuncionesNegocio funcionNegocio;
     private int idFuncionSeleccionada = -1;
 
-    public CatalogoFunciones(IFuncionesNegocio funcionNegocio) throws PersistenciaException {
+    public CatalogoFunciones(IFuncionesNegocio funcionNegocio) {
         this.funcionNegocio = funcionNegocio;
         initComponents();
 

@@ -32,14 +32,11 @@ public class AgregarFunciones extends javax.swing.JFrame {
      * Creates new form AgregarFunciones
      */
     public AgregarFunciones(IFuncionesNegocio funcionesNegocio) {
-        this.funcionesNegocio = funcionesNegocio; // Guarda la lógica de negocio
+        this.funcionesNegocio = funcionesNegocio; 
         initComponents();
     }
 
-    AgregarFunciones() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+    
     private void guardarFuncion(FuncionesDTO nuevaFuncion) throws PersistenciaException {
         funcionesNegocio.guardar(nuevaFuncion); // Usa el nuevo objeto FuncionesDTO
         JOptionPane.showMessageDialog(this, "Función guardada con éxito.");
