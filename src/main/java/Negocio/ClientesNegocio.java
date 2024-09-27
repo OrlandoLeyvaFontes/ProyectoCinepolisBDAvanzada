@@ -20,9 +20,9 @@ import javax.swing.JOptionPane;
 public class ClientesNegocio implements IClientesNegocios {
 
     private IClientesDAO clientesDAO;
-    private CiudadesNegocio ciudadesNegocio;
+    private ICiudadesNegocio ciudadesNegocio;
 
-    public ClientesNegocio(IClientesDAO clientesDAO, CiudadesNegocio ciudadesNegocio) {
+    public ClientesNegocio(IClientesDAO clientesDAO, ICiudadesNegocio ciudadesNegocio) {
         this.clientesDAO = clientesDAO;
         this.ciudadesNegocio = ciudadesNegocio;
     }
