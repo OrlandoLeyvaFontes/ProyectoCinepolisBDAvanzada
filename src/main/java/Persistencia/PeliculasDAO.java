@@ -23,7 +23,7 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     private IConexionBD conexionBD;
 
-    public PeliculasDAO(IConexionBD conexionBD) throws SQLException {
+    public PeliculasDAO(IConexionBD conexionBD)  {
         this.conexionBD = conexionBD;
     }
 

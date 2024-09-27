@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Presentacion;
+package Administrativp;
 
+import Negocio.IPeliculasNegocio;
 import Negocio.NegocioException;
 import Negocio.PeliculasNegocio;
 import Persistencia.ConexionBD;
@@ -23,13 +24,11 @@ import javax.swing.JOptionPane;
  */
 public class AgregarPeliculas extends javax.swing.JFrame {
 
-    private PeliculasNegocio peliculasNegocio;
+    private IPeliculasNegocio peliculasNegocio;
 
-    public AgregarPeliculas() throws SQLException{
+    public AgregarPeliculas(IPeliculasNegocio peliculasNegocio) {
         initComponents();
-        IConexionBD conexionBD = new ConexionBD();
-        IPeliculasDAO peliculaDAO = new PeliculasDAO(conexionBD);
-        peliculasNegocio = new PeliculasNegocio(peliculaDAO);
+        this.peliculasNegocio = peliculasNegocio;
     }
 
     /**
