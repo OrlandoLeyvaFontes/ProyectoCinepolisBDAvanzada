@@ -1,44 +1,72 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Negocio;
 
 import Entidad.Peliculas;
+import Persistencia.IConexionBD;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
 import Persistencia.IPeliculasDAO;
-import Persistencia.PeliculasDAO;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author Oley
- */
 public class PeliculasNegocio implements IPeliculasNegocio {
+    
+    private IConexionBD conexionBD;
+    private IPeliculasDAO peliculaDAO;
 
-    private final IPeliculasDAO peliculaDAO;
-    PeliculasDTO peliculasDTO;
-
-    public PeliculasNegocio(IPeliculasDAO peliculasDAO) {
+    public PeliculasNegocio(IConexionBD conexionBD, IPeliculasDAO peliculasDAO) {
         this.peliculaDAO = peliculasDAO;
+        this.conexionBD = conexionBD;
     }
 
     @Override
-    public void guardar(PeliculasDTO peliculaDTO) throws PersistenciaException {
-        Peliculas pelicula = DTOaEntidad(peliculaDTO);
+    public void guardar(PeliculasDTO peliculaDTO) throws NegocioException {
 
-        peliculaDAO.guardar(pelicula);
     }
 
-    private Peliculas DTOaEntidad(PeliculasDTO peliculasDTO) {
-        Peliculas pelicula = new Peliculas();
-        pelicula.setTitulo(peliculasDTO.getTitulo());
-        pelicula.setClasificacion(peliculasDTO.getClasificacion());
-        pelicula.setGenero(peliculasDTO.getGenero());
-        pelicula.setPaisOrigen(peliculasDTO.getPaisOrigen());
-        pelicula.setDuracionMinutos(peliculasDTO.getDuracionMinutos());
-        pelicula.setTexto(peliculasDTO.getTexto());
-        pelicula.setLinkTrailer(peliculasDTO.getLinkTrailer());
-        return pelicula;
+
+    public boolean reglasNegocio(PeliculasDTO e) {
+        String titulo = e.getTitulo();
+        return !titulo.contains("Panduro");
     }
+    
+    private Peliculas convertirADTO(PeliculasDTO peliculasDTO){
+        if (peliculasDTO == null) {
+            return null;
+        }
+        Peliculas peliculas = new Peliculas();
+        peliculas.setId(peliculasDTO.getId());
+    }
+    
+    
+//    private Clientes convertirADTO(ClientesDTO clientesDTO) {
+//        if (clientesDTO == null) {
+//            return null;
+//        }
+//        Clientes clientes = new Clientes();
+//        clientes.setId(clientesDTO.getId());
+//        clientes.setNombre(clientesDTO.getNombre());
+//        clientes.setApellidoPaterno(clientesDTO.getApellidoPaterno());
+//        clientes.setApellidoMaterno(clientesDTO.getApellidoMaterno());
+//        clientes.setFechaNacimiento(clientesDTO.getFechaNacimiento());
+//        clientes.setCorreo(clientesDTO.getCorreo());
+//        clientes.setContraseña(clientesDTO.getContraseña());
+//        clientes.setCiudad(convertirADTO(clientesDTO.getCiudad()));
+//        return clientes;
+//
+//    }
+//
+//    private Ciudad convertirADTO(CiudadesDTO ciudadesDTO) {
+//        if (ciudadesDTO == null) {
+//            return null;
+//        }
+//        Ciudad ciudad = new Ciudad();
+//        ciudad.setId(ciudadesDTO.getId());
+//        ciudad.setNombre(ciudadesDTO.getNombre());
+//        return ciudad;
+//
+//    }
 }

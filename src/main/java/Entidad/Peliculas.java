@@ -10,58 +10,19 @@ package Entidad;
  */
 public class Peliculas {
 
-    int id;
-    String titulo;
-    String clasificacion;
-    String genero;
-    int duracionMinutos;
-    String paisOrigen;
-    String texto;
-    String linkTrailer;
-    String rutaImagen;
-    String sinopsis;
+    private int id;
+    private String titulo;
+    private String clasificacion;
+    private String genero;
+    private String paisOrigen;
+    private int duracionMinutos;
+    private String sinopsis;
+    private String linkTrailer;
+    private boolean estaEliminado = false;
 
     public Peliculas() {
     }
 
-    public Peliculas(String titulo, String clasificacion, String genero) {
-        this.titulo = titulo;
-        this.clasificacion = clasificacion;
-        this.genero = genero;
-    }
-
-    public Peliculas(String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto, String linkTrailer, String rutaImagen, String Sinopsis) {
-        this.titulo = titulo;
-        this.clasificacion = clasificacion;
-        this.genero = genero;
-        this.duracionMinutos = duracionMinutos;
-        this.paisOrigen = paisOrigen;
-        this.texto = texto;
-        this.linkTrailer = linkTrailer;
-        this.rutaImagen = rutaImagen;
-        this.sinopsis=sinopsis;
-    }
-
-    
-
-    public Peliculas(int id, String titulo, String clasificacion, String genero, int duracionMinutos, String paisOrigen, String texto) {
-        this.id = id;
-        this.titulo = titulo;
-        this.clasificacion = clasificacion;
-        this.genero = genero;
-        this.duracionMinutos = duracionMinutos;
-        this.paisOrigen = paisOrigen;
-        this.texto = texto;
-    }
-
-    
-    public String getSinopsis() {
-        return sinopsis;
-    }
-
-    public void setSinopsis(String sinopsis) {
-        this.sinopsis = sinopsis;
-    }
     public int getId() {
         return id;
     }
@@ -94,14 +55,6 @@ public class Peliculas {
         this.genero = genero;
     }
 
-    public int getDuracionMinutos() {
-        return duracionMinutos;
-    }
-
-    public void setDuracionMinutos(int duracionMinutos) {
-        this.duracionMinutos = duracionMinutos;
-    }
-
     public String getPaisOrigen() {
         return paisOrigen;
     }
@@ -110,12 +63,20 @@ public class Peliculas {
         this.paisOrigen = paisOrigen;
     }
 
-    public String getTexto() {
-        return texto;
+    public int getDuracionMinutos() {
+        return duracionMinutos;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setDuracionMinutos(int duracionMinutos) {
+        this.duracionMinutos = duracionMinutos;
+    }
+
+    public String getSinopsis() {
+        return sinopsis;
+    }
+
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
     }
 
     public String getLinkTrailer() {
@@ -126,12 +87,12 @@ public class Peliculas {
         this.linkTrailer = linkTrailer;
     }
 
-    public String getRutaImagen() {
-        return rutaImagen;
+    public boolean isEstaEliminado() {
+        return estaEliminado;
     }
 
-    public void setRutaImagen(String rutaImagen) {
-        this.rutaImagen = rutaImagen;
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
     }
 
 }

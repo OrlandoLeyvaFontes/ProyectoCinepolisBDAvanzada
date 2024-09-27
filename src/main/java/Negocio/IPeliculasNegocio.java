@@ -7,13 +7,14 @@ package Negocio;
 import Entidad.Peliculas;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
+import java.util.ArrayList;
+
 
 /**
  *
  * @author Oley
  */
 public interface IPeliculasNegocio {
-
-    void guardar(PeliculasDTO peliculaDTO) throws PersistenciaException;
+    public void guardar(PeliculasDTO peliculaDTO) throws NegocioException;
 
 }

@@ -5,12 +5,18 @@
 package Persistencia;
 
 import Entidad.Peliculas;
+import dtoCinepolis.PeliculasDTO;
+import java.util.ArrayList;
 
 /**
  *
  * @author Oley
  */
 public interface IPeliculasDAO {
-
     void guardar(Peliculas pelicula) throws PersistenciaException;
+    
+    
+    
+    
+
 }
