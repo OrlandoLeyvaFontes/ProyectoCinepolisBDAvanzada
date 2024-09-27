@@ -76,7 +76,7 @@ this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
      private int getIdSeleccionadoCiudad() {
-        return this.idCiudad; // Devuelve el ID que ya está almacenado en la clase
+        return this.idCiudad;
     }
     
 

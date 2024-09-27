@@ -244,7 +244,7 @@ private int idCiudadSeleccionada = -1;
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
   if (idCiudadSeleccionada != -1) {
-    System.out.println("ID Ciudad antes de abrir: " + idCiudadSeleccionada); // Agrega esta línea
+    System.out.println("ID Ciudad antes de abrir: " + idCiudadSeleccionada); 
     if (idCiudadSeleccionada != -1) {
         abrirDetallesCiudad(idCiudadSeleccionada);
     } else {

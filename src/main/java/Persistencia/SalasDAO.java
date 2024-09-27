@@ -90,29 +90,27 @@ public class SalasDAO implements ISalasDAO {
 
     @Override
     public Salas buscarPorID(int id) throws PersistenciaException {
-        try {
-            Salas salas = null;
-            Connection connection = ConexionBD.crearConexion();
-            String codigoSQL = """
-                     SELECT nombre
-                     FROM salas
-                     WHERE id=?
-                     """;
-            PreparedStatement preparedStatement = connection.prepareStatement(codigoSQL);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                salas = new Salas(resultSet.getString("nombre"));
-            }
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
-            return salas;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new PersistenciaException("Ocurrió un error al leer la base de datos, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
+        String codigoSQL = """
+        SELECT nombre
+        FROM salas
+        WHERE id=?""";
+    try (Connection connection = ConexionBD.crearConexion();
+         PreparedStatement preparedStatement = connection.prepareStatement(codigoSQL)) {
 
+        preparedStatement.setInt(1, id);
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return new Salas(resultSet.getString("nombre"));
+            } else {
+                System.out.println("No se encontró la sala con ID: " + id);
+            }
         }
+    } catch (SQLException e) {
+        System.out.println("SQL Error: " + e.getErrorCode() + " - " + e.getMessage());
+        throw new PersistenciaException("Ocurrió un error al leer la base de datos. Inténtelo de nuevo y si el error persiste, comuníquese con el encargado del sistema.");
+    }
+    return null;
 
     }
 
@@ -168,7 +166,7 @@ public class SalasDAO implements ISalasDAO {
     public List<SalasTablaDTO> buscarSalaTabla(SalaFiltroTablaDTO filtro) throws PersistenciaException {
         List<SalasTablaDTO> salaLista = new ArrayList<>();
         String sql = """
-        SELECT nombre, cantAsientos, tiempoLimpieza, costoSugerido
+        SELECT nombre, cantAsientos, tiempoLimpieza, costoSugerido,id
         FROM salas
         WHERE nombre LIKE ?
         LIMIT ?
@@ -194,7 +192,7 @@ public class SalasDAO implements ISalasDAO {
                     }
 
                     salasTablaDTO.setCostoSugerido(resultado.getDouble("costoSugerido"));
-
+                     salasTablaDTO.setId(resultado.getInt("id"));
                     salaLista.add(salasTablaDTO);
                 }
             }
