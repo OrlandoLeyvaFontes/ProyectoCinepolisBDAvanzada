@@ -6,8 +6,13 @@ package Presentacion;
 
 import Negocio.NegocioException;
 import Negocio.PeliculasNegocio;
+import Persistencia.ConexionBD;
+import Persistencia.IConexionBD;
+import Persistencia.IPeliculasDAO;
+import Persistencia.PeliculasDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,30 +21,18 @@ import javax.swing.JOptionPane;
  *
  * @author rober
  */
-public class eliminarPelicula extends javax.swing.JFrame {
+public class EliminarPelicula extends javax.swing.JFrame {
 
     private PeliculasNegocio peliculasNegocio;
 
     /**
      * Creates new form EliminarPelicula
      */
-    public eliminarPelicula(PeliculasNegocio peliculasNegocio) {
-        this.peliculasNegocio = peliculasNegocio;
+    public EliminarPelicula() throws SQLException{
         initComponents();
-    }
-
-    public void eliminarPelicula() throws NegocioException {
-        int idPelicula = Integer.parseInt(txtID.getText());
-        peliculasNegocio.eliminar(idPelicula);
-    }
-
-    private boolean validarCampos() {
-        if (txtID.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, rellena todos los campos.");
-            return false;
-        } else {
-            return true;
-        }
+        IConexionBD conexionBD = new ConexionBD();
+        IPeliculasDAO peliculaDAO = new PeliculasDAO(conexionBD);
+        peliculasNegocio = new PeliculasNegocio(peliculaDAO);
     }
 
     /**
@@ -122,21 +115,17 @@ public class eliminarPelicula extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int id = Integer.parseInt(txtID.getText());
+        PeliculasDTO peliculaDTO = new PeliculasDTO(id);
         try {
-            eliminarPelicula();
-        } catch (NegocioException ex) {
-            Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error de negocio: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (NumberFormatException ex) {
-            // Captura la excepción si hay un error en el formato de la duración
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para el id.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+            peliculasNegocio.eliminar(id);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setVisible(false);
-        MenuAdministrador menu = new MenuAdministrador();
-        menu.setVisible(true);
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

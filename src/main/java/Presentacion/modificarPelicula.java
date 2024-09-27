@@ -6,8 +6,13 @@ package Presentacion;
 
 import Negocio.NegocioException;
 import Negocio.PeliculasNegocio;
+import Persistencia.ConexionBD;
+import Persistencia.IConexionBD;
+import Persistencia.IPeliculasDAO;
+import Persistencia.PeliculasDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,35 +21,37 @@ import javax.swing.JOptionPane;
  *
  * @author rober
  */
-public class modificarPelicula extends javax.swing.JFrame {
+public class ModificarPelicula extends javax.swing.JFrame {
 
     // Declara la variable
     private PeliculasNegocio peliculasNegocio;
-    
-    public modificarPelicula(PeliculasNegocio peliculasNegocio) {
-        this.peliculasNegocio = peliculasNegocio;
+
+    public ModificarPelicula() throws SQLException {
         initComponents();
+        IConexionBD conexionBD = new ConexionBD();
+        IPeliculasDAO peliculaDAO = new PeliculasDAO(conexionBD);
+        peliculasNegocio = new PeliculasNegocio(peliculaDAO);
     }
-
-    private void modificarPelicula() throws NegocioException {
-        int idPelicula = Integer.parseInt(txtID.getText());
-        String titulo = txtTitulo.getText();
-        String clasificacion = txtClasificacion.getText();
-        String genero = txtGenero.getText();
-        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
-        String sinopsis = txtSinopsis.getText();
-        String paisOrigen = txtOrigen.getText();        
-        String linkTrailer = txtLinkTrailer.getText();
-    String rutaImagen = txtRutaImagen.getText();
-
-        // Crear el objeto DTO
-        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, sinopsis, linkTrailer, rutaImagen);
-        peliculaDTO.setId(idPelicula);
-
-        // Llama al método en la capa de negocio para actualizar
-        peliculasNegocio.actualizar(peliculaDTO);
-        
-    }
+//
+//    private void modificarPelicula() throws NegocioException {
+//        int idPelicula = Integer.parseInt(txtID.getText());
+//        String titulo = txtTitulo.getText();
+//        String clasificacion = txtClasificacion.getText();
+//        String genero = txtGenero.getText();
+//        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
+//        String sinopsis = txtSinopsis.getText();
+//        String paisOrigen = txtOrigen.getText();        
+//        String linkTrailer = txtLinkTrailer.getText();
+//    String rutaImagen = txtRutaImagen.getText();
+//
+//        // Crear el objeto DTO
+//        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, sinopsis, linkTrailer, rutaImagen);
+//        peliculaDTO.setId(idPelicula);
+//
+//        // Llama al método en la capa de negocio para actualizar
+//        peliculasNegocio.actualizar(peliculaDTO);
+//        
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -136,68 +143,70 @@ public class modificarPelicula extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(155, 155, 155)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(56, 56, 56)
+                                .addComponent(jLabel5)
+                                .addGap(11, 11, 11)
+                                .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(9, 9, 9)
+                                    .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(txtClasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel2)
+                                            .addGap(9, 9, 9))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel10)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(12, 12, 12)
                                 .addComponent(txtLinkTrailer, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(13, 13, 13)
-                                .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(59, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(82, 82, 82))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(155, 155, 155)
-                            .addComponent(jLabel1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(46, 46, 46)
-                            .addComponent(jLabel4)
-                            .addGap(9, 9, 9)
-                            .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jLabel7)
+                                    .addGap(4, 4, 4)
+                                    .addComponent(txtSinopsis, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(9, 9, 9)
+                                    .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton2)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel9)
+                                    .addGap(13, 13, 13)
+                                    .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(11, 11, 11)
-                                .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(9, 9, 9)
-                                .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(10, 10, 10)
-                                .addComponent(txtClasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(9, 9, 9))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(4, 4, 4)
-                                .addComponent(txtSinopsis, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(31, 31, 31))
+                        .addComponent(jButton1)
+                        .addGap(253, 253, 253)))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,6 +237,12 @@ public class modificarPelicula extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
+                        .addComponent(jLabel5))
+                    .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
                         .addComponent(jLabel4))
                     .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -236,12 +251,6 @@ public class modificarPelicula extends javax.swing.JFrame {
                         .addGap(8, 8, 8)
                         .addComponent(jLabel7))
                     .addComponent(txtSinopsis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel5))
-                    .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -256,7 +265,7 @@ public class modificarPelicula extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -267,20 +276,29 @@ public class modificarPelicula extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRutaImagenActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.setVisible(false);
-        MenuAdministrador menu = new MenuAdministrador();
-        menu.setVisible(true);
+//        this.setVisible(false);
+//        MenuAdministrador menu = new MenuAdministrador();
+//        menu.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int id = Integer.parseInt(txtID.getText());
+        String titulo = txtTitulo.getText();
+        String clasificacion = txtClasificacion.getText();
+        String genero = txtGenero.getText();
+        String paisOrigen = txtOrigen.getText();
+        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
+        String sinopsis = txtSinopsis.getText();
+        String linkTrailer = txtLinkTrailer.getText();
+        String rutaImagen = txtRutaImagen.getText();
+
+        PeliculasDTO peliculasDTO = new PeliculasDTO(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, linkTrailer, rutaImagen);
+        peliculasDTO.setId(id);
+
         try {
-            modificarPelicula();
-        } catch (NegocioException ex) {
-            Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error de negocio: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (NumberFormatException ex) {
-            // Captura la excepción si hay un error en el formato de la duración
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para la duración.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+            peliculasNegocio.actualizar(peliculasDTO);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

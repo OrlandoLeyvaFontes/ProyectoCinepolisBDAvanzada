@@ -16,5 +16,6 @@ import java.util.ArrayList;
  */
 public interface IPeliculasNegocio {
     public void guardar(PeliculasDTO peliculaDTO) throws NegocioException;
-
+    void eliminar(int id) throws NegocioException;
+    void actualizar(PeliculasDTO peliculaDTO) throws NegocioException;
 }

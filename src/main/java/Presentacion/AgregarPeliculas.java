@@ -6,9 +6,13 @@ package Presentacion;
 
 import Negocio.NegocioException;
 import Negocio.PeliculasNegocio;
+import Persistencia.ConexionBD;
+import Persistencia.IConexionBD;
+import Persistencia.IPeliculasDAO;
 import Persistencia.PeliculasDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,36 +25,11 @@ public class AgregarPeliculas extends javax.swing.JFrame {
 
     private PeliculasNegocio peliculasNegocio;
 
-    public AgregarPeliculas(PeliculasNegocio peliculasNegocio) {
-        this.peliculasNegocio = peliculasNegocio;
+    public AgregarPeliculas() throws SQLException{
         initComponents();
-    }
-
-    private void agregarPelicula() throws PersistenciaException, NegocioException {
-        String titulo = txtTitulo.getText();
-        String clasificacion = txtClasificacion.getText();
-        String genero = txtGenero.getText();
-        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
-        String sinopsis = txtSinopsis.getText();
-        String paisOrigen = txtOrigen.getText();            
-        String linkTrailer = txtLinkTrailer.getText();
-        String rutaImagen = txtRutaImagen.getText();
-
-        PeliculasDTO peliculaDTO = new PeliculasDTO(titulo, clasificacion, genero, duracionMinutos, paisOrigen, sinopsis, linkTrailer, rutaImagen);
-
-        peliculasNegocio.guardar(peliculaDTO);
-
-    }
-
-    private void limpiarCampos() {
-        txtTitulo.setText("");
-        txtGenero.setText("");
-        txtDuracion.setText("");
-        txtOrigen.setText("");
-        txtClasificacion.setText("");
-        txtSinopsis.setText("");
-        txtLinkTrailer.setText("");
-        txtRutaImagen.setText("");
+        IConexionBD conexionBD = new ConexionBD();
+        IPeliculasDAO peliculaDAO = new PeliculasDAO(conexionBD);
+        peliculasNegocio = new PeliculasNegocio(peliculaDAO);
     }
 
     /**
@@ -93,24 +72,24 @@ public class AgregarPeliculas extends javax.swing.JFrame {
         getContentPane().add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 250, -1));
 
         jLabel3.setText("Genero:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
-        getContentPane().add(txtGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 82, 250, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+        getContentPane().add(txtGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 250, 30));
 
         jLabel4.setText("Duracion:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
-        getContentPane().add(txtDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 250, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
+        getContentPane().add(txtDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 250, 30));
 
         jLabel5.setText("Origen:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
-        getContentPane().add(txtOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 250, 30));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+        getContentPane().add(txtOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 250, 30));
 
         jLabel6.setText("Clasificacion:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
-        getContentPane().add(txtClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 240, 30));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        getContentPane().add(txtClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 240, 30));
 
         jLabel7.setText("Sipnosis:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, -1, -1));
-        getContentPane().add(txtSinopsis, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 250, 30));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
+        getContentPane().add(txtSinopsis, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 250, 30));
 
         jButton1.setText("Regresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -146,23 +125,24 @@ public class AgregarPeliculas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.setVisible(false);
-        MenuAdministrador menu = new MenuAdministrador();
-        menu.setVisible(true);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String titulo = txtTitulo.getText();
+        String clasificacion = txtClasificacion.getText();
+        String genero = txtGenero.getText();
+        String paisOrigen = txtOrigen.getText();
+        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
+        String sinopsis = txtSinopsis.getText();
+        String linkTrailer = txtLinkTrailer.getText();
+        String rutaImagen = txtRutaImagen.getText();
+
+        PeliculasDTO peliculasDTO = new PeliculasDTO(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, linkTrailer, rutaImagen);
         try {
-            agregarPelicula();
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error al guardar la película: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (NegocioException ex) {
-            Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error de negocio: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (NumberFormatException ex) {
-            // Captura la excepción si hay un error en el formato de la duración
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para la duración.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+            peliculasNegocio.guardar(peliculasDTO);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -170,7 +150,7 @@ public class AgregarPeliculas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRutaImagenActionPerformed
 
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
