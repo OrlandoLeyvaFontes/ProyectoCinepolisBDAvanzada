@@ -4,6 +4,14 @@
  */
 package Presentacion;
 
+import Entidad.Peliculas;
+import Negocio.NegocioException;
+import Negocio.PeliculasNegocio;
+import Persistencia.ConexionBD;
+import Persistencia.IConexionBD;
+import Persistencia.PeliculasDAO;
+import Persistencia.PersistenciaException;
+import dtoCinepolis.PeliculasDTO;
 import java.sql.SQLException;
 
 /**
@@ -15,10 +23,11 @@ public class Pruebas {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SQLException {
-        ModificarPelicula ap = new ModificarPelicula();
-        ap.setVisible(true);
-
+    public static void main(String[] args) throws SQLException, PersistenciaException, NegocioException {
+        IConexionBD conexionBD = new ConexionBD();
+        PeliculasDAO ap = new PeliculasDAO(conexionBD);
+        PeliculasNegocio pn = new PeliculasNegocio(ap);
+        pn.leer();
     }
 
 }

@@ -33,6 +33,43 @@ public class PeliculasDAO implements IPeliculasDAO {
     }
 
     @Override
+    public ArrayList<PeliculasDTO> leer() throws PersistenciaException {
+        PeliculasDTO peliculaDTO;
+        Connection con = null;
+        ResultSet rs;
+        ArrayList<PeliculasDTO> lista = new ArrayList<>();
+
+        try {
+            con = conexionBD.crearConexion();
+            String leer = "SELECT * FROM cinepolis.peliculas;";
+            PreparedStatement ps = con.prepareStatement(leer);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                peliculaDTO = new PeliculasDTO();
+                peliculaDTO.setId(rs.getInt("id"));
+                peliculaDTO.setTitulo(rs.getString("Titulo"));
+                peliculaDTO.setClasificacion(rs.getString("Clasificacion"));
+                peliculaDTO.setGenero(rs.getString("Genero"));
+                peliculaDTO.setPaisOrigen(rs.getString("PaisOrigen"));
+                peliculaDTO.setDuracionMinutos(rs.getInt("DuracionMinutos"));
+                peliculaDTO.setSinopsis(rs.getString("Sinopsis"));
+                peliculaDTO.setLinkTrailer(rs.getString("LinkTrailer"));
+                //peliculaDTO.setRutaImagen(rs.getString("RutaImagen"));
+                peliculaDTO.setEstaEliminado(rs.getBoolean("EstaEliminado"));
+                lista.add(peliculaDTO);
+
+                rs.close();
+                ps.close();
+                con.close();
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error de conexion" + e.getMessage());
+        }
+        return lista;
+    }
+
+    @Override
     public void guardar(Peliculas pelicula) throws PersistenciaException {
         Connection con = null;
         try {
