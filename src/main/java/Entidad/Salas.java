@@ -18,8 +18,7 @@ public class Salas {
     LocalDateTime tiempoLimpieza;
     Sucursales sucursales;
     Double CostoSugerido;
-
-  
+    private boolean estaEliminado;
 
     public Salas() {
     }
@@ -31,13 +30,26 @@ public class Salas {
         this.tiempoLimpieza = tiempoLimpieza;
     }
 
-    public Salas(int id, String nombre, int cantidadAsientos, LocalDateTime tiempoLimpieza, Sucursales sucursales, Double CostoSugerido) {
+    public Salas(int id, String nombre, int cantidadAsientos, LocalDateTime tiempoLimpieza, Sucursales sucursales, Double CostoSugerido, boolean estaEliminado) {
         this.id = id;
         this.nombre = nombre;
         this.cantidadAsientos = cantidadAsientos;
         this.tiempoLimpieza = tiempoLimpieza;
         this.sucursales = sucursales;
         this.CostoSugerido = CostoSugerido;
+        this.estaEliminado = estaEliminado;
+    }
+
+    public Salas(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public boolean isEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
     }
 
     public Double getCostoSugerido() {
@@ -48,7 +60,6 @@ public class Salas {
         this.CostoSugerido = CostoSugerido;
     }
 
-   
     public Sucursales getSucursales() {
         return sucursales;
     }
@@ -70,7 +81,7 @@ public class Salas {
     }
 
     public void setId(int id) {
-        this.id = id; 
+        this.id = id;
     }
 
     public String getNombre() {
@@ -78,7 +89,7 @@ public class Salas {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre; 
+        this.nombre = nombre;
     }
 
     public int getCantidadAsientos() {
@@ -86,7 +97,7 @@ public class Salas {
     }
 
     public void setCantidadAsientos(int cantidadAsientos) {
-        this.cantidadAsientos = cantidadAsientos; 
+        this.cantidadAsientos = cantidadAsientos;
     }
 
 }

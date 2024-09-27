@@ -8,22 +8,18 @@ package dtoCinepolis;
  *
  * @author Oley
  */
-public class SalasFiltroTablaDTO {
-      private int limit;
+public class SalaFiltroTablaDTO {
+  private int limit;
     private int offset;
     private String filtro;
 
-    public SalasFiltroTablaDTO() {
+    public SalaFiltroTablaDTO() {
     }
 
-    public SalasFiltroTablaDTO(int limit, int offset, String filtro) {
+    public SalaFiltroTablaDTO(int limit, int offset, String filtro) {
         this.limit = limit;
         this.offset = offset;
         this.filtro = filtro;
-    }
-
-    public SalasFiltroTablaDTO(int limit) {
-        this.limit = limit;
     }
 
     public int getLimit() {
@@ -49,4 +45,5 @@ public class SalasFiltroTablaDTO {
     public void setFiltro(String filtro) {
         this.filtro = filtro;
     }
+
 }
