@@ -86,9 +86,9 @@ public class ExitoFuncion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnContinuarActionPerformed
-        CatalogoFunciones continuar = new CatalogoFunciones();
-        continuar.setVisible(true);
-        this.dispose();
+//        CatalogoFunciones continuar = new CatalogoFunciones();
+//        continuar.setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_BtnContinuarActionPerformed
 
     /**

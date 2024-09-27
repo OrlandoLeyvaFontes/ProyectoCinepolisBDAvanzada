@@ -33,6 +33,10 @@ public class AgregarFunciones extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.funcionesNegocio = funcionesNegocio; // Guarda la lógica de negocio
     }
+
+    AgregarFunciones() {
+
+    }
     
     
 
@@ -254,9 +258,7 @@ public class AgregarFunciones extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al guardar la función: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        ExitoFuncion continuar = new ExitoFuncion();
-        continuar.setVisible(true);
-        this.dispose();
+        
 
     }//GEN-LAST:event_BtnAgregarActionPerformed
 

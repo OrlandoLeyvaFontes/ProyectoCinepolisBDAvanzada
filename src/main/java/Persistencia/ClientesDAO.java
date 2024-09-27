@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -50,7 +52,11 @@ public class ClientesDAO implements IClientesDAO {
             prepared.setString(1, clientes.getNombre());
             prepared.setString(2, clientes.getApellidoPaterno());
             prepared.setString(3, clientes.getApellidoMaterno());
-            Timestamp timestamp = Timestamp.valueOf(clientes.getFechaNacimiento());
+            LocalDate fechaNacimiento = clientes.getFechaNacimiento();
+            // Convertir LocalDate a LocalDateTime, asumiendo medianoche como hora
+            LocalDateTime fechaNacimientoDateTime = fechaNacimiento.atStartOfDay();
+            // Convertir LocalDateTime a Timestamp
+            Timestamp timestamp = Timestamp.valueOf(fechaNacimientoDateTime);
             prepared.setTimestamp(4, timestamp);
             prepared.setString(5, clientes.getCorreo());
             prepared.setString(6, clientes.getContraseña());

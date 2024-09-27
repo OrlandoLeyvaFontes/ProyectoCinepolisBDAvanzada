@@ -6,7 +6,8 @@ package Persistencia;
 
 import Entidad.Ciudad;
 import Entidad.Clientes;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -26,8 +27,8 @@ public class ProbarClientes {
         clientes.setApellidoPaterno("Pérez");
         clientes.setApellidoMaterno("García");
         String fechaNacimientoStr = "1990-01-01 00:00:00";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime fechaNacimiento = LocalDateTime.parse(fechaNacimientoStr, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+        LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoStr, formatter);
         clientes.setFechaNacimiento(fechaNacimiento);
         clientes.setCorreo("juan.perez@example.com");
         clientes.setContraseña("contrasena123");

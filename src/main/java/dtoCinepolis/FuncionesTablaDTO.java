@@ -5,40 +5,59 @@
 package dtoCinepolis;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
  * @author aleja
  */
 public class FuncionesTablaDTO {
-    
-    String nombre;
-    LocalDate horaInicio;
-    int costo;
-    boolean estaEliminado;
 
-    public String getNombre() {
-        return nombre;
+    private int id;
+    private String nombrePelicula;
+    private LocalTime horaInicio;
+    private double precio;
+    private int sala;
+    private boolean estaEliminado;
+
+    public int getId() {
+        return id;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public LocalDate getHoraInicio() {
+    public String getNombrePelicula() {
+        return nombrePelicula;
+    }
+
+    public void setNombrePelicula(String nombrePelicula) {
+        this.nombrePelicula = nombrePelicula;
+    }
+
+    public LocalTime getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(LocalDate horaInicio) {
+    public void setHoraInicio(LocalTime horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public int getCosto() {
-        return costo;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setCosto(int costo) {
-        this.costo = costo;
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getSala() {
+        return sala;
+    }
+
+    public void setSala(int sala) {
+        this.sala = sala;
     }
 
     public boolean isEstaEliminado() {

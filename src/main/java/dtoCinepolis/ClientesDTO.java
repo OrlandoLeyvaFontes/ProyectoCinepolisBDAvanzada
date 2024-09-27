@@ -5,7 +5,7 @@
 package dtoCinepolis;
 
 import Entidad.Ciudad;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  *
@@ -17,7 +17,7 @@ public class ClientesDTO {
     String nombre;
     String apellidoPaterno;
     String apellidoMaterno;
-    LocalDateTime fechaNacimiento;
+    LocalDate fechaNacimiento;
     String correo;
     String contraseña;
     CiudadesDTO ciudad;
@@ -25,7 +25,7 @@ public class ClientesDTO {
     public ClientesDTO() {
     }
 
-    public ClientesDTO(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, CiudadesDTO ciudad) {
+    public ClientesDTO(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, CiudadesDTO ciudad) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -35,7 +35,7 @@ public class ClientesDTO {
         this.ciudad = ciudad;
     }
 
-    public ClientesDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDateTime fechaNacimiento, String correo, String contraseña, CiudadesDTO ciudad) {
+    public ClientesDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, CiudadesDTO ciudad) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -90,11 +90,11 @@ public class ClientesDTO {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public LocalDateTime getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

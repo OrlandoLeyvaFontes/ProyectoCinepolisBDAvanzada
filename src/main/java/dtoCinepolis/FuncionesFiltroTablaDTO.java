@@ -49,6 +49,7 @@ public class FuncionesFiltroTablaDTO {
     public void setFiltro(String filtro) {
         this.filtro = filtro;
     }
+
     
     
 }

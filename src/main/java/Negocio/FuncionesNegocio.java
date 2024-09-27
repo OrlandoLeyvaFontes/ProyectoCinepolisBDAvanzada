@@ -8,6 +8,10 @@ import Entidad.Funciones;
 import Persistencia.IFuncionesDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.FuncionesDTO;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import dtoCinepolis.FuncionesFiltroTablaDTO;
 
 /**
  *
@@ -62,5 +66,35 @@ public class FuncionesNegocio implements IFuncionesNegocio {
         );
     }
 
-}
+    public List<FuncionesDTO> buscarFunciones(FuncionesFiltroTablaDTO filtro) throws NegocioException, PersistenciaException {
+        if (filtro == null) {
+            throw new NegocioException("El filtro recibido es null");
+        }
 
+        List<FuncionesDTO> funcionesLista;
+
+        funcionesLista = funcionesDAO.buscarFunciones(filtro);
+
+        if (funcionesLista == null || funcionesLista.isEmpty()) {
+            throw new NegocioException("No se encontraron registros con los filtros");
+        }
+
+        return funcionesLista;
+    }
+
+    public List<FuncionesDTO> buscarFuncionesTabla(FuncionesFiltroTablaDTO filtro) throws NegocioException, PersistenciaException {
+        if (filtro == null) {
+            throw new NegocioException("El filtro recibido es null");
+        }
+
+        List<FuncionesDTO> funcionesLista = null;
+
+        funcionesLista = funcionesDAO.buscarFuncionesTabla(filtro);
+
+        if (funcionesLista == null || funcionesLista.isEmpty()) {
+            throw new NegocioException("No se encontraron registros con los filtros");
+        }
+
+        return funcionesLista;
+    }
+}
