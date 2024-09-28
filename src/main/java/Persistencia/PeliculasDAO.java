@@ -163,7 +163,7 @@ public class PeliculasDAO implements IPeliculasDAO {
         // Actualiza la consulta para establecer el valor de 'estaEliminado'
         String updatePeliculas = """
                                UPDATE pelicula
-                               SET estaEliminado = 1  -- o el valor que necesites para indicar que está eliminado
+                               SET estaEliminado = 1  
                                WHERE id = ?;
                                """;
 
@@ -185,8 +185,8 @@ public class PeliculasDAO implements IPeliculasDAO {
     public Peliculas buscarPeliculasPorNombre(String nombrePelicula) throws PersistenciaException {
         String sqlBuscarPelicula = "SELECT * FROM pelicula WHERE titulo=?";
     Peliculas peliculas = null;
-    try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(sqlBuscarPelicula)) {  // Aquí debes usar 'sqlBuscarPelicula'
-        prepa.setString(1, nombrePelicula);  // Asignar el valor de 'nombrePelicula' al parámetro
+    try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(sqlBuscarPelicula)) {  
+        prepa.setString(1, nombrePelicula);  
         ResultSet resultSet = prepa.executeQuery();
         if (resultSet.next()) {
             peliculas = new Peliculas();

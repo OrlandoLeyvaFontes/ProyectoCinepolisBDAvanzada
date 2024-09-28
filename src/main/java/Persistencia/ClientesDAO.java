@@ -59,13 +59,78 @@ public class ClientesDAO implements IClientesDAO {
             prepared.setTimestamp(4, timestamp);
 
             prepared.setString(5, clientes.getCorreo());
-            prepared.setString(6, clientes.getContraseña()); // Considera aplicar hashing aquí
-            prepared.setString(7, clientes.getCiudad()); // o prepared.setInt(7, clientes.getCiudad().getId());
+            prepared.setString(6, clientes.getContraseña());
+            prepared.setString(7, clientes.getCiudad());
 
             prepared.executeUpdate();
         } catch (SQLException e) {
             throw new PersistenciaException("Error al guardar el cliente", e);
         }
+    }
+
+    @Override
+    public void editar(Clientes clientes) throws PersistenciaException {
+        String updateClientes = """
+                                   UPDATE clientes
+                                   SET nombre=?,
+                                   apellidoPaterno=?
+                                   , apellidoMaterno=?
+                                   , fechaNacimiento=?
+                                   , correo=?
+                                   , contraseña=?
+                                   , ciudad=?
+                                   WHERE id=?
+                                   """;
+        try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(updateClientes)) {
+            prepa.setString(1, clientes.getNombre());
+            prepa.setString(2, clientes.getApellidoPaterno());
+            prepa.setString(3, clientes.getApellidoMaterno());
+            LocalDate fechaNacimiento = clientes.getFechaNacimiento();
+            Timestamp timestamp = Timestamp.valueOf(fechaNacimiento.atStartOfDay());
+            prepa.setTimestamp(4, timestamp);
+            prepa.setString(5, clientes.getCorreo());
+            prepa.setString(6, clientes.getContraseña());
+            prepa.setString(7, clientes.getCiudad());
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al actualizar la pelicula", e);
+
+        }
+
+    }
+
+    @Override
+    public Clientes buscarPorId(int id) throws PersistenciaException {
+        String codigoSQL = """
+                      SELECT nombre
+                      FROM clientes
+                      WHERE id=?
+                      """;
+        try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(codigoSQL)) {
+            prepa.setInt(1, id);
+            try (ResultSet result = prepa.executeQuery()) {
+                if (result.next()) {
+                    return new Clientes(result.getString("nombre"));
+                } else {
+                    System.out.println("No se encontró el ID del cliente: " + id);
+
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error: " + e.getErrorCode() + " - " + e.getMessage());
+            throw new PersistenciaException("Ocurrió un error al leer la base de datos. Inténtelo de nuevo y si el error persiste, comuníquese con el encargado del sistema.");
+
+        }
+return null;
+    }
+
+    @Override
+    public Clientes eliminar(int id) throws PersistenciaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Clientes buscarCiudadPorNombre(String nombreCliente) throws PersistenciaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

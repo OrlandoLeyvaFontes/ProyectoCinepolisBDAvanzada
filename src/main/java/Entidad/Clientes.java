@@ -50,6 +50,10 @@ public class Clientes {
         this.ciudad = ciudad;
     }
 
+    public Clientes(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getCiudad() {
         return ciudad;
     }
