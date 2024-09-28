@@ -4,7 +4,12 @@
  */
 package Administrativp;
 
+import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
+import Negocio.IFuncionesNegocio;
 import Negocio.IPeliculasNegocio;
+import Negocio.ISalasNegocios;
+import Negocio.ISucursalesNegocio;
 import Negocio.NegocioException;
 import dtoCinepolis.PeliculasFiltroTablaDTO;
 import dtoCinepolis.PeliculasTablaDTO;
@@ -23,8 +28,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CatalogoPeliculas extends javax.swing.JFrame {
 
+ private ICiudadesNegocio ciudadesNegocios;
+    private ISucursalesNegocio sucursalesNegocio;
+    private ISalasNegocios salasNegocios;
     private IPeliculasNegocio peliculasNegocio;
-    private int idPeliculasSeleccionada = -1;
+    private IFuncionesNegocio funcionesNegocio;
+     private IClientesNegocios clientesNegocios;
+     private int idPeliculasSeleccionada = -1;
 
     /**
      * Creates new form CatalogoPeliculas
@@ -166,6 +176,11 @@ public class CatalogoPeliculas extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 760, 160));
 
         jButton3.setText("Regresar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
 
         pack();
@@ -185,6 +200,14 @@ public class CatalogoPeliculas extends javax.swing.JFrame {
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+this.setVisible(false);
+Amdministrador amdministrador=new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio, clientesNegocios);
+amdministrador.setVisible(true);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

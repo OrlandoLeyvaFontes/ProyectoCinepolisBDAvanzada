@@ -5,6 +5,7 @@
 package Administrativp;
 
 import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
 import Negocio.ISucursalesNegocio;
@@ -15,20 +16,24 @@ import Negocio.IFuncionesNegocio;
  * @author Oley
  */
 public class AdministradorCuenta extends javax.swing.JFrame {
-   private     ICiudadesNegocio ciudadesNegocio;
-  private ISucursalesNegocio sucursalesNegocio;
-  private ISalasNegocios salasNegocios;
-  private IPeliculasNegocio peliculasNegocio;
-  private IFuncionesNegocio funcionesNegocio;
+
+    private ICiudadesNegocio ciudadesNegocio;
+    private ISucursalesNegocio sucursalesNegocio;
+    private ISalasNegocios salasNegocios;
+    private IPeliculasNegocio peliculasNegocio;
+    private IFuncionesNegocio funcionesNegocio;
+    private IClientesNegocios clientesNegocios;
+
     /**
      * Creates new form AdministradorCuenta
      */
-    public AdministradorCuenta(ICiudadesNegocio ciudadesNegocio,ISucursalesNegocio sucursalesNegocio,ISalasNegocios salasNegocios,IPeliculasNegocio peliculasNegocio ,IFuncionesNegocio funcionesNegocio) {
-        this.ciudadesNegocio=ciudadesNegocio;
-        this.sucursalesNegocio=sucursalesNegocio;
-        this.salasNegocios=salasNegocios;
-        this.peliculasNegocio=peliculasNegocio;
-        this.funcionesNegocio=funcionesNegocio;
+    public AdministradorCuenta(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio, ISalasNegocios salasNegocios, IPeliculasNegocio peliculasNegocio, IFuncionesNegocio funcionesNegocio, IClientesNegocios clientesNegocios) {
+        this.ciudadesNegocio = ciudadesNegocio;
+        this.sucursalesNegocio = sucursalesNegocio;
+        this.salasNegocios = salasNegocios;
+        this.peliculasNegocio = peliculasNegocio;
+        this.funcionesNegocio = funcionesNegocio;
+        this.clientesNegocios = clientesNegocios;
         initComponents();
     }
 
@@ -83,17 +88,16 @@ public class AdministradorCuenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String nombre=jTextField1.getText();
-        String contraseña=jTextField2.getText();
-        
-        if(nombre.equals("admin")&& contraseña.equals("admin")){
-                        javax.swing.JOptionPane.showMessageDialog(this, "Acceso concedido");
-                 
+        String nombre = jTextField1.getText();
+        String contraseña = jTextField2.getText();
+
+        if (nombre.equals("admin") && contraseña.equals("admin")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Acceso concedido");
+
         }
         this.setVisible(false);
-        Amdministrador amdministrador=new Amdministrador(ciudadesNegocio,sucursalesNegocio,salasNegocios,peliculasNegocio, funcionesNegocio);
+        Amdministrador amdministrador = new Amdministrador(ciudadesNegocio, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio,clientesNegocios);
         amdministrador.setVisible(true);
-
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -101,7 +105,6 @@ public class AdministradorCuenta extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

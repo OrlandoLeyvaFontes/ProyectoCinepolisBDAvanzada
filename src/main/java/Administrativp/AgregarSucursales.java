@@ -8,6 +8,7 @@ import Entidad.Ciudad;
 import Entidad.Sucursales;
 import Negocio.CiudadesNegocio;
 import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.IFuncionesNegocio;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
@@ -31,6 +32,7 @@ import javax.swing.JOptionPane;
  * @author Oley
  */
 public class AgregarSucursales extends javax.swing.JFrame {
+     private IClientesNegocios clientesNegocios;
 
      private ICiudadesNegocio ciudadesNegocios;
     private ISucursalesNegocio sucursalesNegocio;
@@ -129,7 +131,7 @@ public class AgregarSucursales extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 this.setVisible(false);
- Amdministrador amdministrador=new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio);
+ Amdministrador amdministrador=new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio,clientesNegocios);
 amdministrador.setVisible(true);
         
         

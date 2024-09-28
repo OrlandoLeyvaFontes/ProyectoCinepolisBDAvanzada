@@ -7,6 +7,7 @@ package Administrativp;
 import Administrativp.Amdministrador;
 import Negocio.FuncionesNegocio;
 import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.IFuncionesNegocio;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
@@ -29,6 +30,7 @@ import javax.swing.JOptionPane;
  * @author aleja
  */
 public class AgregarFunciones extends javax.swing.JFrame {
+     private IClientesNegocios clientesNegocios;
 
     private ICiudadesNegocio ciudadesNegocios;
     private ISucursalesNegocio sucursalesNegocio;
@@ -269,7 +271,7 @@ public class AgregarFunciones extends javax.swing.JFrame {
     }
 
     this.setVisible(false);
-    Amdministrador amdministrador = new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio);
+    Amdministrador amdministrador = new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio,clientesNegocios);
  amdministrador.setVisible(true);
 
 

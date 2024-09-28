@@ -5,6 +5,7 @@
 package Administrativp;
 
 import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.IFuncionesNegocio;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
@@ -31,6 +32,8 @@ public class CatalogoSalas extends javax.swing.JFrame {
     private IPeliculasNegocio peliculasNegocio;
     private IFuncionesNegocio funcionesNegocio;
 private int idSalasSeleccionada = -1;
+     private IClientesNegocios clientesNegocios;
+
 
     /**
      * Creates new form CatalogoSalas
@@ -203,7 +206,7 @@ private int idSalasSeleccionada = -1;
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
 this.setVisible(false);
-Amdministrador menuAdministrador= new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio);
+Amdministrador menuAdministrador= new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio, clientesNegocios);
 menuAdministrador.setVisible(true);
 
         // TODO add your handling code here:

@@ -4,7 +4,12 @@
  */
 package Administrativp;
 
+import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.IFuncionesNegocio;
+import Negocio.IPeliculasNegocio;
+import Negocio.ISalasNegocios;
+import Negocio.ISucursalesNegocio;
 import Negocio.NegocioException;
 import Persistencia.PersistenciaException;
 import Presentacion.EliminarFuncion;
@@ -22,7 +27,11 @@ import javax.swing.table.DefaultTableModel;
  * @author aleja
  */
 public class CatalogoFunciones extends javax.swing.JFrame {
-
+ private ICiudadesNegocio ciudadesNegocios;
+    private ISucursalesNegocio sucursalesNegocio;
+    private ISalasNegocios salasNegocios;
+    private IPeliculasNegocio peliculasNegocio;
+     private IClientesNegocios clientesNegocios;
     private IFuncionesNegocio funcionNegocio;
     private int idFuncionSeleccionada = -1;
     private int pagina = 0;
@@ -143,6 +152,11 @@ public class CatalogoFunciones extends javax.swing.JFrame {
         jLabel1.setText("Catalogo Funciones");
 
         BtnRegresar.setText("Regresar");
+        BtnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnRegresarActionPerformed(evt);
+            }
+        });
 
         BtnAgregar.setText("Agregar");
         BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -286,6 +300,16 @@ public class CatalogoFunciones extends javax.swing.JFrame {
             this.cargarTablaFunciones();
         }
     }//GEN-LAST:event_BtnAnteriorActionPerformed
+
+    private void BtnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarActionPerformed
+this.setVisible(false);
+Amdministrador amdministrador=new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionNegocio, clientesNegocios);
+amdministrador.setVisible(true);
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnRegresarActionPerformed
 
     /**
      * @param args the command line arguments

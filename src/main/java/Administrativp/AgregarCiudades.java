@@ -6,6 +6,7 @@ package Administrativp;
 
 import Negocio.CiudadesNegocio;
 import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.IFuncionesNegocio;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
  * @author Oley
  */
 public class AgregarCiudades extends javax.swing.JFrame {
+     private IClientesNegocios clientesNegocios;
 
    private  ICiudadesNegocio ciudadesNegocio;
 private ISucursalesNegocio sucursalesNeggocio;
@@ -122,7 +124,7 @@ private IFuncionesNegocio funcionesNegocio;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
 this.setVisible(false);
-        Amdministrador administrador=new Amdministrador(ciudadesNegocio,sucursalesNeggocio,salasNegocios,peliculasNegocio, funcionesNegocio);
+        Amdministrador administrador=new Amdministrador(ciudadesNegocio,sucursalesNeggocio,salasNegocios,peliculasNegocio, funcionesNegocio,clientesNegocios);
 administrador.setVisible(true);
 
 

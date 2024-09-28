@@ -5,6 +5,7 @@
 package Administrativp;
 
 import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
 import Negocio.ISucursalesNegocio;
@@ -21,16 +22,18 @@ public class Amdministrador extends javax.swing.JFrame {
     private ISalasNegocios salasNegocios;
     private IPeliculasNegocio peliculasNegocio;
     private IFuncionesNegocio funcionesNegocio;
+     private IClientesNegocios clientesNegocios;
 
     /**
      * Creates new form Amdministrador
      */
-    public Amdministrador(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio, ISalasNegocios salasNegocios, IPeliculasNegocio peliculasNegocio, IFuncionesNegocio funcionesNegocio) {
+    public Amdministrador(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio, ISalasNegocios salasNegocios, IPeliculasNegocio peliculasNegocio, IFuncionesNegocio funcionesNegocio,IClientesNegocios clientesNegocios) {
         this.ciudadesNegocios = ciudadesNegocio;
         this.sucursalesNegocio = sucursalesNegocio;
         this.salasNegocios = salasNegocios;
         this.peliculasNegocio = peliculasNegocio;
         this.funcionesNegocio = funcionesNegocio;
+        this.clientesNegocios=clientesNegocios;
         initComponents();
     }
 
@@ -48,6 +51,7 @@ public class Amdministrador extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         btnCatalogoFuncion = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -92,6 +96,14 @@ public class Amdministrador extends javax.swing.JFrame {
         });
         getContentPane().add(btnCatalogoFuncion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, -1, 30));
 
+        jButton5.setText("Administrar Clientes");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, -1, -1));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -130,10 +142,20 @@ public class Amdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnCatalogoFuncionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogoFuncionActionPerformed
+       this.setVisible(false);
         CatalogoFunciones continuar = new CatalogoFunciones(funcionesNegocio);
         continuar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCatalogoFuncionActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+this.setVisible(false);
+CatalogoClientes catalogoClientes=new CatalogoClientes(clientesNegocios);
+catalogoClientes.setVisible(true);
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -142,5 +164,6 @@ public class Amdministrador extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     // End of variables declaration//GEN-END:variables
 }

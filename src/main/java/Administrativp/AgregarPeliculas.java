@@ -5,6 +5,7 @@
 package Administrativp;
 
 import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.IFuncionesNegocio;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
@@ -34,7 +35,8 @@ public class AgregarPeliculas extends javax.swing.JFrame {
     private ISalasNegocios salasNegocios;
     private IPeliculasNegocio peliculasNegocio;
     private IFuncionesNegocio funcionesNegocio;
-    
+         private IClientesNegocios clientesNegocios;
+
     public AgregarPeliculas(IPeliculasNegocio peliculasNegocio) {
         initComponents();
         setResizable(false);
@@ -215,7 +217,7 @@ private void limpiarCampos() {
         JOptionPane.showMessageDialog(this, "Película guardada con éxito.");
         limpiarCampos();
      this.setVisible(false);
-     Amdministrador amdministrador=new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio);
+     Amdministrador amdministrador=new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio,clientesNegocios);
      amdministrador.setVisible(true);
     } catch (PersistenciaException ex) {
         Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
