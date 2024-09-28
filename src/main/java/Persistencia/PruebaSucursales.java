@@ -14,25 +14,25 @@ import Entidad.Sucursales;
 public class PruebaSucursales {
 
     public static void main(String[] args) {
-        ConexionBD conexionBD = new ConexionBD();
-
-        SucursalDAO sucursalesPersistencia = new SucursalDAO(conexionBD);
-        CiudadesDAO ciudadPersistencia = new CiudadesDAO(conexionBD);
-
-        String nombreCiudad = "tucson";
-
-        try {
-            Ciudad ciudad = ciudadPersistencia.buscarCiudadPorNombre(nombreCiudad);
-
-            Sucursales nuevaSucursal = new Sucursales();
-            nuevaSucursal.setNombreCiudad("Sucursal Centro");
-            
-
-            sucursalesPersistencia.guardar(nuevaSucursal);
-            System.out.println("Sucursal guardada exitosamente con la ciudad: " + ciudad.getId());
-
-        } catch (PersistenciaException e) {
-            e.printStackTrace();
-        }
+//        ConexionBD conexionBD = new ConexionBD();
+//
+//        SucursalDAO sucursalesPersistencia = new SucursalDAO(conexionBD);
+//        CiudadesDAO ciudadPersistencia = new CiudadesDAO(conexionBD);
+//
+//        String nombreCiudad = "tucson";
+//
+//        try {
+//            Ciudad ciudad = ciudadPersistencia.buscarCiudadPorNombre(nombreCiudad);
+//
+//            Sucursales nuevaSucursal = new Sucursales();
+//            nuevaSucursal.setNombreCiudad("Sucursal Centro");
+//            
+//
+//            sucursalesPersistencia.guardar(nuevaSucursal);
+//            System.out.println("Sucursal guardada exitosamente con la ciudad: " + ciudad.getId());
+//
+//        } catch (PersistenciaException e) {
+//            e.printStackTrace();
+//        }
     }
 }

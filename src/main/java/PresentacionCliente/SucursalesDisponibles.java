@@ -39,10 +39,10 @@ public class SucursalesDisponibles extends javax.swing.JFrame {
     }
     
     private void cargaTablaSucursales() {
-        try {
-            SucursalesFiltroTablaDTO filtro = obtenerFiltrosTabla();
-            List<SucursalTablaDTO> sucursalLista = sucursalesNegocio.buscarSucursalPorNombre(nombre);
-        }
+//        try {
+//            SucursalesFiltroTablaDTO filtro = obtenerFiltrosTabla();
+//            List<SucursalTablaDTO> sucursalLista = sucursalesNegocio.buscarSucursalPorNombre(nombre);
+//        }
     }
 
     /**

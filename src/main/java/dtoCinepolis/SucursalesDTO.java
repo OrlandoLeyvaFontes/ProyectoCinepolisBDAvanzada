@@ -12,16 +12,35 @@ import Entidad.Ciudad;
  */
 public class SucursalesDTO {
 
+    
     int id;
-    String nombreCiudad;
-
-    public SucursalesDTO(int id, String nombreCiudad) {
-        this.id = id;
-        this.nombreCiudad = nombreCiudad;
-    }
+    String nombre;
+    CiudadesDTO ciudad;
+    private boolean estaEliminado;
 
     public SucursalesDTO() {
-        
+    }
+
+    public SucursalesDTO(String nombre, CiudadesDTO ciudad, boolean estaEliminado) {
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+        this.estaEliminado = estaEliminado;
+    }
+
+    public SucursalesDTO(String nombre, CiudadesDTO ciudad) {
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+    }
+
+    public SucursalesDTO(int id, String nombre, CiudadesDTO ciudad, boolean estaEliminado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+        this.estaEliminado = estaEliminado;
+    }
+
+    public SucursalesDTO(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getId() {
@@ -32,14 +51,30 @@ public class SucursalesDTO {
         this.id = id;
     }
 
-    public String getNombreCiudad() {
-        return nombreCiudad;
+   
+
+    public String getNombre() {
+        return this.nombre;
     }
 
-    public void setNombreCiudad(String nombreCiudad) {
-        this.nombreCiudad = nombreCiudad;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-    
-    
+
+    public CiudadesDTO getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(CiudadesDTO ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public boolean isEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
+    }
 
 }

@@ -63,13 +63,13 @@ public class SalasNegocios implements ISalasNegocios {
         return salas;
     }
 
-    private Sucursales convertirADTO(SucursalesDTO sucursalesDTO) {
+ private Sucursales convertirADTO(SucursalesDTO sucursalesDTO) {
         if (sucursalesDTO == null) {
             return null;
         }
         Sucursales sucursales = new Sucursales();
         sucursales.setId(sucursalesDTO.getId());
-        sucursales.setNombreCiudad(sucursalesDTO.getNombreCiudad());
+        sucursales.setNombre(sucursalesDTO.getNombre());
         return sucursales;
     }
 
