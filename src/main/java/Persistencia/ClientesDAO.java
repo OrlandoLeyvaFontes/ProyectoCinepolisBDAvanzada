@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,13 +30,14 @@ public class ClientesDAO implements IClientesDAO {
 
     @Override
     public boolean iniciarSesion(String correo, String contrasena) throws PersistenciaException {
-        String sqlIniciarSesion = "SELECT * FROM clientes WHERE correo = ? AND contrasena = ?";
+        String sqlIniciarSesion = "SELECT * FROM clientes WHERE correo = ? AND contraseña = ?";
 
         try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(sqlIniciarSesion)) {
             prepared.setString(1, correo);
             prepared.setString(2, contrasena);
             ResultSet rs = prepared.executeQuery();
-
+            
+            System.out.println("Inicio");
             return rs.next();
 
         } catch (SQLException e) {
@@ -44,7 +46,7 @@ public class ClientesDAO implements IClientesDAO {
         }
     }
 
-    @Override
+     @Override
     public void guardar(Clientes clientes) throws PersistenciaException {
         String sqlInsertarCiudad = "INSERT INTO clientes(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, correo, contraseña, ciudad) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
@@ -120,17 +122,56 @@ public class ClientesDAO implements IClientesDAO {
             throw new PersistenciaException("Ocurrió un error al leer la base de datos. Inténtelo de nuevo y si el error persiste, comuníquese con el encargado del sistema.");
 
         }
-return null;
+        return null;
     }
 
     @Override
     public Clientes eliminar(int id) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+  try{
+      Clientes clientes=buscarPorId(id);
+      if(clientes==null){
+                      throw new PersistenciaException("Ocurrió un error en obtener la información del cliente por su clave");
+
+      }
+      Connection connection=this.ConexionBD.crearConexion();
+      String updateClientes="""
+                            UPDATE clientes
+                            SET estaEliminado=1
+                            WHERE id=?
+                            """;
+      PreparedStatement preparedStatement=connection.prepareStatement(updateClientes);
+      preparedStatement.setInt(1, id);
+      int filasAfectadas=preparedStatement.executeUpdate();
+      System.out.println("filasAfectadas = " + filasAfectadas);
+      preparedStatement.close();
+      return clientes;
+  }catch(SQLException ex){
+           System.out.println(ex.getMessage());
+        throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
+ 
+  }
+
     }
 
     @Override
-    public Clientes buscarCiudadPorNombre(String nombreCliente) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Clientes buscarClientePorNombre(String nombreCliente) throws PersistenciaException {
+        String sqlBuscarCliente = "SELECT * FROM clientes  WHERE nombre";
+        Clientes clientes = null;
+        try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(sqlBuscarCliente)) {
+            prepa.setString(1, nombreCliente);
+            ResultSet resultSet = prepa.executeQuery();
+            if (resultSet.next()) {
+                clientes = new Clientes();
+                clientes.setId(resultSet.getInt("id"));
+                clientes.setNombre(resultSet.getString("nombre"));
+            }
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al buscar al cliente", e);
+
+        }
+        return clientes;
     }
 
 }
+
+

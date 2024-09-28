@@ -25,7 +25,13 @@ public class OpcionesCiudades extends javax.swing.JFrame {
 
     /**
      * Creates new form OpcionesCiudades
-     */
+     */    
+    public OpcionesCiudades() {
+        conexionBD = new ConexionBD();
+        this.ciudadesNegocio = new CiudadesNegocio(new CiudadesDAO(conexionBD));
+        initComponents();
+    }
+
     public OpcionesCiudades(int idCiudad) {
         this.idCiudad = idCiudad;
         conexionBD = new ConexionBD();

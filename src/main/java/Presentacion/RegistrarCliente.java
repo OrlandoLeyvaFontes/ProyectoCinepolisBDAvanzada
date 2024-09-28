@@ -29,7 +29,10 @@ public class RegistrarCliente extends javax.swing.JFrame {
 
     private IClientesNegocios clienteNegocio;
     private ICiudadesNegocio ciudadesNegocio;
-    
+
+    public RegistrarCliente() {
+        initComponents();
+    }    
 
     /**
      * Creates new form RegistrarCliente

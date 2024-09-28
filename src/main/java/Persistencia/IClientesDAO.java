@@ -14,15 +14,16 @@ import dtoCinepolis.ClientesDTO;
  */
 public interface IClientesDAO {
 
-    public boolean iniciarSesion(String  correo, String  contrasena) throws PersistenciaException;
+    public boolean iniciarSesion(String correo, String contrasena) throws PersistenciaException;
 
     public void guardar(Clientes clientes) throws PersistenciaException;
-    
+
     void editar(Clientes clientes) throws PersistenciaException;
-    
+
     Clientes buscarPorId(int id) throws PersistenciaException;
-    
+
     Clientes eliminar(int id) throws PersistenciaException;
-    
-    public  Clientes buscarCiudadPorNombre(String nombreCliente) throws PersistenciaException;
+
+    Clientes buscarClientePorNombre(String nombreCliente) throws PersistenciaException;
+
 }
