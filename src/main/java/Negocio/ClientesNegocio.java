@@ -37,6 +37,8 @@ public class ClientesNegocio implements IClientesNegocios {
             boolean esValido = clientesDAO.iniciarSesion(correo, contrasena);
 
             if (esValido) {
+                JOptionPane.showMessageDialog(null, "INICIO SESION",
+                        ":D", JOptionPane.INFORMATION_MESSAGE);
                 return true;  
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos",
@@ -59,7 +61,28 @@ public class ClientesNegocio implements IClientesNegocios {
             throw new NegocioException("Error al guardar el cliente", e);
         }
     }
+        
+    @Override
+    public void editarCliente(ClientesDTO clientesDTO) throws NegocioException {
+        try {
+            Clientes clientes = convertirADTO(clientesDTO);
+            clientesDAO.editar(clientes);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al editar el cliente", e);
+        }
+    }
+    
+    
+    @Override
+    public void eliminarCliente(int id) throws NegocioException {
+        try {
+            clientesDAO.eliminar(id);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al guardar el cliente", e);
+        }
+    }
 
+    
 //    @Override
 //    public void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException {
 //        try {
@@ -77,6 +100,7 @@ public class ClientesNegocio implements IClientesNegocios {
 //            throw new NegocioException("Error al guardar el cliente en la capa de negocio", e);
 //        }
 //    }
+    
 
     private Clientes convertirADTO(ClientesDTO clientesDTO) {
         if (clientesDTO == null) {
@@ -91,7 +115,6 @@ public class ClientesNegocio implements IClientesNegocios {
         clientes.setCorreo(clientesDTO.getCorreo());
         clientes.setContraseña(clientesDTO.getContraseña());
         clientes.setCiudad(clientesDTO.getCiudad());
-//        clientes.setCiudad(convertirADTO(clientesDTO.getCiudad()));
         return clientes;
 
     }
@@ -111,4 +134,5 @@ public class ClientesNegocio implements IClientesNegocios {
     public void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 }

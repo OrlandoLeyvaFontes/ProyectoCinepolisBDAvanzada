@@ -18,4 +18,8 @@ public interface IClientesNegocios {
     void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException;
 
     public void guardarCliente(ClientesDTO clientesDTO) throws NegocioException;
+    
+    public void editarCliente(ClientesDTO clientesDTO) throws NegocioException;
+    
+    public void eliminarCliente(int id) throws NegocioException;
 }

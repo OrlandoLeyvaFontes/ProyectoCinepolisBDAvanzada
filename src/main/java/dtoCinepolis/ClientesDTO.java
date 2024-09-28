@@ -24,6 +24,15 @@ public class ClientesDTO {
     public ClientesDTO() {
     }
 
+    public ClientesDTO(int id) {
+        this.id = id;
+    }
+
+    public ClientesDTO(String correo, String contraseña) {
+        this.correo = correo;
+        this.contraseña = contraseña;
+    }    
+
     public ClientesDTO(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, String ciudad) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;

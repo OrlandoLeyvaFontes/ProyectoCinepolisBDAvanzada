@@ -46,22 +46,22 @@ public class PeliculasNegocio implements IPeliculasNegocio {
 
     @Override
     public List<PeliculasTablaDTO> buscarPeliculasTabla(PeliculasFiltroTablaDTO filtro) throws NegocioException {
-if(filtro==null){
+        if (filtro == null) {
             throw new NegocioException("El filtro recibido es null");
 
-}
-List<PeliculasTablaDTO> peliculaLista=null;
-try{
-    peliculaLista=this.peliculasDAO.buscarPelicula(filtro);
-}catch(PersistenciaException ex){
-  Logger.getLogger(SalasNegocios.class.getName()).log(Level.SEVERE, null, ex);
-        throw new NegocioException("Error al buscar las salas con el filtro", ex);
-}
-   if(peliculaLista==null||peliculaLista.isEmpty()){
-               throw new NegocioException("No se encontraron registros con los filtros");
+        }
+        List<PeliculasTablaDTO> peliculaLista = null;
+        try {
+            peliculaLista = this.peliculasDAO.buscarPelicula(filtro);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(SalasNegocios.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error al buscar las salas con el filtro", ex);
+        }
+        if (peliculaLista == null || peliculaLista.isEmpty()) {
+            throw new NegocioException("No se encontraron registros con los filtros");
 
-   }
-   return peliculaLista;
+        }
+        return peliculaLista;
     }
 
     @Override
@@ -99,17 +99,16 @@ try{
 
     @Override
     public PeliculasDTO buscarPeliculasPorNombre(String nombrePelicula) throws NegocioException {
-try{
-    Peliculas peliculas=this.peliculasDAO.buscarPeliculasPorNombre(nombrePelicula);
-    PeliculasDTO peliculasDTO=new PeliculasDTO();
-    peliculasDTO.setId(peliculas.getId());
-    peliculasDTO.setTitulo(peliculas.getTitulo());
-    return peliculasDTO;
-}catch(PersistenciaException e){
-                throw new NegocioException("Error al buscar la pelicula por nombre en la capa de negocio", e);
+        try {
+            Peliculas peliculas = this.peliculasDAO.buscarPeliculasPorNombre(nombrePelicula);
+            PeliculasDTO peliculasDTO = new PeliculasDTO();
+            peliculasDTO.setId(peliculas.getId());
+            peliculasDTO.setTitulo(peliculas.getTitulo());
+            return peliculasDTO;
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al buscar la pelicula por nombre en la capa de negocio", e);
 
-}
-
+        }
 
     }
 
