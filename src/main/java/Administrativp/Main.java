@@ -44,12 +44,11 @@ public class Main {
         ICiudadesNegocio ciudadesNegocio = new CiudadesNegocio(ciudadesDAO);
         ISucursalesNegocio sucursalesNegocio = new SucursalesNegocio(sucursalesDAO, ciudadesNegocio);
         ISalasNegocios salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
-//        IPeliculasNegocio peliculasNegocio = new PeliculasNegocio(peliculasDAO);
+        IPeliculasNegocio peliculasNegocio = new PeliculasNegocio(peliculasDAO);
         IFuncionesDAO funcionesDAO = new FuncionesDAO(conexionBD);
         IFuncionesNegocio funcionesNegocio = new FuncionesNegocio(funcionesDAO);
-       AdministradorCuenta administradorCuenta=new AdministradorCuenta(ciudadesNegocio, sucursalesNegocio, salasNegocios, funcionesNegocio);
-//        AdministradorCuenta administrador = new AdministradorCuenta(ciudadesNegocio, sucursalesNegocio, salasNegocios,peliculasNegocio, funcionesNegocio);
-        administradorCuenta.setVisible(true);
+        AdministradorCuenta administrador = new AdministradorCuenta(ciudadesNegocio, sucursalesNegocio, salasNegocios,peliculasNegocio, funcionesNegocio);
+        administrador.setVisible(true);
    
 }
 }

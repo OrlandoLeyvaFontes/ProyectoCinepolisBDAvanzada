@@ -138,60 +138,62 @@ public class AgregarPeliculas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-//        String titulo = txtTitulo.getText();
-//        String clasificacion = txtClasificacion.getText();
-//        String genero = txtGenero.getText();
-//        String paisOrigen = txtOrigen.getText();
-//        String duracionTexto = txtDuracion.getText();
-//        String sinopsis = txtSinopsis.getText();
-//        String linkTrailer = txtLinkTrailer.getText();
-//        String rutaImagen = txtRutaImagen.getText();
-//
-//        if (titulo.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "El titulo es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        if (clasificacion.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "La clasificacion es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        if (genero.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "El genero es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        if (paisOrigen.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "El pais de origen es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        if (sinopsis.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "La sinopsis es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        if (linkTrailer.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "El link del trailer es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        if (rutaImagen.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "La imaguen es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        if (duracionTexto.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "La duracion es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//
-//        int duracionMinutos = Integer.parseInt(duracionTexto);
-//
-//        PeliculasDTO peliculasDTO = new PeliculasDTO(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, linkTrailer, rutaImagen);
-//        try {
-//            peliculasNegocio.guardar(peliculasDTO);
-//        } catch (NegocioException e) {
-//            JOptionPane.showMessageDialog(this, "Error al guardar la pelicula: " + e.getMessage());
-//        }
+        String titulo = txtTitulo.getText();
+        String clasificacion = txtClasificacion.getText();
+        String genero = txtGenero.getText();
+        String paisOrigen = txtOrigen.getText();
+        String duracionTexto = txtDuracion.getText();
+        String sinopsis = txtSinopsis.getText();
+        String linkTrailer = txtLinkTrailer.getText();
+        String rutaImagen = txtRutaImagen.getText();
+
+        if (titulo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El titulo es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (clasificacion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La clasificacion es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (genero.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El genero es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (paisOrigen.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El pais de origen es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (sinopsis.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La sinopsis es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (linkTrailer.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El link del trailer es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (rutaImagen.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La imaguen es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (duracionTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La duracion es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int duracionMinutos = Integer.parseInt(duracionTexto);
+
+        PeliculasDTO peliculasDTO = new PeliculasDTO(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, linkTrailer, rutaImagen);
+        try {
+            peliculasNegocio.guardarPeliculas(peliculasDTO);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtRutaImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaImagenActionPerformed
-        // TODO add your handling code here:
+
+
+
     }//GEN-LAST:event_txtRutaImagenActionPerformed
 
 

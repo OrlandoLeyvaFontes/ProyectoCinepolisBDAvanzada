@@ -23,7 +23,7 @@ public class AdministradorCuenta extends javax.swing.JFrame {
     /**
      * Creates new form AdministradorCuenta
      */
-    public AdministradorCuenta(ICiudadesNegocio ciudadesNegocio,ISucursalesNegocio sucursalesNegocio,ISalasNegocios salasNegocios, IFuncionesNegocio funcionesNegocio) {
+    public AdministradorCuenta(ICiudadesNegocio ciudadesNegocio,ISucursalesNegocio sucursalesNegocio,ISalasNegocios salasNegocios,IPeliculasNegocio peliculasNegocio ,IFuncionesNegocio funcionesNegocio) {
         this.ciudadesNegocio=ciudadesNegocio;
         this.sucursalesNegocio=sucursalesNegocio;
         this.salasNegocios=salasNegocios;

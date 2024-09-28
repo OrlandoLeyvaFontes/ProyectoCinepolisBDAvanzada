@@ -130,9 +130,9 @@ public class ClientesNegocio implements IClientesNegocios {
 
     }
 
-    @Override
-    public void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+//    @Override
+//    public void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
 
 }

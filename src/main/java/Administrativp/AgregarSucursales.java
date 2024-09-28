@@ -42,22 +42,22 @@ public class AgregarSucursales extends javax.swing.JFrame {
 
     }
 
-    private void agregarSucursal(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio) throws PersistenciaException {
+    private void agregarSucursal() throws PersistenciaException {
         String nombreSucursal = jTextField1.getText();
-        String nombreCiudad = jTextField2.getText();
+    String nombreCiudad = jTextField2.getText();
 
-        try {
-            CiudadesDTO ciudad = ciudadesNegocio.buscarCiudadPorNombre(nombreCiudad);
+    try {
+        CiudadesDTO ciudad = ciudadesNegocio.buscarCiudadPorNombre(nombreCiudad);
 
-            if (ciudad != null) {
-                SucursalesDTO sucursalesDTO = new SucursalesDTO(nombreSucursal, ciudad);
-                sucursalesNegocio.guardarSucursalConCiudadPorNombre(sucursalesDTO, nombreCiudad);
-            } else {
-                JOptionPane.showMessageDialog(this, "La ciudad no existe.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        if (ciudad != null) {
+            SucursalesDTO sucursalesDTO = new SucursalesDTO(nombreSucursal, ciudad);
+            sucursalesNegocio.guardarSucursalConCiudadPorNombre(sucursalesDTO, nombreCiudad);
+        } else {
+            JOptionPane.showMessageDialog(this, "La ciudad no existe.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } catch (NegocioException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }
 
 
@@ -126,12 +126,11 @@ public class AgregarSucursales extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        try {
-            agregarSucursal(ciudadesNegocio, sucursalesNegocio);
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(AgregarSucursales.class.getName()).log(Level.SEVERE, null, ex);
-        }
+  try {
+        agregarSucursal();  
+    } catch (PersistenciaException ex) {
+        Logger.getLogger(AgregarSucursales.class.getName()).log(Level.SEVERE, null, ex);
+    }
 
 
     }//GEN-LAST:event_jButton2ActionPerformed
