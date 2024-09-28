@@ -7,14 +7,24 @@ package Negocio;
 import Entidad.Peliculas;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
+import dtoCinepolis.PeliculasFiltroTablaDTO;
+import dtoCinepolis.PeliculasTablaDTO;
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  *
  * @author Oley
  */
 public interface IPeliculasNegocio {
- 
-    
+
+    PeliculasDTO guardarPeliculas(PeliculasDTO peliculasDTO) throws PersistenciaException;
+
+    List<PeliculasTablaDTO> buscarPeliculasTabla(PeliculasFiltroTablaDTO filtro) throws NegocioException;
+
+    public void editar(PeliculasDTO peliculasDTO) throws NegocioException;
+
+    PeliculasDTO eliminar(int id) throws NegocioException;
+
+    public PeliculasDTO buscarPeliculasPorNombre(String nombrePelicula) throws NegocioException;
 }

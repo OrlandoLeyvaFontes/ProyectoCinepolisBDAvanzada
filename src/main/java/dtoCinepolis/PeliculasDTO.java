@@ -20,6 +20,7 @@ public class PeliculasDTO {
     private String linkTrailer;
     private String rutaImagen;
     private boolean estaEliminado = false;
+    private int idFuncion;
 
     public PeliculasDTO() {
     }
@@ -154,6 +155,14 @@ public class PeliculasDTO {
 
     public void setEstaEliminado(boolean estaEliminado) {
         this.estaEliminado = estaEliminado;
+    }
+
+    public int getIdFuncion() {
+        return idFuncion;
+    }
+
+    public void setIdFuncion(int idFuncion) {
+        this.idFuncion = idFuncion;
     }
 
 }
