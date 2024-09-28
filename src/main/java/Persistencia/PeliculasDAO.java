@@ -92,32 +92,38 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
     public void editar(Peliculas peliculas) throws PersistenciaException {
-        String updatePeliculas = """
-                              UPDATE  pelicula
-                              SET titulo=?
-                              ,clasificacion=?
-                              ,genero=?
-                              ,paisOrigen=?
-                              ,duracionMinutos=?
-                              ,sinopsis=?
-                              ,rutaImagen=?
-                              ,idFuncion=?
-                              WHERE id=?
-                              """;
-        try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(updatePeliculas)) {
-            prepa.setString(1, peliculas.getTitulo());
-            prepa.setString(2, peliculas.getClasificacion());
-            prepa.setString(3, peliculas.getGenero());
-            prepa.setString(4, peliculas.getPaisOrigen());
-            prepa.setInt(5, peliculas.getDuracionMinutos());
-            prepa.setString(6, peliculas.getSinopsis());
-            prepa.setString(7, peliculas.getRutaImagen());
-            prepa.setInt(8, peliculas.getIdFuncion());
-            prepa.executeUpdate();
-        } catch (SQLException e) {
-            throw new PersistenciaException("Error al actualizar la pelicula", e);
-
-        }
+     String updatePeliculas = """
+                          UPDATE  pelicula
+                          SET titulo=?,
+                              clasificacion=?,
+                              genero=?,
+                              paisOrigen=?,
+                              duracionMinutos=?,
+                              sinopsis=?,
+                              rutaImagen=?,
+                              idFuncion=?
+                          WHERE id=?
+                          """;
+    try (Connection conexion = conexionBD.crearConexion(); 
+         PreparedStatement prepa = conexion.prepareStatement(updatePeliculas)) {
+        
+        // Asignar los valores a los parámetros
+        prepa.setString(1, peliculas.getTitulo());
+        prepa.setString(2, peliculas.getClasificacion());
+        prepa.setString(3, peliculas.getGenero());
+        prepa.setString(4, peliculas.getPaisOrigen());
+        prepa.setInt(5, peliculas.getDuracionMinutos());
+        prepa.setString(6, peliculas.getSinopsis());
+        prepa.setString(7, peliculas.getRutaImagen());
+        prepa.setInt(8, peliculas.getIdFuncion());
+        prepa.setInt(9, peliculas.getId());  // Aquí pasamos el ID como noveno parámetro
+        
+        // Ejecutar la actualización
+        prepa.executeUpdate();
+        
+    } catch (SQLException e) {
+        throw new PersistenciaException("Error al actualizar la pelicula", e);
+    }
     }
 
     @Override
@@ -147,45 +153,46 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
     public Peliculas eliminar(int id) throws PersistenciaException {
-        try {
-            Peliculas peliculas = buscarPorID(id);
-            if (peliculas == null) {
-                throw new PersistenciaException("Ocurrio un error en obtener la información de la pelicula por su clave");
-
-            }
-            Connection connection = this.conexionBD.crearConexion();
-            String updatePeliculas = """
-                                   UPDATE pelicula
-                                   SET estaEliminado
-                                   WHERE id=?
-                                   """;
-            PreparedStatement preparedStatement = connection.prepareStatement(updatePeliculas);
-            preparedStatement.setInt(1, id);
-            int filasAfectadas = preparedStatement.executeUpdate();
-            System.out.println("filasAfectadas = " + filasAfectadas);
-            preparedStatement.close();
-            connection.close();
-            return peliculas;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
-
+         try {
+        Peliculas peliculas = buscarPorID(id);
+        if (peliculas == null) {
+            throw new PersistenciaException("Ocurrió un error en obtener la información de la pelicula por su clave");
         }
+
+        Connection connection = this.conexionBD.crearConexion();
+        // Actualiza la consulta para establecer el valor de 'estaEliminado'
+        String updatePeliculas = """
+                               UPDATE pelicula
+                               SET estaEliminado = 1  -- o el valor que necesites para indicar que está eliminado
+                               WHERE id = ?;
+                               """;
+
+        PreparedStatement preparedStatement = connection.prepareStatement(updatePeliculas);
+        preparedStatement.setInt(1, id);
+        int filasAfectadas = preparedStatement.executeUpdate();
+        System.out.println("filasAfectadas = " + filasAfectadas);
+        preparedStatement.close();
+        connection.close();
+        return peliculas;
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+        throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
+    }
 
     }
 
     @Override
     public Peliculas buscarPeliculasPorNombre(String nombrePelicula) throws PersistenciaException {
         String sqlBuscarPelicula = "SELECT * FROM pelicula WHERE titulo=?";
-        Peliculas peliculas = null;
-        try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(nombrePelicula)) {
-            prepa.setString(1, nombrePelicula);
-            ResultSet resultSet = prepa.executeQuery();
-            if (resultSet.next()) {
-                peliculas = new Peliculas();
-                peliculas.setId(resultSet.getInt("id"));
-                peliculas.setTitulo(resultSet.getString("titulo"));
-            }
+    Peliculas peliculas = null;
+    try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(sqlBuscarPelicula)) {  // Aquí debes usar 'sqlBuscarPelicula'
+        prepa.setString(1, nombrePelicula);  // Asignar el valor de 'nombrePelicula' al parámetro
+        ResultSet resultSet = prepa.executeQuery();
+        if (resultSet.next()) {
+            peliculas = new Peliculas();
+            peliculas.setId(resultSet.getInt("id"));
+            peliculas.setTitulo(resultSet.getString("titulo"));
+        }
         } catch (SQLException e) {
             throw new PersistenciaException("Error al buscar la sala", e);
 
