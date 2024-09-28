@@ -69,7 +69,7 @@ public class SalasNegocios implements ISalasNegocios {
         }
         Sucursales sucursales = new Sucursales();
         sucursales.setId(sucursalesDTO.getId());
-        sucursales.setNombre(sucursalesDTO.getNombre());
+        sucursales.setNombreCiudad(sucursalesDTO.getNombreCiudad());
         return sucursales;
     }
 

@@ -6,6 +6,8 @@ package Persistencia;
 
 import Entidad.Ciudad;
 import Entidad.Sucursales;
+import dtoCinepolis.SucursalTablaDTO;
+import dtoCinepolis.SucursalesFiltroTablaDTO;
 
 import java.util.List;
 
@@ -24,5 +26,6 @@ public interface ISucursalDAO {
     Sucursales eliminar(int id) throws PersistenciaException;
 
      Sucursales buscarSucursalPorNombre(String nombre) throws PersistenciaException;
+     List<SucursalTablaDTO> buscarSucursalTabla(SucursalesFiltroTablaDTO filtro) throws PersistenciaException ;
 
 }

@@ -25,6 +25,8 @@ public class CatalogoFunciones extends javax.swing.JFrame {
 
     private IFuncionesNegocio funcionNegocio;
     private int idFuncionSeleccionada = -1;
+    private int pagina = 0;
+    private final int LIMITE = 10;
 
     public CatalogoFunciones(IFuncionesNegocio funcionNegocio) {
         this.funcionNegocio = funcionNegocio;
@@ -42,6 +44,10 @@ public class CatalogoFunciones extends javax.swing.JFrame {
                 }
             }
         });
+    }
+    
+    private FuncionesFiltroTablaDTO obtenerFiltrosTabla() {
+        return new FuncionesFiltroTablaDTO(this.LIMITE, this.pagina, txtFiltro.getText());
     }
 
     CatalogoFunciones() {
@@ -104,10 +110,6 @@ public class CatalogoFunciones extends javax.swing.JFrame {
         }
     }
 
-    private FuncionesFiltroTablaDTO obtenerFiltrosTabla() {
-        return new FuncionesFiltroTablaDTO(10, 0, jTextField1.getText()); // Crear el filtro usando el valor del campo de texto
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,8 +133,9 @@ public class CatalogoFunciones extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         BtnAnterior = new javax.swing.JButton();
         BtnSiguiente = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtFiltro = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        lblNumeroPagina = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -162,8 +165,18 @@ public class CatalogoFunciones extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         BtnAnterior.setText("Anterior");
+        BtnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAnteriorActionPerformed(evt);
+            }
+        });
 
         BtnSiguiente.setText("Siguiente");
+        BtnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSiguienteActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Eliminar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -172,33 +185,37 @@ public class CatalogoFunciones extends javax.swing.JFrame {
             }
         });
 
+        lblNumeroPagina.setText("   ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(BtnAnterior)
-                        .addGap(209, 209, 209)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtnSiguiente))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(BtnRegresar)
-                .addGap(207, 207, 207)
-                .addComponent(jLabel1)
-                .addContainerGap(272, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(190, 190, 190)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BtnAgregar)
-                .addGap(54, 54, 54))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(BtnRegresar)
+                        .addGap(207, 207, 207)
+                        .addComponent(jLabel1)
+                        .addContainerGap(272, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(90, 90, 90)
+                                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BtnAgregar))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(BtnAnterior)
+                                    .addGap(221, 221, 221)
+                                    .addComponent(lblNumeroPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(BtnSiguiente))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,14 +227,15 @@ public class CatalogoFunciones extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnAgregar)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(39, 39, 39)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnAnterior)
                     .addComponent(BtnSiguiente)
-                    .addComponent(jButton1))
+                    .addComponent(lblNumeroPagina))
                 .addGap(35, 35, 35))
         );
 
@@ -250,6 +268,25 @@ public class CatalogoFunciones extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void BtnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSiguienteActionPerformed
+        this.pagina++;
+        int impresion = pagina + 1;
+        lblNumeroPagina.setText("Página " + impresion);
+        this.cargarTablaFunciones();
+    }//GEN-LAST:event_BtnSiguienteActionPerformed
+
+    private void BtnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAnteriorActionPerformed
+         if (pagina == 0) {
+            JOptionPane.showMessageDialog(null, "inicio de la lista");
+        } else {
+            this.pagina--;
+
+            int impresion = pagina + 1;
+            lblNumeroPagina.setText("Página " + impresion);
+            this.cargarTablaFunciones();
+        }
+    }//GEN-LAST:event_BtnAnteriorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -264,6 +301,7 @@ public class CatalogoFunciones extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblNumeroPagina;
+    private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

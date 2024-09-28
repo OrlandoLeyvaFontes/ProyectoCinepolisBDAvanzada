@@ -95,7 +95,7 @@ public class FuncionesDAO implements IFuncionesDAO {
                   LIMIT ? 
                   OFFSET ?
                   """;
-    
+ 
     try (Connection conexion = conexionBD.crearConexion(); PreparedStatement ps = conexion.prepareStatement(sql)) {
 
         // Establecer los parámetros de búsqueda en la consulta

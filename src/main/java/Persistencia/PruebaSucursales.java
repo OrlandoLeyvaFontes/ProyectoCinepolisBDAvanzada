@@ -25,8 +25,8 @@ public class PruebaSucursales {
             Ciudad ciudad = ciudadPersistencia.buscarCiudadPorNombre(nombreCiudad);
 
             Sucursales nuevaSucursal = new Sucursales();
-            nuevaSucursal.setNombre("Sucursal Centro");
-            nuevaSucursal.setCiudad(ciudad);
+            nuevaSucursal.setNombreCiudad("Sucursal Centro");
+            
 
             sucursalesPersistencia.guardar(nuevaSucursal);
             System.out.println("Sucursal guardada exitosamente con la ciudad: " + ciudad.getId());

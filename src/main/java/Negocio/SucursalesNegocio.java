@@ -10,7 +10,12 @@ import Persistencia.ISucursalDAO;
 import Persistencia.PersistenciaException;
 import Persistencia.SucursalDAO;
 import dtoCinepolis.CiudadesDTO;
+import dtoCinepolis.SucursalTablaDTO;
 import dtoCinepolis.SucursalesDTO;
+import dtoCinepolis.SucursalesFiltroTablaDTO;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,20 +31,20 @@ public class SucursalesNegocio implements ISucursalesNegocio {
         this.ciudadesNegocio = ciudadesNegocio;
     }
 
-    public void guardarSucursalConCiudadPorNombre(SucursalesDTO sucursalDTO, String nombreCiudad) throws NegocioException {
-        try {
-            CiudadesDTO ciudadDTO = ciudadesNegocio.buscarCiudadPorNombre(nombreCiudad);
-
-            Ciudad ciudad = convertirADto(ciudadDTO);
-            sucursalDTO.setCiudad(ciudadDTO); // Esto debería seguir siendo CiudadesDTO
-
-            Sucursales sucursal = convertirADto(sucursalDTO);
-
-            sucursalesDAO.guardar(sucursal);
-        } catch (PersistenciaException e) {
-            throw new NegocioException("Error al guardar la sucursal en la capa de negocio", e);
-        }
-    }
+//    public void guardarSucursalConCiudadPorNombre(SucursalesDTO sucursalDTO, String nombreCiudad) throws NegocioException {
+//        try {
+//            CiudadesDTO ciudadDTO = ciudadesNegocio.buscarCiudadPorNombre(nombreCiudad);
+//
+//            Ciudad ciudad = convertirADto(ciudadDTO);
+//            sucursalDTO.setNombreCiudad(ciudadDTO); // Esto debería seguir siendo CiudadesDTO
+//
+//            Sucursales sucursal = convertirADto(sucursalDTO);
+//
+//            sucursalesDAO.guardar(sucursal);
+//        } catch (PersistenciaException e) {
+//            throw new NegocioException("Error al guardar la sucursal en la capa de negocio", e);
+//        }
+//    }
 
     private Ciudad convertirADto(CiudadesDTO ciudadDTO) {
         if (ciudadDTO == null) {
@@ -57,8 +62,7 @@ public class SucursalesNegocio implements ISucursalesNegocio {
         }
         Sucursales sucursal = new Sucursales();
         sucursal.setId(sucursalDTO.getId());
-        sucursal.setNombre(sucursalDTO.getNombre());
-        sucursal.setCiudad(convertirADto(sucursalDTO.getCiudad()));
+        sucursal.setNombreCiudad(sucursalDTO.getNombreCiudad());
         return sucursal;
     }
 
@@ -71,11 +75,22 @@ public class SucursalesNegocio implements ISucursalesNegocio {
         }
         SucursalesDTO sucursalesDTO = new SucursalesDTO();
         sucursalesDTO.setId(sucursales.getId());
-        sucursalesDTO.setNombre(sucursales.getNombre());
+        sucursalesDTO.setNombreCiudad(sucursales.getNombreCiudad());
         return sucursalesDTO;
     } catch (PersistenciaException e) {
         throw new NegocioException("Error al buscar la sucursal por nombre en la capa de negocio", e);
         }
+    }
+    
+    public List<SucursalTablaDTO> BuscarSucursalTabla(SucursalesFiltroTablaDTO filtro) throws NegocioException {
+        List<SucursalTablaDTO> sucursalesLista;
+        try {
+            sucursalesLista = sucursalesDAO.buscarSucursalTabla(filtro);
+        } catch (PersistenciaException ex)  {
+            Logger.getLogger(FuncionesNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error al buscar sucursales: " + ex.getMessage(), ex);
+        }
+        return sucursalesLista;
     }
     
 }
