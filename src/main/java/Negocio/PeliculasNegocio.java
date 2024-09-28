@@ -41,7 +41,6 @@ public class PeliculasNegocio implements IPeliculasNegocio {
         peliculas.setDuracionMinutos(peliculasDTO.getDuracionMinutos());
         peliculas.setSinopsis(peliculasDTO.getSinopsis());
         peliculas.setRutaImagen(peliculasDTO.getRutaImagen());
-        peliculas.setIdFuncion(peliculasDTO.getIdFuncion());
         return peliculas;
     }
 
@@ -123,7 +122,6 @@ public class PeliculasNegocio implements IPeliculasNegocio {
         peliculasDTO.setDuracionMinutos(peliculas.getDuracionMinutos());
         peliculasDTO.setSinopsis(peliculas.getSinopsis());
         peliculasDTO.setRutaImagen(peliculas.getRutaImagen());
-        peliculasDTO.setIdFuncion(peliculas.getIdFuncion());
         return peliculasDTO;
 
     }

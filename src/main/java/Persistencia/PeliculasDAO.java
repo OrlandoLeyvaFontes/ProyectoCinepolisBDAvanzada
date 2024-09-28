@@ -33,7 +33,7 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
      public Peliculas guardar(Peliculas peliculas) throws PersistenciaException {
-    String SQInsertarPeliculas = "INSERT INTO pelicula(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, rutaImagen, idFuncion) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    String SQInsertarPeliculas = "INSERT INTO pelicula(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, rutaImagen) VALUES (?, ?, ?, ?, ?, ?, ?)";
     try (Connection conexion = conexionBD.crearConexion(); 
          PreparedStatement prepa = conexion.prepareStatement(SQInsertarPeliculas, Statement.RETURN_GENERATED_KEYS)) {
          
@@ -44,7 +44,6 @@ public class PeliculasDAO implements IPeliculasDAO {
         prepa.setInt(5, peliculas.getDuracionMinutos());
         prepa.setString(6, peliculas.getSinopsis());
         prepa.setString(7, peliculas.getRutaImagen());
-        prepa.setInt(8, peliculas.getIdFuncion());
         
         int rowsAffecred = prepa.executeUpdate();
         
@@ -113,7 +112,6 @@ public class PeliculasDAO implements IPeliculasDAO {
                               duracionMinutos=?,
                               sinopsis=?,
                               rutaImagen=?,
-                              idFuncion=?
                           WHERE id=?
                           """;
     try (Connection conexion = conexionBD.crearConexion(); 
@@ -127,7 +125,6 @@ public class PeliculasDAO implements IPeliculasDAO {
         prepa.setInt(5, peliculas.getDuracionMinutos());
         prepa.setString(6, peliculas.getSinopsis());
         prepa.setString(7, peliculas.getRutaImagen());
-        prepa.setInt(8, peliculas.getIdFuncion());
         prepa.setInt(9, peliculas.getId());  
         
         // Ejecutar la actualización

@@ -20,7 +20,6 @@ public class Peliculas {
     private String linkTrailer;
     private String rutaImagen;
     private boolean estaEliminado;
-    private int idFuncion;
 
     public Peliculas() {
     }
@@ -117,13 +116,7 @@ public class Peliculas {
         return rutaImagen;
     }
 
-    public int getIdFuncion() {
-        return idFuncion;
-    }
-
-    public void setIdFuncion(int idFuncion) {
-        this.idFuncion = idFuncion;
-    }
+    
 
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
