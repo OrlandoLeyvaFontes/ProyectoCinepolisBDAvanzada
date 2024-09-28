@@ -178,33 +178,37 @@ public class ClientesDAO implements IClientesDAO {
 
     @Override
     public List<ClienteTablaDTO> buscarClienteTabla(ClienteFiltroTablaDTO filtro) throws PersistenciaException {
-List<ClienteTablaDTO> clientesLista=new ArrayList<>();
-String sql="""
-           SELECT id,nombre, apellidoPaterno, apellidoMaterno
-           From  clientes
+  List<ClienteTablaDTO> clientesLista = new ArrayList<>();
+    String sql = """
+           SELECT id, nombre, apellidoPaterno, apellidoMaterno
+           FROM clientes
            WHERE nombre LIKE ?
            LIMIT ?
            OFFSET ?
            """;
-try(Connection conexion= ConexionBD.crearConexion(); PreparedStatement prepa= conexion.prepareStatement(sql)){
-    
-            prepa.setString(1, "%" + filtro.getFiltro() + "%");
-            prepa.setInt(2, filtro.getLimit());
-            prepa.setInt(3, filtro.getOffset());
-            try(ResultSet resultado = prepa.executeQuery()){
-                ClienteTablaDTO clienteTablaDTO =new ClienteTablaDTO();
-                
-                clienteTablaDTO.setNombre(resultado.getString("id"));  clienteTablaDTO.setApellidoPaterno(resultado.getString("nombre"));
-                clienteTablaDTO.setApellidoPaterno("apellidoPaterno"); clienteTablaDTO.setApellidoMaterno("apellidoMaterno");
-                clientesLista.add(clienteTablaDTO);
+
+    try (Connection conexion = ConexionBD.crearConexion(); 
+         PreparedStatement prepa = conexion.prepareStatement(sql)) {
+        
+        prepa.setString(1, "%" + filtro.getFiltro() + "%");
+        prepa.setInt(2, filtro.getLimit());
+        prepa.setInt(3, filtro.getOffset());
+
+        try (ResultSet resultado = prepa.executeQuery()) {
+            while (resultado.next()) { 
+                ClienteTablaDTO clienteTablaDTO = new ClienteTablaDTO();
+                clienteTablaDTO.setId(resultado.getInt("id"));
+                clienteTablaDTO.setNombre(resultado.getString("nombre")); 
+                clienteTablaDTO.setApellidoPaterno(resultado.getString("apellidoPaterno")); 
+                clienteTablaDTO.setApellidoMaterno(resultado.getString("apellidoMaterno")); 
+                clientesLista.add(clienteTablaDTO); 
             }
-}catch(SQLException ex){
-                throw new PersistenciaException("Error al buscar salas", ex);
-
-}
-return clientesLista;
+        }
+    } catch (SQLException ex) {
+        throw new PersistenciaException("Error al buscar clientes", ex);
     }
-
+    return clientesLista;
+    }
 }
 
 

@@ -13,8 +13,11 @@ import Negocio.ISucursalesNegocio;
 import Negocio.NegocioException;
 import dtoCinepolis.ClienteFiltroTablaDTO;
 import dtoCinepolis.ClienteTablaDTO;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,27 +31,63 @@ public class CatalogoClientes extends javax.swing.JFrame {
     private IPeliculasNegocio peliculasNegocio;
     private IFuncionesNegocio funcionesNegocio;
     private IClientesNegocios clientesNegocios;
-
+      private int idClientesSeleccionada = -1;
+ 
     /**
      * Creates new form CatalogoClientes
      */
     public CatalogoClientes(IClientesNegocios clientesNegocios) {
         this.clientesNegocios = clientesNegocios;
         initComponents();
+                cargarTablaClientes();
+jTable1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    int row = jTable1.getSelectedRow();
+                    if (row != -1) {
+                        idClientesSeleccionada = (int) jTable1.getValueAt(row, 0);
+                        System.out.println("ID Ciudad seleccionada: " + idClientesSeleccionada);
+
+                    }
+                }
+            }
+        });
     }
-//private void cargarTablaClientes(){
-//    try{
-//        ClienteFiltroTablaDTO clienteFiltroTablaDTO=obtenerFiltrosTablas();
-//        List<ClienteTablaDTO> clienteLista=clientesNegocios
-//    }catch(NegocioException e){
-//                    JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);
-//
-//    }
-//}
+    private void AgregarRegistroTablaClientes(List<ClienteTablaDTO> clienteTablaDTOs){
+        if(clienteTablaDTOs==null){
+            return;
+        }
+          DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
+          clienteTablaDTOs.forEach(row ->{
+              Object[] fila=new Object[4];
+              fila[0]=row.getId();
+fila[1]=row.getNombre();
+fila[2]=row.getApellidoPaterno();
+fila[3]=row.getApellidoMaterno();
+modeloTabla.addRow(fila);
+          });
+    }
+private void cargarTablaClientes(){
+    try {
+        ClienteFiltroTablaDTO clienteFiltroTablaDTO = obtenerFiltrosTablas();
+        
+        List<ClienteTablaDTO> clienteLista = clientesNegocios.buuscarClienteTabla(clienteFiltroTablaDTO);
+        
+        // Limpiar la tabla
+        BorrarRegistroTablaSalas();
+        
+        AgregarRegistroTablaClientes(clienteLista);
+    } catch (NegocioException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);
+    }
+}
 private ClienteFiltroTablaDTO obtenerFiltrosTablas(){
     return new ClienteFiltroTablaDTO(10, 0, jTextField1.getText());
 }
-
+ private void BorrarRegistroTablaSalas() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
+        modeloTabla.setRowCount(0);
+    }
 
 
     /**
@@ -86,9 +125,17 @@ private ClienteFiltroTablaDTO obtenerFiltrosTablas(){
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id", "nombre", "apellido Paterno", "Apellido Materno"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 380, 150));
