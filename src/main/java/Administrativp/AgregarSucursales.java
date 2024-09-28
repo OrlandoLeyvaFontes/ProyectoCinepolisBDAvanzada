@@ -8,6 +8,9 @@ import Entidad.Ciudad;
 import Entidad.Sucursales;
 import Negocio.CiudadesNegocio;
 import Negocio.ICiudadesNegocio;
+import Negocio.IFuncionesNegocio;
+import Negocio.IPeliculasNegocio;
+import Negocio.ISalasNegocios;
 import Negocio.ISucursalesNegocio;
 import Negocio.NegocioException;
 import Negocio.SucursalesNegocio;
@@ -29,15 +32,18 @@ import javax.swing.JOptionPane;
  */
 public class AgregarSucursales extends javax.swing.JFrame {
 
-    private ICiudadesNegocio ciudadesNegocio;
+     private ICiudadesNegocio ciudadesNegocios;
     private ISucursalesNegocio sucursalesNegocio;
+    private ISalasNegocios salasNegocios;
+    private IPeliculasNegocio peliculasNegocio;
+    private IFuncionesNegocio funcionesNegocio;
 
     /**
      * Creates new form AñadirSucursales
      */
     public AgregarSucursales(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio) {
         this.sucursalesNegocio = sucursalesNegocio;
-        this.ciudadesNegocio = ciudadesNegocio;
+        this.ciudadesNegocios = ciudadesNegocio;
         initComponents();
 
     }
@@ -47,7 +53,7 @@ public class AgregarSucursales extends javax.swing.JFrame {
     String nombreCiudad = jTextField2.getText();
 
     try {
-        CiudadesDTO ciudad = ciudadesNegocio.buscarCiudadPorNombre(nombreCiudad);
+        CiudadesDTO ciudad =  ciudadesNegocios.buscarCiudadPorNombre(nombreCiudad);
 
         if (ciudad != null) {
             SucursalesDTO sucursalesDTO = new SucursalesDTO(nombreSucursal, ciudad);
@@ -122,7 +128,13 @@ public class AgregarSucursales extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+this.setVisible(false);
+ Amdministrador amdministrador=new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio);
+amdministrador.setVisible(true);
+        
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -131,8 +143,9 @@ public class AgregarSucursales extends javax.swing.JFrame {
     } catch (PersistenciaException ex) {
         Logger.getLogger(AgregarSucursales.class.getName()).log(Level.SEVERE, null, ex);
     }
-
-
+  this.setVisible(false);
+  ExitoSucursal exitoSucursal=new ExitoSucursal();
+exitoSucursal.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

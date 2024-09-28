@@ -4,7 +4,11 @@
  */
 package Administrativp;
 
+import Negocio.ICiudadesNegocio;
+import Negocio.IFuncionesNegocio;
 import Negocio.IPeliculasNegocio;
+import Negocio.ISalasNegocios;
+import Negocio.ISucursalesNegocio;
 import Negocio.NegocioException;
 import Negocio.PeliculasNegocio;
 import Persistencia.ConexionBD;
@@ -25,16 +29,68 @@ import javax.swing.JOptionPane;
  */
 public class AgregarPeliculas extends javax.swing.JFrame {
 
+    private ICiudadesNegocio ciudadesNegocios;
+    private ISucursalesNegocio sucursalesNegocio;
+    private ISalasNegocios salasNegocios;
     private IPeliculasNegocio peliculasNegocio;
-    IPeliculasDAO peliculasDAO = new PeliculasDAO(new ConexionBD());
-
+    private IFuncionesNegocio funcionesNegocio;
+    
     public AgregarPeliculas(IPeliculasNegocio peliculasNegocio) {
         initComponents();
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.peliculasNegocio = peliculasNegocio;
     }
+private boolean validarCampos() {
+    if (txtTitulo.getText().isEmpty()) {
+        mostrarMensajeError("El título es obligatorio.");
+        return false;
+    }
+    if (txtClasificacion.getText().isEmpty()) {
+        mostrarMensajeError("La clasificación es obligatoria.");
+        return false;
+    }
+    if (txtGenero.getText().isEmpty()) {
+        mostrarMensajeError("El género es obligatorio.");
+        return false;
+    }
+    if (txtOrigen.getText().isEmpty()) {
+        mostrarMensajeError("El país de origen es obligatorio.");
+        return false;
+    }
+    if (txtSinopsis.getText().isEmpty()) {
+        mostrarMensajeError("La sinopsis es obligatoria.");
+        return false;
+    }
+    if (txtLinkTrailer.getText().isEmpty()) {
+        mostrarMensajeError("El link del trailer es obligatorio.");
+        return false;
+    }
+    if (txtRutaImagen.getText().isEmpty()) {
+        mostrarMensajeError("La imagen es obligatoria.");
+        return false;
+    }
+    if (txtDuracion.getText().isEmpty()) {
+        mostrarMensajeError("La duración es obligatoria.");
+        return false;
+    }
+    return true;
+}
 
+private void mostrarMensajeError(String mensaje) {
+    JOptionPane.showMessageDialog(this, mensaje, "Error de Validación", JOptionPane.ERROR_MESSAGE);
+}
+
+private void limpiarCampos() {
+    txtTitulo.setText("");
+    txtClasificacion.setText("");
+    txtGenero.setText("");
+    txtOrigen.setText("");
+    txtDuracion.setText("");
+    txtSinopsis.setText("");
+    txtLinkTrailer.setText("");
+    txtRutaImagen.setText("");
+}
 //    private void guardarPelicula(PeliculasDTO nuevaPelicula) throws NegocioException, PersistenciaException {
 ////        peliculasNegocio.guardar(nuevaPelicula); // Usa el nuevo objeto FuncionesDTO
 ////        JOptionPane.showMessageDialog(this, "Pelicula guardada con éxito.");
@@ -138,56 +194,40 @@ public class AgregarPeliculas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String titulo = txtTitulo.getText();
-        String clasificacion = txtClasificacion.getText();
-        String genero = txtGenero.getText();
-        String paisOrigen = txtOrigen.getText();
-        String duracionTexto = txtDuracion.getText();
-        String sinopsis = txtSinopsis.getText();
-        String linkTrailer = txtLinkTrailer.getText();
-        String rutaImagen = txtRutaImagen.getText();
+      if (!validarCampos()) {
+        return; // Si hay un error de validación, no continuar
+    }
 
-        if (titulo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El titulo es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (clasificacion.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La clasificacion es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (genero.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El genero es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (paisOrigen.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El pais de origen es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (sinopsis.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La sinopsis es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (linkTrailer.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El link del trailer es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (rutaImagen.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La imaguen es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (duracionTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La duracion es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    String titulo = txtTitulo.getText();
+    String clasificacion = txtClasificacion.getText();
+    String genero = txtGenero.getText();
+    String paisOrigen = txtOrigen.getText();
+    String duracionTexto = txtDuracion.getText();
+    String sinopsis = txtSinopsis.getText();
+    String linkTrailer = txtLinkTrailer.getText();
+    String rutaImagen = txtRutaImagen.getText();
 
-        int duracionMinutos = Integer.parseInt(duracionTexto);
+    int duracionMinutos = Integer.parseInt(duracionTexto);
 
-        PeliculasDTO peliculasDTO = new PeliculasDTO(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, linkTrailer, rutaImagen);
-        try {
-            peliculasNegocio.guardarPeliculas(peliculasDTO);
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    PeliculasDTO peliculasDTO = new PeliculasDTO(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, linkTrailer, rutaImagen);
+    try {
+        peliculasNegocio.guardarPeliculas(peliculasDTO);
+        JOptionPane.showMessageDialog(this, "Película guardada con éxito.");
+        limpiarCampos();
+     this.setVisible(false);
+     Amdministrador amdministrador=new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio);
+     amdministrador.setVisible(true);
+    } catch (PersistenciaException ex) {
+        Logger.getLogger(AgregarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, "Error al guardar la película: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Error en la duración: debe ser un número entero.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+    }
+        
+        
+        
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtRutaImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaImagenActionPerformed

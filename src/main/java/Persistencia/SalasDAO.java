@@ -61,7 +61,11 @@ public class SalasDAO implements ISalasDAO {
 
     @Override
     public void editar(Salas salas) throws PersistenciaException {
-        String updateSalas = """
+         if (salas == null) {
+        throw new PersistenciaException("El objeto 'salas' no puede ser nulo.");
+    }
+    
+    String updateSalas = """
         UPDATE salas
         SET nombre = ?, 
             cantAsientos = ?, 
@@ -71,20 +75,25 @@ public class SalasDAO implements ISalasDAO {
         WHERE id = ?
     """;
 
-        try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepared = conexion.prepareStatement(updateSalas)) {
+    try (Connection conexion = ConexionBD.crearConexion(); 
+         PreparedStatement prepared = conexion.prepareStatement(updateSalas)) {
 
-            prepared.setString(1, salas.getNombre());
-            prepared.setInt(2, salas.getCantidadAsientos());
-            Timestamp timestamp = Timestamp.valueOf(salas.getTiempoLimpieza());
-            prepared.setTimestamp(3, timestamp);
-            prepared.setInt(4, salas.getSucursales().getId());
-            prepared.setDouble(5, salas.getCostoSugerido());
-            prepared.setInt(6, salas.getId());
+        prepared.setString(1, salas.getNombre());
+        prepared.setInt(2, salas.getCantidadAsientos());
+        Timestamp timestamp = Timestamp.valueOf(salas.getTiempoLimpieza());
+        prepared.setTimestamp(3, timestamp);
+        prepared.setInt(4, salas.getSucursales().getId());
+        prepared.setDouble(5, salas.getCostoSugerido());
+        prepared.setInt(6, salas.getId());
 
-            prepared.executeUpdate();
-        } catch (SQLException ex) {
-            throw new PersistenciaException("Error al actualizar la sala", ex);
+        int filasAfectadas = prepared.executeUpdate();
+        if (filasAfectadas == 0) {
+            throw new PersistenciaException("No se actualizó ninguna sala. Verifique el ID.");
         }
+
+    } catch (SQLException ex) {
+        throw new PersistenciaException("Error al actualizar la sala: " + ex.getMessage(), ex);
+    }
 
     }
 
@@ -117,31 +126,31 @@ public class SalasDAO implements ISalasDAO {
     @Override
     public Salas eliminar(int id) throws PersistenciaException {
         try {
-            Salas salas = buscarPorID(id);
-            if (salas == null) {
-                throw new PersistenciaException("Ocurrio un error en obtener la información de la sala por su clave");
-
-            }
-            Connection connection = this.ConexionBD.crearConexion();
-            String updateSalas = """
-                        UPDATE salas
-                        SET estaEliminado
-                        WHERE id=?
-                        """;
-            PreparedStatement preparedStatement = connection.prepareStatement(updateSalas);
-            preparedStatement.setInt(1, id);
-            int filasAfectadas = preparedStatement.executeUpdate();
-            System.out.println("filasAfectadas = " + filasAfectadas);
-            preparedStatement.close();
-            connection.close();
-            return salas;
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
-
+        Salas salas = buscarPorID(id);
+        if (salas == null) {
+            throw new PersistenciaException("Ocurrió un error en obtener la información de la sala por su clave");
         }
-    }
+        
+        Connection connection = this.ConexionBD.crearConexion();
+        String updateSalas = """
+                    UPDATE salas
+                    SET estaEliminado = 1  -- o el valor que desees asignar
+                    WHERE id = ?
+                    """;
+        
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSalas);
+        preparedStatement.setInt(1, id);
+        int filasAfectadas = preparedStatement.executeUpdate();
+        System.out.println("filasAfectadas = " + filasAfectadas);
+        
+        preparedStatement.close();
+        connection.close();
+        return salas;
+
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+        throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
+    }    }
 
     @Override
     public Salas buscarSalasPorNombre(String nombreSalas) throws PersistenciaException {

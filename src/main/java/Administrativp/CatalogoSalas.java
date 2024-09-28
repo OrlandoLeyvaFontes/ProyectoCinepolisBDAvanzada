@@ -4,6 +4,9 @@
  */
 package Administrativp;
 
+import Negocio.ICiudadesNegocio;
+import Negocio.IFuncionesNegocio;
+import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
 import Negocio.ISucursalesNegocio;
 import Negocio.NegocioException;
@@ -22,8 +25,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CatalogoSalas extends javax.swing.JFrame {
 
-    private ISalasNegocios salasNegocios;
+     private ICiudadesNegocio ciudadesNegocios;
     private ISucursalesNegocio sucursalesNegocio;
+    private ISalasNegocios salasNegocios;
+    private IPeliculasNegocio peliculasNegocio;
+    private IFuncionesNegocio funcionesNegocio;
 private int idSalasSeleccionada = -1;
 
     /**
@@ -40,11 +46,10 @@ private int idSalasSeleccionada = -1;
         if (e.getClickCount() == 1) { 
             int row = jTable1.getSelectedRow();
             if (row != -1) {
-               idSalasSeleccionada = (int) jTable1.getValueAt(row, 0); 
+                idSalasSeleccionada = (int) jTable1.getValueAt(row, 4); 
                 System.out.println("ID Ciudad seleccionada: " + idSalasSeleccionada);
-                }
-    }
-    }
+            }
+    }}
     });
     }
 
@@ -60,11 +65,12 @@ private int idSalasSeleccionada = -1;
         }
         DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
         salasLista.forEach(row -> {
-            Object[] fila = new Object[4];
+            Object[] fila = new Object[5];
             fila[0] = row.getNombre();
             fila[1] = row.getCantidadAsientos();
             fila[2]=row.getTiempoLimpieza();
             fila[3]=row.getCantidadAsientos();
+            fila[4]=row.getId();
             modeloTabla.addRow(fila);
         });
     }
@@ -102,9 +108,9 @@ private int idSalasSeleccionada = -1;
         jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -137,17 +143,17 @@ private int idSalasSeleccionada = -1;
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "nombre", "Cantidad Asientos", "Tiempo limpieza", "costo sugerido"
+                "nombre", "Cantidad Asientos", "Tiempo limpieza", "costo sugerido", "id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Double.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -159,13 +165,10 @@ private int idSalasSeleccionada = -1;
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 170));
 
         jButton3.setText("<--");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, -1, 20));
 
         jButton4.setText("-->");
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, -1, -1));
-
-        jButton5.setText("Detalles");
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, -1, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, -1, -1));
 
         jButton6.setText("Regresar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -177,6 +180,14 @@ private int idSalasSeleccionada = -1;
 
         jLabel2.setText("Pica la Salas que quieres y despues pulsa el boton de detalles!!!");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
+
+        jButton7.setText("Detalles");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -191,10 +202,10 @@ private int idSalasSeleccionada = -1;
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
-//this.setVisible(false);
-//MenuAdministrador menuAdministrador= new MenuAdministrador();
-//menuAdministrador.setVisible(true);
-//
+this.setVisible(false);
+Amdministrador menuAdministrador= new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio);
+menuAdministrador.setVisible(true);
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -209,14 +220,22 @@ private int idSalasSeleccionada = -1;
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        setVisible(false);
+        DetallesSalas detallesSalas =new DetallesSalas(idSalasSeleccionada, salasNegocios, sucursalesNegocio);
+detallesSalas.setVisible(true);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

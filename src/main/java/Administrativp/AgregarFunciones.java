@@ -4,8 +4,13 @@
  */
 package Administrativp;
 
+import Administrativp.Amdministrador;
 import Negocio.FuncionesNegocio;
+import Negocio.ICiudadesNegocio;
 import Negocio.IFuncionesNegocio;
+import Negocio.IPeliculasNegocio;
+import Negocio.ISalasNegocios;
+import Negocio.ISucursalesNegocio;
 import Negocio.NegocioException;
 import Persistencia.ConexionBD;
 import Persistencia.FuncionesDAO;
@@ -25,8 +30,11 @@ import javax.swing.JOptionPane;
  */
 public class AgregarFunciones extends javax.swing.JFrame {
 
+    private ICiudadesNegocio ciudadesNegocios;
+    private ISucursalesNegocio sucursalesNegocio;
+    private ISalasNegocios salasNegocios;
+    private IPeliculasNegocio peliculasNegocio;
     private IFuncionesNegocio funcionesNegocio;
-    
 
     /**
      * Creates new form AgregarFunciones
@@ -200,61 +208,74 @@ public class AgregarFunciones extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
-        String IdTexto = jTextField4.getText();
-        String nombre = jTextField1.getText();
-        String costoTexto = jTextField2.getText();
-        String horaInicioTexto = jTextField3.getText();
-        String SalaTexto = jTextField5.getText();
+      String IdTexto = jTextField4.getText();
+    String nombre = jTextField1.getText();
+    String costoTexto = jTextField2.getText();
+    String horaInicioTexto = jTextField3.getText();
+    String SalaTexto = jTextField5.getText();
 
-        if (IdTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El id es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (nombre.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (costoTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El costo es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!costoTexto.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "El precio debe ser un número entero válido.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (horaInicioTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La hora de inicio es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!horaInicioTexto.matches("\\d{1,2}:\\d{2}")) {
-            JOptionPane.showMessageDialog(this, "Formato de hora inválido. Usa 'HH:mm'.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (SalaTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La sala es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // Validaciones existentes
+    if (IdTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El id es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (costoTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El costo es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (!costoTexto.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "El precio debe ser un número entero válido.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (horaInicioTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "La hora de inicio es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (!horaInicioTexto.matches("\\d{1,2}:\\d{2}")) {
+        JOptionPane.showMessageDialog(this, "Formato de hora inválido. Usa 'HH:mm'.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (SalaTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "La sala es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (!SalaTexto.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "El campo sala debe ser un número entero válido.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime horaInicio = LocalTime.parse(horaInicioTexto, formatter);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    LocalTime horaInicio = LocalTime.parse(horaInicioTexto, formatter);
 
-        int id = Integer.parseInt(IdTexto);
-        int costo = Integer.parseInt(costoTexto);
-        int sala = Integer.parseInt(SalaTexto);
-        FuncionesDTO nuevaFuncion = new FuncionesDTO();
-        nuevaFuncion.setId(id);
-        nuevaFuncion.setNombrePelicula(nombre);
-        nuevaFuncion.setPrecio(costo);
-        nuevaFuncion.setHoraInicio(horaInicio);
-        nuevaFuncion.setSala(sala);
-        try {
-            guardarFuncion(nuevaFuncion);
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(AgregarFunciones.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error al guardar la funcion: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    int id = Integer.parseInt(IdTexto);
+    int costo = Integer.parseInt(costoTexto);
+    int sala = Integer.parseInt(SalaTexto); // Aquí ya será seguro convertir
+
+    FuncionesDTO nuevaFuncion = new FuncionesDTO();
+    nuevaFuncion.setId(id);
+    nuevaFuncion.setNombrePelicula(nombre);
+    nuevaFuncion.setPrecio(costo);
+    nuevaFuncion.setHoraInicio(horaInicio);
+    nuevaFuncion.setSala(sala);
+    try {
+        guardarFuncion(nuevaFuncion);
+    } catch (PersistenciaException ex) {
+        Logger.getLogger(AgregarFunciones.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, "Error al guardar la función: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    this.setVisible(false);
+    Amdministrador amdministrador = new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio);
+ amdministrador.setVisible(true);
 
 
+        
+        
+        
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
