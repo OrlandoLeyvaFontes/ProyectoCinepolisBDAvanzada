@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface IPeliculasNegocio {
 
-    PeliculasDTO guardarPeliculas(PeliculasDTO peliculasDTO) throws PersistenciaException;
+     PeliculasDTO guardarPeliculas(PeliculasDTO peliculasDTO) throws PersistenciaException;
 
     List<PeliculasTablaDTO> buscarPeliculasTabla(PeliculasFiltroTablaDTO filtro) throws NegocioException;
 

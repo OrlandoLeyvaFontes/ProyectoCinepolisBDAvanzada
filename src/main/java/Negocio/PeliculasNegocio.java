@@ -25,27 +25,92 @@ public class PeliculasNegocio implements IPeliculasNegocio {
 
     @Override
     public PeliculasDTO guardarPeliculas(PeliculasDTO peliculasDTO) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Peliculas peliculas = convertirDTO(peliculasDTO);
+        this.peliculasDAO.guardar(peliculas);
+        return convertirPeliculasDTO(peliculas);
+
+    }
+
+    private Peliculas convertirDTO(PeliculasDTO peliculasDTO) {
+        Peliculas peliculas = new Peliculas();
+        peliculas.setTitulo(peliculasDTO.getTitulo());
+        peliculas.setClasificacion(peliculasDTO.getClasificacion());
+        peliculas.setGenero(peliculasDTO.getGenero());
+        peliculas.setPaisOrigen(peliculasDTO.getPaisOrigen());
+        peliculas.setDuracionMinutos(peliculasDTO.getDuracionMinutos());
+        peliculas.setSinopsis(peliculasDTO.getSinopsis());
+        peliculas.setRutaImagen(peliculasDTO.getRutaImagen());
+        peliculas.setIdFuncion(peliculasDTO.getIdFuncion());
+        return peliculas;
     }
 
     @Override
     public List<PeliculasTablaDTO> buscarPeliculasTabla(PeliculasFiltroTablaDTO filtro) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+if(filtro==null){
+            throw new NegocioException("El filtro recibido es null");
+
+}
+List<PeliculasTablaDTO> peliculaLista=null;
+try{
+    peliculaLista=this.peliculasDAO.buscarPelicula(filtro);
+}catch(PersistenciaException ex){
+  Logger.getLogger(SalasNegocios.class.getName()).log(Level.SEVERE, null, ex);
+        throw new NegocioException("Error al buscar las salas con el filtro", ex);
+}
+   if(peliculaLista==null||peliculaLista.isEmpty()){
+               throw new NegocioException("No se encontraron registros con los filtros");
+
+   }
+   return peliculaLista;
     }
 
     @Override
     public void editar(PeliculasDTO peliculasDTO) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            Peliculas peliculas = convertirDTO(peliculasDTO);
+            this.peliculasDAO.editar(peliculas);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al editar la pelicula: " + ex.getMessage(), ex);
+
+        }
+
     }
 
     @Override
     public PeliculasDTO eliminar(int id) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            if (id <= 0) {
+                throw new NegocioException("El id recibido es incorrecto");
+
+            }
+            Peliculas peliculas = peliculasDAO.buscarPorID(id);
+            if (peliculas == null) {
+                throw new NegocioException("Nose pudo obtener la pelicula con la clave ingresada");
+
+            }
+            Peliculas peliculasEliminado = peliculasDAO.eliminar(id);
+            System.out.println(peliculasEliminado);
+            return convertirPeliculasDTO(peliculas);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+
+        }
     }
 
     @Override
     public PeliculasDTO buscarPeliculasPorNombre(String nombrePelicula) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+try{
+    Peliculas peliculas=this.peliculasDAO.buscarPeliculasPorNombre(nombrePelicula);
+    PeliculasDTO peliculasDTO=new PeliculasDTO();
+    peliculasDTO.setId(peliculas.getId());
+    peliculasDTO.setTitulo(peliculas.getTitulo());
+    return peliculasDTO;
+}catch(PersistenciaException e){
+                throw new NegocioException("Error al buscar la pelicula por nombre en la capa de negocio", e);
+
+}
+
+
     }
 
     private PeliculasDTO convertirPeliculasDTO(Peliculas peliculas) {

@@ -139,7 +139,7 @@ public class SalasNegocios implements ISalasNegocios {
         salasLista = salasDAO.buscarSalaTabla(filtro);
     } catch (PersistenciaException ex) {
         Logger.getLogger(SalasNegocios.class.getName()).log(Level.SEVERE, null, ex);
-        throw new NegocioException("Error al buscar las salas con el filtro", ex); // Lanza la excepción
+        throw new NegocioException("Error al buscar las salas con el filtro", ex); 
     }
 
     if (salasLista == null || salasLista.isEmpty()) {
