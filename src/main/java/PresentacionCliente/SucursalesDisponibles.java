@@ -23,6 +23,7 @@ public class SucursalesDisponibles extends javax.swing.JFrame {
     private int idSucursalesSeleccionada = -1;
     private int pagina = 0;
     private final int LIMITE = 5;
+    private int idSucursalSeleccionada = -1;
     
     /**
      * Creates new form SucursalesDisponibles
