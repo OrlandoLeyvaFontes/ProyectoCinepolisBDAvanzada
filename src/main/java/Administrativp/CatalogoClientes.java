@@ -10,6 +10,11 @@ import Negocio.IFuncionesNegocio;
 import Negocio.IPeliculasNegocio;
 import Negocio.ISalasNegocios;
 import Negocio.ISucursalesNegocio;
+import Negocio.NegocioException;
+import dtoCinepolis.ClienteFiltroTablaDTO;
+import dtoCinepolis.ClienteTablaDTO;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,6 +36,20 @@ public class CatalogoClientes extends javax.swing.JFrame {
         this.clientesNegocios = clientesNegocios;
         initComponents();
     }
+//private void cargarTablaClientes(){
+//    try{
+//        ClienteFiltroTablaDTO clienteFiltroTablaDTO=obtenerFiltrosTablas();
+//        List<ClienteTablaDTO> clienteLista=clientesNegocios
+//    }catch(NegocioException e){
+//                    JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);
+//
+//    }
+//}
+private ClienteFiltroTablaDTO obtenerFiltrosTablas(){
+    return new ClienteFiltroTablaDTO(10, 0, jTextField1.getText());
+}
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.

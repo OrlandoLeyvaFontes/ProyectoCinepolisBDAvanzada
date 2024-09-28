@@ -29,25 +29,25 @@ public class Pruebas {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SQLException, PersistenciaException, NegocioException {
-        IConexionBD conexionBD = new ConexionBD();
-        IClientesDAO peliculasDAO = new ClientesDAO(conexionBD); // Asegúrate de tener una implementación de IPeliculasDAO
-
-        // Paso 2: Instanciar PeliculasNegocio
-        IClientesNegocios peliculasNegocio = new ClientesNegocio(peliculasDAO);
-
-        ClientesDTO clienteDTO = new ClientesDTO(
-                "Juan", // nombre
-                "Pérez", // apellidoPaterno
-                "García", // apellidoMaterno
-                LocalDate.of(1990, 5, 15), // fechaNacimiento (LocalDate)
-                "juan.perez@example.com", // correo
-                "password123", // contraseña
-                "Ciudad de México" // ciudad
-        );
-        clienteDTO.setId(1);
-        
-        peliculasNegocio.editarCliente(clienteDTO);
-    }
+//    public static void main(String[] args) throws SQLException, PersistenciaException, NegocioException {
+//        IConexionBD conexionBD = new ConexionBD();
+//        IClientesDAO peliculasDAO = new ClientesDAO(conexionBD); // Asegúrate de tener una implementación de IPeliculasDAO
+//
+//        // Paso 2: Instanciar PeliculasNegocio
+//        IClientesNegocios peliculasNegocio = new ClientesNegocio(peliculasDAO);
+//
+//        ClientesDTO clienteDTO = new ClientesDTO(
+//                "Juan", // nombre
+//                "Pérez", // apellidoPaterno
+//                "García", // apellidoMaterno
+//                LocalDate.of(1990, 5, 15), // fechaNacimiento (LocalDate)
+//                "juan.perez@example.com", // correo
+//                "password123", // contraseña
+//                "Ciudad de México" // ciudad
+//        );
+//        clienteDTO.setId(1);
+//        
+//        peliculasNegocio.editarCliente(clienteDTO);
+//    }
 
 }

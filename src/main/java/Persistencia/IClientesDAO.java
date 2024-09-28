@@ -6,7 +6,10 @@ package Persistencia;
 
 import Entidad.Ciudad;
 import Entidad.Clientes;
+import dtoCinepolis.ClienteFiltroTablaDTO;
+import dtoCinepolis.ClienteTablaDTO;
 import dtoCinepolis.ClientesDTO;
+import java.util.List;
 
 /**
  *
@@ -19,7 +22,9 @@ public interface IClientesDAO {
     public void guardar(Clientes clientes) throws PersistenciaException;
 
     void editar(Clientes clientes) throws PersistenciaException;
-
+List<ClienteTablaDTO> buscarClienteTabla(ClienteFiltroTablaDTO filtro) throws PersistenciaException;
+    
+    
     Clientes buscarPorId(int id) throws PersistenciaException;
 
     Clientes eliminar(int id) throws PersistenciaException;

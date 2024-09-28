@@ -6,6 +6,8 @@ package Persistencia;
 
 import Entidad.Ciudad;
 import Entidad.Clientes;
+import dtoCinepolis.ClienteFiltroTablaDTO;
+import dtoCinepolis.ClienteTablaDTO;
 import dtoCinepolis.ClientesDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +16,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -170,6 +174,35 @@ public class ClientesDAO implements IClientesDAO {
 
         }
         return clientes;
+    }
+
+    @Override
+    public List<ClienteTablaDTO> buscarClienteTabla(ClienteFiltroTablaDTO filtro) throws PersistenciaException {
+List<ClienteTablaDTO> clientesLista=new ArrayList<>();
+String sql="""
+           SELECT id,nombre, apellidoPaterno, apellidoMaterno
+           From  clientes
+           WHERE nombre LIKE ?
+           LIMIT ?
+           OFFSET ?
+           """;
+try(Connection conexion= ConexionBD.crearConexion(); PreparedStatement prepa= conexion.prepareStatement(sql)){
+    
+            prepa.setString(1, "%" + filtro.getFiltro() + "%");
+            prepa.setInt(2, filtro.getLimit());
+            prepa.setInt(3, filtro.getOffset());
+            try(ResultSet resultado = prepa.executeQuery()){
+                ClienteTablaDTO clienteTablaDTO =new ClienteTablaDTO();
+                
+                clienteTablaDTO.setNombre(resultado.getString("id"));  clienteTablaDTO.setApellidoPaterno(resultado.getString("nombre"));
+                clienteTablaDTO.setApellidoPaterno("apellidoPaterno"); clienteTablaDTO.setApellidoMaterno("apellidoMaterno");
+                clientesLista.add(clienteTablaDTO);
+            }
+}catch(SQLException ex){
+                throw new PersistenciaException("Error al buscar salas", ex);
+
+}
+return clientesLista;
     }
 
 }

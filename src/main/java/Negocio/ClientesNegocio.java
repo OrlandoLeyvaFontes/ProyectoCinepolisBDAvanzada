@@ -9,7 +9,10 @@ import Entidad.Clientes;
 import Persistencia.IClientesDAO;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.CiudadesDTO;
+import dtoCinepolis.ClienteFiltroTablaDTO;
+import dtoCinepolis.ClienteTablaDTO;
 import dtoCinepolis.ClientesDTO;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -62,44 +65,13 @@ public class ClientesNegocio implements IClientesNegocios {
         }
     }
         
-    @Override
-    public void editarCliente(ClientesDTO clientesDTO) throws NegocioException {
-        try {
-            Clientes clientes = convertirADTO(clientesDTO);
-            clientesDAO.editar(clientes);
-        } catch (PersistenciaException e) {
-            throw new NegocioException("Error al editar el cliente", e);
-        }
-    }
+   
     
     
-    @Override
-    public void eliminarCliente(int id) throws NegocioException {
-        try {
-            clientesDAO.eliminar(id);
-        } catch (PersistenciaException e) {
-            throw new NegocioException("Error al guardar el cliente", e);
-        }
-    }
+   
 
     
-//    @Override
-//    public void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException {
-//        try {
-//            String nombreN = nombre.trim().toLowerCase();
-//            CiudadesDTO ciudadesDTO = ciudadesNegocio.buscarCiudadPorNombre(nombreN);
-//
-//            if (ciudadesDTO == null) {
-//                throw new NegocioException("Ciudad no encontrada: " + nombre);
-//            }
-//
-//            clientesDTO.setCiudad(ciudadesDTO);
-//            Clientes clientes = convertirADTO(clientesDTO);
-//            clientesDAO.guardar(clientes);
-//        } catch (PersistenciaException e) {
-//            throw new NegocioException("Error al guardar el cliente en la capa de negocio", e);
-//        }
-//    }
+
     
 
     private Clientes convertirADTO(ClientesDTO clientesDTO) {
@@ -130,9 +102,72 @@ public class ClientesNegocio implements IClientesNegocios {
 
     }
 
+
+
 //    @Override
-//    public void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    public List<ClienteTablaDTO> buuscarClienteTabla(ClienteFiltroTablaDTO filtro) throws NegocioException {
+//try{
+//    List<ClienteTablaDTO> clienteLista=clientesDAO.
+//}catch(PersistenciaException e){
+//      System.out.println(e.getMessage());
+//            throw new NegocioException(e.getMessage());
+//}
+//
+//
 //    }
+
+    @Override
+    public void editar(ClientesDTO clientesDTO) throws NegocioException {
+try{
+    Clientes clientes= convertirADTO(clientesDTO);
+    clientesDAO.editar(clientes);
+}catch(PersistenciaException ex){
+            throw new NegocioException("Error al editar la ciudad: " + ex.getMessage(), ex);
+}
+
+
+    }
+
+    @Override
+    public ClientesDTO eliminar(int id) throws NegocioException {
+ try {
+        if (id <= 0) {
+            throw new NegocioException("El id recibido es incorrecto");
+        }
+
+        Clientes cliente = clientesDAO.buscarPorId(id);
+        if (cliente == null) {
+            throw new NegocioException("No se pudo obtener el cliente con la clave ingresada");
+        }
+
+        Clientes clienteEliminado = clientesDAO.eliminar(id);
+        System.out.println("Cliente eliminado: " + clienteEliminado); 
+
+        return entidadADTO(clienteEliminado);
+    } catch (PersistenciaException ex) {
+        throw new NegocioException("Error de persistencia: " + ex.getMessage());
+    }
+
+    }
+    private ClientesDTO entidadADTO(Clientes clientes) {
+    ClientesDTO clientesDTO = new ClientesDTO();
+    clientesDTO.setId(clientes.getId()); 
+    clientesDTO.setNombre(clientes.getNombre());
+    return clientesDTO;
+}
+
+    @Override
+    public List<ClienteTablaDTO> buuscarClienteTabla(ClienteFiltroTablaDTO filtro) throws NegocioException {
+try{
+    List<ClienteTablaDTO> clienteLista=clientesDAO.buscarClienteTabla(filtro);
+    if(clienteLista==null){
+                        throw new NegocioException("No se encontraron registros con los filtros");
+
+    }
+    return clienteLista;
+}catch(PersistenciaException e){
+     System.out.println(e.getMessage());
+            throw new NegocioException(e.getMessage());
+}}
 
 }

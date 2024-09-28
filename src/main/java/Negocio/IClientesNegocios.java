@@ -5,7 +5,10 @@
 package Negocio;
 
 import Persistencia.PersistenciaException;
+import dtoCinepolis.ClienteFiltroTablaDTO;
+import dtoCinepolis.ClienteTablaDTO;
 import dtoCinepolis.ClientesDTO;
+import java.util.List;
 
 /**
  *
@@ -17,9 +20,11 @@ public interface IClientesNegocios {
 
 //    void guardarClientesConCiudad(ClientesDTO clientesDTO, String nombre) throws NegocioException;
 
+    List<ClienteTablaDTO> buuscarClienteTabla(ClienteFiltroTablaDTO filtro)throws NegocioException;
+            
     public void guardarCliente(ClientesDTO clientesDTO) throws NegocioException;
     
-    public void editarCliente(ClientesDTO clientesDTO) throws NegocioException;
-    
-    public void eliminarCliente(int id) throws NegocioException;
+   public void editar(ClientesDTO clientesDTO)  throws NegocioException;
+   
+   ClientesDTO eliminar(int id) throws NegocioException;
 }

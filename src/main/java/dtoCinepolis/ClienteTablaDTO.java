@@ -20,6 +20,9 @@ public class ClienteTablaDTO {
     String contraseña;
     String ciudad;
 
+    public ClienteTablaDTO() {
+    }
+
     public ClienteTablaDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String contraseña, String ciudad) {
         this.id = id;
         this.nombre = nombre;
