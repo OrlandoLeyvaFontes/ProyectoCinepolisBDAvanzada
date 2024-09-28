@@ -10,7 +10,7 @@ package dtoCinepolis;
  */
 public class PeliculasTablaDTO {
     
-    private int id;
+  private int id;
     private String titulo;
     private String clasificacion;
     private String genero;
@@ -19,9 +19,13 @@ public class PeliculasTablaDTO {
     private String sinopsis;
     private String linkTrailer;
     private String rutaImagen;
-    private boolean estaEliminado = false;
+    private boolean estaEliminado;
+    private int idFuncion;
 
-    public PeliculasTablaDTO(int id, String titulo, String clasificacion, String genero, String paisOrigen, int duracionMinutos, String sinopsis, String linkTrailer, String rutaImagen) {
+    public PeliculasTablaDTO() {
+    }
+
+    public PeliculasTablaDTO(int id, String titulo, String clasificacion, String genero, String paisOrigen, int duracionMinutos, String sinopsis, String linkTrailer, String rutaImagen, boolean estaEliminado) {
         this.id = id;
         this.titulo = titulo;
         this.clasificacion = clasificacion;
@@ -31,6 +35,7 @@ public class PeliculasTablaDTO {
         this.sinopsis = sinopsis;
         this.linkTrailer = linkTrailer;
         this.rutaImagen = rutaImagen;
+        this.estaEliminado = estaEliminado;
     }
 
     public int getId() {
@@ -112,6 +117,18 @@ public class PeliculasTablaDTO {
     public void setEstaEliminado(boolean estaEliminado) {
         this.estaEliminado = estaEliminado;
     }
+
+    public int getIdFuncion() {
+        return idFuncion;
+    }
+
+    public void setIdFuncion(int idFuncion) {
+        this.idFuncion = idFuncion;
+    }
+
+   
+    
+    
     
     
     

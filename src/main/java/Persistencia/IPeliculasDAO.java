@@ -6,7 +6,10 @@ package Persistencia;
 
 import Entidad.Peliculas;
 import dtoCinepolis.PeliculasDTO;
+import dtoCinepolis.PeliculasFiltroTablaDTO;
+import dtoCinepolis.PeliculasTablaDTO;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,14 +17,16 @@ import java.util.ArrayList;
  */
 public interface IPeliculasDAO {
 
-    public IConexionBD getConexionBD();
-    
-    ArrayList<PeliculasDTO> leer() throws PersistenciaException;
+public void guardar(Peliculas peliculas) throws  PersistenciaException;
 
-    void guardar(Peliculas pelicula) throws PersistenciaException;
-    
-    void eliminar(int id) throws PersistenciaException;
-    
-    void actualizar(Peliculas pelicula) throws PersistenciaException;
+List<PeliculasTablaDTO> buscarPelicula(PeliculasFiltroTablaDTO filtro) throws PersistenciaException;
+
+void editar(Peliculas peliculas) throws PersistenciaException;
+
+Peliculas buscarPorID(int id) throws PersistenciaException;
+
+Peliculas eliminar(int id) throws  PersistenciaException;
+
+public Peliculas buscarPeliculasPorNombre(String nombrePelicula) throws PersistenciaException;
 
 }

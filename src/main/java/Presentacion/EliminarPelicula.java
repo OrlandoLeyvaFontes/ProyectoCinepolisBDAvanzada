@@ -32,7 +32,7 @@ public class EliminarPelicula extends javax.swing.JFrame {
         initComponents();
         IConexionBD conexionBD = new ConexionBD();
         IPeliculasDAO peliculaDAO = new PeliculasDAO(conexionBD);
-        peliculasNegocio = new PeliculasNegocio(peliculaDAO);
+//        peliculasNegocio = new PeliculasNegocio(peliculaDAO);
     }
 
     /**
@@ -115,13 +115,13 @@ public class EliminarPelicula extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int id = Integer.parseInt(txtID.getText());
-        PeliculasDTO peliculaDTO = new PeliculasDTO(id);
-        try {
-            peliculasNegocio.eliminar(id);
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
-        }
+//        int id = Integer.parseInt(txtID.getText());
+//        PeliculasDTO peliculaDTO = new PeliculasDTO(id);
+//        try {
+//            peliculasNegocio.eliminar(id);
+//        } catch (NegocioException e) {
+//            JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

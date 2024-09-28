@@ -53,7 +53,7 @@ public class Amdministrador extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Catalogo Ciudades");
+        jButton1.setText("Agregar Ciudades");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -115,9 +115,8 @@ public class Amdministrador extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        CatalogoCiudades catalogoCiudades = new CatalogoCiudades(ciudadesNegocios);
-        catalogoCiudades.setVisible(true);
-
+        AgregarCiudades añadirCiudades = new AgregarCiudades(ciudadesNegocios);
+        añadirCiudades.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 

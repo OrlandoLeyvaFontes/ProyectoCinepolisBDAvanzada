@@ -6,10 +6,15 @@ package Administrativp;
 
 import Negocio.CiudadesNegocio;
 import Negocio.ICiudadesNegocio;
+import Negocio.IFuncionesNegocio;
+import Negocio.IPeliculasNegocio;
+import Negocio.ISalasNegocios;
+import Negocio.ISucursalesNegocio;
 import Persistencia.PersistenciaException;
 import dtoCinepolis.CiudadesDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,8 +22,11 @@ import java.util.logging.Logger;
  */
 public class AgregarCiudades extends javax.swing.JFrame {
 
-    private ICiudadesNegocio ciudadesNegocio;
-
+   private  ICiudadesNegocio ciudadesNegocio;
+private ISucursalesNegocio sucursalesNeggocio;
+private  ISalasNegocios salasNegocios;
+private IPeliculasNegocio peliculasNegocio;
+private IFuncionesNegocio funcionesNegocio;
     /**
      * Creates new form AñadirCiudades
      */
@@ -28,10 +36,14 @@ public class AgregarCiudades extends javax.swing.JFrame {
     }
 
     private void agregarCiudad() throws PersistenciaException {
-        String nombre = jTextField1.getText();
-        CiudadesDTO ciudadesDTO = new CiudadesDTO(nombre,false);
-        ciudadesNegocio.guardar(ciudadesDTO);
-    }
+     String nombre = jTextField1.getText().trim(); // Elimina espacios en blanco
+
+        if (nombre.isEmpty()) {
+            throw new PersistenciaException("El nombre de la ciudad no puede estar vacío.");
+        }
+
+        CiudadesDTO ciudadesDTO = new CiudadesDTO(nombre, false);
+        ciudadesNegocio.guardar(ciudadesDTO);  }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,22 +79,57 @@ public class AgregarCiudades extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, -1, -1));
 
         jButton2.setText("Regresar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
+ try {
             agregarCiudad();
+            this.setVisible(false);
+            ExitoCiudad exitoCiudad = new ExitoCiudad();
+            exitoCiudad.setVisible(true);
         } catch (PersistenciaException ex) {
             Logger.getLogger(AgregarCiudades.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        this.setVisible(false);
-        ExitoCiudad exitoCiudad = new ExitoCiudad();
-        exitoCiudad.setVisible(true);
+
+
+
+
+
+
+
+
+
+//        try {
+//            agregarCiudad();
+//        } catch (PersistenciaException ex) {
+//            Logger.getLogger(AgregarCiudades.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        this.setVisible(false);
+//        ExitoCiudad exitoCiudad = new ExitoCiudad();
+//        exitoCiudad.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+this.setVisible(false);
+        Amdministrador administrador=new Amdministrador(ciudadesNegocio,sucursalesNeggocio,salasNegocios,peliculasNegocio, funcionesNegocio);
+administrador.setVisible(true);
+
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

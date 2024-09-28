@@ -18,9 +18,27 @@ public class Peliculas {
     private int duracionMinutos;
     private String sinopsis;
     private String linkTrailer;
-    private boolean estaEliminado = false;
+    private String rutaImagen;
+    private boolean estaEliminado;
+    private int idFuncion;
 
     public Peliculas() {
+    }
+
+    public Peliculas(int id, String titulo, String clasificacion, String genero, String paisOrigen, int duracionMinutos, String sinopsis, String linkTrailer, String rutaImagen) {
+        this.id = id;
+        this.titulo = titulo;
+        this.clasificacion = clasificacion;
+        this.genero = genero;
+        this.paisOrigen = paisOrigen;
+        this.duracionMinutos = duracionMinutos;
+        this.sinopsis = sinopsis;
+        this.linkTrailer = linkTrailer;
+        this.rutaImagen = rutaImagen;
+    }
+
+    public Peliculas(String titulo) {
+        this.titulo = titulo;
     }
 
     public int getId() {
@@ -93,6 +111,22 @@ public class Peliculas {
 
     public void setEstaEliminado(boolean estaEliminado) {
         this.estaEliminado = estaEliminado;
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public int getIdFuncion() {
+        return idFuncion;
+    }
+
+    public void setIdFuncion(int idFuncion) {
+        this.idFuncion = idFuncion;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
     }
 
 }

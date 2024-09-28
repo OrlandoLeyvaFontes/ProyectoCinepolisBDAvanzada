@@ -30,7 +30,7 @@ public class ModificarPelicula extends javax.swing.JFrame {
         initComponents();
         IConexionBD conexionBD = new ConexionBD();
         IPeliculasDAO peliculaDAO = new PeliculasDAO(conexionBD);
-        peliculasNegocio = new PeliculasNegocio(peliculaDAO);
+//        peliculasNegocio = new PeliculasNegocio(peliculaDAO);
     }
 
     /**
@@ -262,24 +262,24 @@ public class ModificarPelicula extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int id = Integer.parseInt(txtID.getText());
-        String titulo = txtTitulo.getText();
-        String clasificacion = txtClasificacion.getText();
-        String genero = txtGenero.getText();
-        String paisOrigen = txtOrigen.getText();
-        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
-        String sinopsis = txtSinopsis.getText();
-        String linkTrailer = txtLinkTrailer.getText();
-        String rutaImagen = txtRutaImagen.getText();
-
-        PeliculasDTO peliculasDTO = new PeliculasDTO(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, linkTrailer, rutaImagen);
-        peliculasDTO.setId(id);
-
-        try {
-            peliculasNegocio.actualizar(peliculasDTO);
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
-        }
+//        int id = Integer.parseInt(txtID.getText());
+//        String titulo = txtTitulo.getText();
+//        String clasificacion = txtClasificacion.getText();
+//        String genero = txtGenero.getText();
+//        String paisOrigen = txtOrigen.getText();
+//        int duracionMinutos = Integer.parseInt(txtDuracion.getText());
+//        String sinopsis = txtSinopsis.getText();
+//        String linkTrailer = txtLinkTrailer.getText();
+//        String rutaImagen = txtRutaImagen.getText();
+//
+//        PeliculasDTO peliculasDTO = new PeliculasDTO(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, linkTrailer, rutaImagen);
+//        peliculasDTO.setId(id);
+//
+//        try {
+//            peliculasNegocio.actualizar(peliculasDTO);
+//        } catch (NegocioException e) {
+//            JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
+//        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed

@@ -24,10 +24,7 @@ public class Pruebas {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException, PersistenciaException, NegocioException {
-        IConexionBD conexionBD = new ConexionBD();
-        PeliculasDAO ap = new PeliculasDAO(conexionBD);
-        PeliculasNegocio pn = new PeliculasNegocio(ap);
-        pn.leer();
+     
     }
 
 }

@@ -34,18 +34,16 @@ public class ClientesNegocio implements IClientesNegocios {
     @Override
     public boolean iniciarSesion(String correo, String contrasena) throws NegocioException {
         try {
-            // Asumiendo que clientesDAO tiene un método iniciarSesion que acepta Strings
             boolean esValido = clientesDAO.iniciarSesion(correo, contrasena);
 
             if (esValido) {
-                return true;  // Credenciales válidas
+                return true;  
             } else {
-                // Mostrar mensaje de error
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos",
                         "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-        } catch (Exception e) {  // Cambié ESQLException a SQLException
+        } catch (Exception e) {  
             throw new NegocioException("Error al validar el usuario", e);
         }
     }
