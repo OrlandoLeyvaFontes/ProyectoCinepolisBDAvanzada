@@ -100,7 +100,9 @@ modificarSala.setVisible(true);
                 try {
                     salasNegocios.eliminar(idSalasSelecionada);
                     JOptionPane.showMessageDialog(this, "Sala eliminada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose(); // Cerrar ventana si se elimina
+                    this.setVisible(false);
+                    CatalogoSalas catalogoSalas=new CatalogoSalas(salasNegocios, sucursalesNegocio);
+                    catalogoSalas.setVisible(true);
                 } catch (NegocioException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

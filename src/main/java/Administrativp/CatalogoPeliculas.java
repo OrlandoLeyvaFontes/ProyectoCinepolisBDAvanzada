@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Oley
  */
 public class CatalogoPeliculas extends javax.swing.JFrame {
+
     private IPeliculasNegocio peliculasNegocio;
     private int idPeliculasSeleccionada = -1;
 
@@ -29,63 +30,78 @@ public class CatalogoPeliculas extends javax.swing.JFrame {
      * Creates new form CatalogoPeliculas
      */
     public CatalogoPeliculas(IPeliculasNegocio peliculasNegocio) {
-        this.peliculasNegocio=peliculasNegocio;
+
+        this.peliculasNegocio = peliculasNegocio;
         initComponents();
-         cargarTablaPeliculas();
-  jTable1.addMouseListener(new MouseAdapter() {
-    public void mouseClicked(MouseEvent e) {
-        if (e.getClickCount() == 1) { 
-            int row = jTable1.getSelectedRow();
-            if (row != -1) {
-                idPeliculasSeleccionada = (int) jTable1.getValueAt(row, 0); 
-                System.out.println("ID Ciudad seleccionada: " + idPeliculasSeleccionada);
-          
+        cargarTablaPeliculas();
+        jTable1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    int row = jTable1.getSelectedRow();
+                    if (row != -1) {
+                        idPeliculasSeleccionada = (int) jTable1.getValueAt(row, 0);
+                        System.out.println("ID Ciudad seleccionada: " + idPeliculasSeleccionada);
+
+                    }
+                }
+            }
+        });
     }
-        }
-    }
-   });
-          }
-    private void AgregarRegistroTablaPeliculas(List<PeliculasTablaDTO> peliculasTablaDTOs){
-        if(peliculasTablaDTOs==null){
+
+    private void AgregarRegistroTablaPeliculas(List<PeliculasTablaDTO> peliculasTablaDTOs) {
+        if (peliculasTablaDTOs == null) {
             return;
         }
-          DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
-          peliculasTablaDTOs.forEach(row ->{
-              Object[] fila=new Object[3];
-              fila[0]=row.getId();
-              fila[1]=row.getTitulo();
-              fila[2]=row.getSinopsis();
-                 modeloTabla.addRow(fila);
-          });
-    }
-    
-    
-    
-    
-     private void cargarTablaPeliculas(){
-       try {
-        PeliculasFiltroTablaDTO peliculasFiltroTablaDTO = ObtenerFiltrosTablas();
-        List<PeliculasTablaDTO> peliculaLista = peliculasNegocio.buscarPeliculasTabla(peliculasFiltroTablaDTO);
-        System.out.println("Cantidad de películas encontradas: " + peliculaLista.size()); // Debug
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
+        peliculasTablaDTOs.forEach(row -> {
+            Object[] fila = new Object[7];
+            fila[0] = row.getId();
+            fila[1] = row.getTitulo();
+            fila[2] = row.getClasificacion();
+            fila[3] = row.getGenero();
+            fila[4] = row.getPaisOrigen();
+            fila[5] = row.getSinopsis();
+            fila[6] = row.getRutaImagen();
+            modeloTabla.addRow(fila);
 
-        if (!peliculaLista.isEmpty()) {
-            AgregarRegistroTablaPeliculas(peliculaLista); // Llamada para agregar registros a la tabla
-        } else {
-            BorrarRegistroTablaSalas();
-            JOptionPane.showMessageDialog(this, "No se encontraron películas.", "Información", JOptionPane.INFORMATION_MESSAGE);
-        }
-    } catch (NegocioException e) {
-        BorrarRegistroTablaSalas();
-        JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);
+            /*
+                  private int id;
+    private String titulo;
+    private String clasificacion;
+    private String genero;
+    private String paisOrigen;
+    private int duracionMinutos;
+    private String sinopsis;
+    private String linkTrailer;
+    private String rutaImagen;
+    private int idFuncion;
+             */
+        });
     }
-     }
-     private void BorrarRegistroTablaSalas() {
+
+    private void cargarTablaPeliculas() {
+        try {
+            PeliculasFiltroTablaDTO peliculasFiltroTablaDTO = ObtenerFiltrosTablas();
+            List<PeliculasTablaDTO> peliculaLista = peliculasNegocio.buscarPeliculasTabla(peliculasFiltroTablaDTO);
+            BorrarRegistroTablaSalas();
+
+            AgregarRegistroTablaPeliculas(peliculaLista);
+
+        } catch (NegocioException e) {
+            BorrarRegistroTablaSalas();
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void BorrarRegistroTablaSalas() {
         DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
         modeloTabla.setRowCount(0);
     }
-     private PeliculasFiltroTablaDTO ObtenerFiltrosTablas(){
-          return new PeliculasFiltroTablaDTO(10, 0, jTextField1.getText());
-     }
+
+    private PeliculasFiltroTablaDTO ObtenerFiltrosTablas() {
+        return new PeliculasFiltroTablaDTO(10, 0, jTextField1.getText());
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,7 +124,7 @@ public class CatalogoPeliculas extends javax.swing.JFrame {
 
         jLabel1.setText("Catalgo de Peliculas");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 260, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 630, -1));
 
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -116,7 +132,7 @@ public class CatalogoPeliculas extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 30, -1, -1));
 
         jButton2.setText("Nuevo");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -128,17 +144,17 @@ public class CatalogoPeliculas extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "titulo", "sinopsis"
+                "id", "titulo", "clasificacion", "Genero", "Pais origen", "Sinopsis", "Ruta imagen"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -147,7 +163,7 @@ public class CatalogoPeliculas extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 360, 160));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 760, 160));
 
         jButton3.setText("Regresar");
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
@@ -159,14 +175,13 @@ public class CatalogoPeliculas extends javax.swing.JFrame {
         this.setVisible(false);
         AgregarPeliculas agregarPeliculas = new AgregarPeliculas(peliculasNegocio);
         agregarPeliculas.setVisible(true);
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
-        cargarTablaPeliculas();
 
+        cargarTablaPeliculas();
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

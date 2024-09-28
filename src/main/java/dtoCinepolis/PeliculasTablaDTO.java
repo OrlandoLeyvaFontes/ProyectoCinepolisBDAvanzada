@@ -19,13 +19,18 @@ public class PeliculasTablaDTO {
     private String sinopsis;
     private String linkTrailer;
     private String rutaImagen;
-    private boolean estaEliminado;
     private int idFuncion;
 
     public PeliculasTablaDTO() {
     }
 
-    public PeliculasTablaDTO(int id, String titulo, String clasificacion, String genero, String paisOrigen, int duracionMinutos, String sinopsis, String linkTrailer, String rutaImagen, boolean estaEliminado) {
+    public PeliculasTablaDTO(int id, String titulo, String sinopsis) {
+        this.id = id;
+        this.titulo = titulo;
+        this.sinopsis = sinopsis;
+    }
+
+    public PeliculasTablaDTO(int id, String titulo, String clasificacion, String genero, String paisOrigen, int duracionMinutos, String sinopsis, String linkTrailer, String rutaImagen) {
         this.id = id;
         this.titulo = titulo;
         this.clasificacion = clasificacion;
@@ -35,7 +40,6 @@ public class PeliculasTablaDTO {
         this.sinopsis = sinopsis;
         this.linkTrailer = linkTrailer;
         this.rutaImagen = rutaImagen;
-        this.estaEliminado = estaEliminado;
     }
 
     public int getId() {
@@ -110,14 +114,7 @@ public class PeliculasTablaDTO {
         this.rutaImagen = rutaImagen;
     }
 
-    public boolean isEstaEliminado() {
-        return estaEliminado;
-    }
-
-    public void setEstaEliminado(boolean estaEliminado) {
-        this.estaEliminado = estaEliminado;
-    }
-
+  
     public int getIdFuncion() {
         return idFuncion;
     }

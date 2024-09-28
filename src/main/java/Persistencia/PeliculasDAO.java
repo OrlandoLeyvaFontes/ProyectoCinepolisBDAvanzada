@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,34 +32,44 @@ public class PeliculasDAO implements IPeliculasDAO {
     }
 
     @Override
-    public void guardar(Peliculas peliculas) throws PersistenciaException {
-        String SQInsertarPeliculas = "INSERT INTO pelicula(titulo,clasificacion,genero,paisOrigen,duracionMinutos,sinopsis,rutaImagen,idFuncion) VALUES(?,?,?,?,?,?,?,?)";
-        try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(SQInsertarPeliculas)) {
-            prepa.setString(1, peliculas.getTitulo());
-            prepa.setString(2, peliculas.getClasificacion());
-            prepa.setString(3, peliculas.getGenero());
-            prepa.setString(4, peliculas.getPaisOrigen());
-            prepa.setInt(5, peliculas.getDuracionMinutos());
-            prepa.setString(6, peliculas.getSinopsis());
-            prepa.setString(7, peliculas.getRutaImagen());
-            prepa.setInt(8, peliculas.getIdFuncion());
-            int rowsAffecred = prepa.executeUpdate();
-            if (rowsAffecred > 0) {
-                System.out.println("Sala guardada correctamente.");
-            } else {
-                System.out.println("No se guardó ninguna sala.");
+     public Peliculas guardar(Peliculas peliculas) throws PersistenciaException {
+    String SQInsertarPeliculas = "INSERT INTO pelicula(titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, rutaImagen, idFuncion) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    try (Connection conexion = conexionBD.crearConexion(); 
+         PreparedStatement prepa = conexion.prepareStatement(SQInsertarPeliculas, Statement.RETURN_GENERATED_KEYS)) {
+         
+        prepa.setString(1, peliculas.getTitulo());
+        prepa.setString(2, peliculas.getClasificacion());
+        prepa.setString(3, peliculas.getGenero());
+        prepa.setString(4, peliculas.getPaisOrigen());
+        prepa.setInt(5, peliculas.getDuracionMinutos());
+        prepa.setString(6, peliculas.getSinopsis());
+        prepa.setString(7, peliculas.getRutaImagen());
+        prepa.setInt(8, peliculas.getIdFuncion());
+        
+        int rowsAffecred = prepa.executeUpdate();
+        
+        if (rowsAffecred > 0) {
+            try (ResultSet generatedKeys = prepa.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int idGenerado = generatedKeys.getInt(1);
+                    peliculas.setId(idGenerado);
+                }
             }
-        } catch (SQLException e) {
-            throw new PersistenciaException("Error al guardar la pelicula", e);
-
+            System.out.println("Película guardada correctamente con ID: " + peliculas.getId());
+        } else {
+            System.out.println("No se guardó ninguna película.");
         }
+    } catch (SQLException e) {
+        throw new PersistenciaException("Error al guardar la película", e);
+    }
+    return peliculas; 
     }
 
     @Override
     public List<PeliculasTablaDTO> buscarPelicula(PeliculasFiltroTablaDTO filtro) throws PersistenciaException {
        List<PeliculasTablaDTO> peliculasLista = new ArrayList<>();
     String sql = """
-        SELECT titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, rutaImagen, idFuncion
+        SELECT id,titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, rutaImagen
         FROM pelicula
         WHERE titulo LIKE ?
         LIMIT ?
@@ -73,6 +84,7 @@ public class PeliculasDAO implements IPeliculasDAO {
         try (ResultSet resultado = prepa.executeQuery()) {
             while (resultado.next()) {
                 PeliculasTablaDTO peliculasTablaDTO = new PeliculasTablaDTO();
+                peliculasTablaDTO.setId(resultado.getInt("id"));
                 peliculasTablaDTO.setTitulo(resultado.getString("titulo"));
                 peliculasTablaDTO.setClasificacion(resultado.getString("clasificacion"));
                 peliculasTablaDTO.setGenero(resultado.getString("genero"));
@@ -80,7 +92,6 @@ public class PeliculasDAO implements IPeliculasDAO {
                 peliculasTablaDTO.setDuracionMinutos(resultado.getInt("duracionMinutos"));
                 peliculasTablaDTO.setSinopsis(resultado.getString("sinopsis"));
                 peliculasTablaDTO.setRutaImagen(resultado.getString("rutaImagen"));
-                peliculasTablaDTO.setIdFuncion(resultado.getInt("idFuncion"));
                 peliculasLista.add(peliculasTablaDTO);
             }
         }
@@ -117,7 +128,7 @@ public class PeliculasDAO implements IPeliculasDAO {
         prepa.setString(6, peliculas.getSinopsis());
         prepa.setString(7, peliculas.getRutaImagen());
         prepa.setInt(8, peliculas.getIdFuncion());
-        prepa.setInt(9, peliculas.getId());  // Aquí pasamos el ID como noveno parámetro
+        prepa.setInt(9, peliculas.getId());  
         
         // Ejecutar la actualización
         prepa.executeUpdate();
@@ -130,9 +141,7 @@ public class PeliculasDAO implements IPeliculasDAO {
     @Override
     public Peliculas buscarPorID(int id) throws PersistenciaException {
         String codigoSQL = """
-                          SELECT titulo
-                          FROM pelicula
-                          WHERE id=?
+                         SELECT id, titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, rutaImagen, FROM pelicula WHERE id=?
                           """;
         try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(codigoSQL)) {
             prepa.setInt(1, id);

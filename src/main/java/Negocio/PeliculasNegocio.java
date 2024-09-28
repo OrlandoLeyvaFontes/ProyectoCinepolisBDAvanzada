@@ -33,6 +33,7 @@ public class PeliculasNegocio implements IPeliculasNegocio {
 
     private Peliculas convertirDTO(PeliculasDTO peliculasDTO) {
         Peliculas peliculas = new Peliculas();
+        peliculas.setId(peliculasDTO.getId());
         peliculas.setTitulo(peliculasDTO.getTitulo());
         peliculas.setClasificacion(peliculasDTO.getClasificacion());
         peliculas.setGenero(peliculasDTO.getGenero());
@@ -114,6 +115,7 @@ public class PeliculasNegocio implements IPeliculasNegocio {
 
     private PeliculasDTO convertirPeliculasDTO(Peliculas peliculas) {
         PeliculasDTO peliculasDTO = new PeliculasDTO();
+        peliculasDTO.setId(peliculas.getId());
         peliculasDTO.setTitulo(peliculas.getTitulo());
         peliculasDTO.setClasificacion(peliculas.getClasificacion());
         peliculasDTO.setGenero(peliculas.getGenero());
