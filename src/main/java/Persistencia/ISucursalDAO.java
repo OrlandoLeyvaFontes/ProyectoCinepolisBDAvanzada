@@ -27,4 +27,5 @@ public interface ISucursalDAO {
 
      Sucursales buscarSucursalPorNombre(String nombre) throws PersistenciaException;
 
+     List<Sucursales> buscarSucursal(SucursalesFiltroTablaDTO filtro) throws PersistenciaException;
 }

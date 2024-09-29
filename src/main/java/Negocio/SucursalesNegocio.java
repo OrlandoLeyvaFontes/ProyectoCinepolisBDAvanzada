@@ -13,6 +13,7 @@ import dtoCinepolis.CiudadesDTO;
 import dtoCinepolis.SucursalTablaDTO;
 import dtoCinepolis.SucursalesDTO;
 import dtoCinepolis.SucursalesFiltroTablaDTO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class SucursalesNegocio implements ISucursalesNegocio {
 
-      private final ISucursalDAO sucursalesDAO;
+    private final ISucursalDAO sucursalesDAO;
     private final ICiudadesNegocio ciudadesNegocio;
 
     public SucursalesNegocio(ISucursalDAO sucursalesDAO, ICiudadesNegocio ciudadesNegocio) {
@@ -69,17 +70,41 @@ public class SucursalesNegocio implements ISucursalesNegocio {
 
     @Override
     public SucursalesDTO buscarSucursalPorNombre(String nombre) throws NegocioException {
-    try {
-        Sucursales sucursales = sucursalesDAO.buscarSucursalPorNombre(nombre);
-        if (sucursales == null) {
-            return null; // O lanzar una excepción específica si prefieres
-        }
-        SucursalesDTO sucursalesDTO = new SucursalesDTO();
-        sucursalesDTO.setId(sucursales.getId());
-        sucursalesDTO.setNombre(sucursales.getNombre());
-        return sucursalesDTO;
-    } catch (PersistenciaException e) {
-        throw new NegocioException("Error al buscar la sucursal por nombre en la capa de negocio", e);
+        try {
+            Sucursales sucursales = sucursalesDAO.buscarSucursalPorNombre(nombre);
+            if (sucursales == null) {
+                return null; // O lanzar una excepción específica si prefieres
+            }
+            SucursalesDTO sucursalesDTO = new SucursalesDTO();
+            sucursalesDTO.setId(sucursales.getId());
+            sucursalesDTO.setNombre(sucursales.getNombre());
+            return sucursalesDTO;
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al buscar la sucursal por nombre en la capa de negocio", e);
         }
     }
+
+    public List<SucursalesDTO> buscarSucursal(SucursalesFiltroTablaDTO filtro) throws NegocioException {
+        try {
+            // Llamar al método del DAO para buscar las sucursales según el filtro
+            List<Sucursales> sucursalesList = sucursalesDAO.buscarSucursal(filtro);
+
+            // Convertir la lista de Sucursales a SucursalesDTO
+            List<SucursalesDTO> sucursalesDTOList = new ArrayList<>();
+
+            for (Sucursales sucursal : sucursalesList) {
+                SucursalesDTO sucursalDTO = new SucursalesDTO();
+                sucursalDTO.setId(sucursal.getId());
+                sucursalDTO.setNombre(sucursal.getNombre());
+                
+
+                sucursalesDTOList.add(sucursalDTO);
+            }
+
+            return sucursalesDTOList; // Retorna la lista de SucursalesDTO
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al buscar sucursales en la capa de negocio", e);
+        }
+    }
+
 }

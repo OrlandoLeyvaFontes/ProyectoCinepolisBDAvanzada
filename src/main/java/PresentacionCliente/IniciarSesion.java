@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Presentacion;
+package PresentacionCliente;
 
 import Negocio.ClientesNegocio;
 import Negocio.NegocioException;
@@ -10,6 +10,8 @@ import Persistencia.ClientesDAO;
 import Persistencia.ConexionBD;
 import Persistencia.IClientesDAO;
 import Persistencia.IConexionBD;
+import Presentacion.OpcionesCiudades;
+import Presentacion.RegistrarCliente;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -120,10 +122,11 @@ public class IniciarSesion extends javax.swing.JFrame {
                 .addComponent(btnIniciarSesion)
                 .addGap(18, 18, 18)
                 .addComponent(btnAgregarCliente)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
@@ -133,8 +136,9 @@ public class IniciarSesion extends javax.swing.JFrame {
         ClientesNegocio cn = new ClientesNegocio(clientesDAO);
         try {
             if (cn.iniciarSesion(correo, contrasena) == true) {
-                OpcionesCiudades oc = new OpcionesCiudades();
-                oc.setVisible(true);
+                SucursalesDisponibles continuar = new SucursalesDisponibles();
+                continuar.setVisible(true);
+                this.dispose();
             }
         } catch (NegocioException ex) {
             Logger.getLogger(IniciarSesion.class.getName()).log(Level.SEVERE, null, ex);

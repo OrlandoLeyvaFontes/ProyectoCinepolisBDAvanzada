@@ -4,13 +4,23 @@
  */
 package PresentacionCliente;
 
+import Negocio.IPeliculasNegocio;
 import Negocio.SucursalesNegocio;
 import Negocio.ISucursalesNegocio;
+import Negocio.NegocioException;
 import Persistencia.ConexionBD;
 import Persistencia.SucursalDAO;
 import dtoCinepolis.SucursalTablaDTO;
+import dtoCinepolis.SucursalesDTO;
 import dtoCinepolis.SucursalesFiltroTablaDTO;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,31 +29,72 @@ import java.util.List;
 public class SucursalesDisponibles extends javax.swing.JFrame {
 
     private ISucursalesNegocio sucursalesNegocio;
-    private ConexionBD conexionBD;
-    private int idSucursalesSeleccionada = -1;
+    private IPeliculasNegocio peliculasNegocio; // Asegúrate de que esta variable esté declarada
+    private int idSucursalSeleccionada = -1;
     private int pagina = 0;
     private final int LIMITE = 5;
-    private int idSucursalSeleccionada = -1;
-    
-    /**
-     * Creates new form SucursalesDisponibles
-     */
-    
-    private SucursalesFiltroTablaDTO obtenerFiltrosTabla() {
-        return new SucursalesFiltroTablaDTO(this.LIMITE, this.pagina, txtFiltro.getText());
-    }
-    public SucursalesDisponibles() {
-        conexionBD = new ConexionBD();
+
+    public SucursalesDisponibles(ISucursalesNegocio sucursalNegocio, IPeliculasNegocio peliculasNegocio) throws NegocioException {
+        this.sucursalesNegocio = sucursalNegocio; // Inicializar el negocio de sucursales
+        this.peliculasNegocio = peliculasNegocio; // Inicializar el negocio de películas
         initComponents();
-        
-        
+        cargarTablaSucursales();
+
+        jTable1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    int row = jTable1.getSelectedRow();
+                    if (row != -1) {
+                        idSucursalSeleccionada = (int) jTable1.getValueAt(row, 0);
+                        System.out.println("ID Ciudad seleccionada: " + idSucursalSeleccionada);
+                    }
+                }
+            }
+        });
     }
-    
-    private void cargaTablaSucursales() {
-//        try {
-//            SucursalesFiltroTablaDTO filtro = obtenerFiltrosTabla();
-//            List<SucursalTablaDTO> sucursalLista = sucursalesNegocio.buscarSucursalPorNombre(nombre);
-//        }
+
+    SucursalesDisponibles() {
+        initComponents();
+    }
+
+    private void AgregarRegistroTablaSucursales(List<SucursalTablaDTO> sucursalTablaDTO) {
+        if (sucursalTablaDTO == null) {
+            return;
+        }
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
+        sucursalTablaDTO.forEach(row -> {
+            Object[] fila = new Object[3]; // Ajusta el tamaño del array a 3
+            fila[0] = row.getId();
+            fila[1] = row.getNombre();
+            fila[2] = row.getCiudad(); // Asegúrate de que este campo exista
+            modeloTabla.addRow(fila);
+        });
+    }
+
+    private void cargarTablaSucursales() throws NegocioException {
+        SucursalesFiltroTablaDTO sucursalesFiltroTablaDTO = ObtenerFiltrosTablas();
+        List<SucursalesDTO> sucursalesDTOList = sucursalesNegocio.buscarSucursal(sucursalesFiltroTablaDTO);
+
+        List<SucursalTablaDTO> sucursalLista = new ArrayList<>();
+        for (SucursalesDTO sucursalDTO : sucursalesDTOList) {
+            SucursalTablaDTO sucursalTablaDTO = new SucursalTablaDTO();
+            sucursalTablaDTO.setId(sucursalDTO.getId());
+            sucursalTablaDTO.setNombre(sucursalDTO.getNombre());
+            sucursalTablaDTO.setCiudad(sucursalDTO.getCiudad()); // Asegúrate de que esto exista
+            sucursalLista.add(sucursalTablaDTO);
+        }
+
+        BorrarRegistroTablaSalas();
+        AgregarRegistroTablaSucursales(sucursalLista);
+    }
+
+    private void BorrarRegistroTablaSalas() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
+        modeloTabla.setRowCount(0);
+    }
+
+    private SucursalesFiltroTablaDTO ObtenerFiltrosTablas() {
+        return new SucursalesFiltroTablaDTO(LIMITE, pagina, txtFiltro.getText());
     }
 
     /**
@@ -57,20 +108,23 @@ public class SucursalesDisponibles extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnCambiarCiudad = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         txtFiltro = new javax.swing.JLabel();
+        btnContinuar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Cinepolis");
 
-        btnCambiarCiudad.setText("Cambiar Ciudad");
-
         btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Sucursales disponible en tu zona:");
 
@@ -89,31 +143,41 @@ public class SucursalesDisponibles extends javax.swing.JFrame {
 
         txtFiltro.setText("  ");
 
+        btnContinuar.setText("Continuar");
+        btnContinuar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContinuarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(165, 165, 165)
+                                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnRegresar)
+                                        .addGap(77, 77, 77)
+                                        .addComponent(jLabel1)
+                                        .addGap(196, 196, 196)))))
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(btnRegresar)
-                            .addGap(78, 78, 78)
-                            .addComponent(jLabel1)
-                            .addGap(65, 65, 65)
-                            .addComponent(btnCambiarCiudad))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(107, 107, 107)
-                                .addComponent(jLabel2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
-                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                            .addGap(107, 107, 107)
+                            .addComponent(jLabel2)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnContinuar)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,22 +185,23 @@ public class SucursalesDisponibles extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(btnCambiarCiudad)
                     .addComponent(btnRegresar))
-                .addGap(54, 54, 54)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(btnContinuar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addComponent(txtFiltro)
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,45 +209,24 @@ public class SucursalesDisponibles extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SucursalesDisponibles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SucursalesDisponibles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SucursalesDisponibles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SucursalesDisponibles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        IniciarSesion regresar = new IniciarSesion();
+        regresar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SucursalesDisponibles().setVisible(true);
-            }
-        });
-    }
+    private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
+        PeliculasDisponibles continuar = new PeliculasDisponibles();
+        continuar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnContinuarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCambiarCiudad;
+    private javax.swing.JButton btnContinuar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

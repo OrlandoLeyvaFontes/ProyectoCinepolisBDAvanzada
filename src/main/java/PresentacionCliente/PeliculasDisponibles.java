@@ -22,70 +22,59 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
 
     private IPeliculasNegocio peliculasNegocio;
     private int idPeliculasSeleccionada = -1;
+    private int pagina = 0;
 
     /**
      * Creates new form PeliculasDisponibles
      */
-    public PeliculasDisponibles(IPeliculasNegocio peliculasNegocio) {
+    public PeliculasDisponibles(){
         initComponents();
+    }
+     public PeliculasDisponibles(IPeliculasNegocio peliculasNegocio) {
         this.peliculasNegocio = peliculasNegocio;
-        cargarTablaPeliculas();
+        initComponents();
+        cargarTablaPeliculasDisponibles();
+
+        // Agregar listener para la selección de la tabla
         jTable1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) {
                     int row = jTable1.getSelectedRow();
                     if (row != -1) {
                         idPeliculasSeleccionada = (int) jTable1.getValueAt(row, 0);
-                        System.out.println("Id ciudad seleccionada " + idPeliculasSeleccionada);
-
+                        System.out.println("ID Película seleccionada: " + idPeliculasSeleccionada);
                     }
                 }
             }
-
         });
     }
 
-    private PeliculasDisponibles() {
-        initComponents();
-    }
-
-    private void AgregarRegistroTablaPeliculas(List<PeliculasTablaDTO> peliculasTablaDTOs) {
+     private void agregarRegistroTablaPeliculas(List<PeliculasTablaDTO> peliculasTablaDTOs) {
         if (peliculasTablaDTOs == null) {
             return;
         }
         DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
-        peliculasTablaDTOs.forEach(row -> {
-            Object[] fila = new Object[2];
-            fila[0] = row.getTitulo();
-            fila[1] = row.getGenero();
+        modeloTabla.setRowCount(0); // Limpiar la tabla antes de agregar registros
+        for (PeliculasTablaDTO pelicula : peliculasTablaDTOs) {
+            Object[] fila = new Object[2]; // Cambiado a 2 columnas
+            fila[0] = pelicula.getTitulo(); // Solo título
+            fila[1] = pelicula.getGenero(); // Solo género
             modeloTabla.addRow(fila);
-        });
-    }
-
-    private void cargarTablaPeliculas() {
-        try {
-            PeliculasFiltroTablaDTO peliculasFiltroTablaDTO = ObtenerFiltrosTablas();
-            List<PeliculasTablaDTO> peliculaLista = peliculasNegocio.buscarPeliculasTabla(peliculasFiltroTablaDTO);
-            System.out.println("Cantidad de películas encontradas: " + peliculaLista.size()); // Debug
-
-            if (!peliculaLista.isEmpty()) {
-                AgregarRegistroTablaPeliculas(peliculaLista); // Llamada para agregar registros a la tabla
-            } else {
-                BorrarRegistroTablaSalas();
-                JOptionPane.showMessageDialog(this, "No se encontraron películas.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } catch (NegocioException e) {
-            BorrarRegistroTablaSalas();
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void BorrarRegistroTablaSalas() {
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
-        modeloTabla.setRowCount(0);
+    private void cargarTablaPeliculasDisponibles() {
+        try {
+            PeliculasFiltroTablaDTO peliculasFiltroTablaDTO = obtenerFiltrosTablas();
+            List<PeliculasTablaDTO> peliculaLista = peliculasNegocio.buscarPeliculasTabla(peliculasFiltroTablaDTO);
+            agregarRegistroTablaPeliculas(peliculaLista);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    private PeliculasFiltroTablaDTO ObtenerFiltrosTablas() {
+
+    private PeliculasFiltroTablaDTO obtenerFiltrosTablas() {
         return new PeliculasFiltroTablaDTO(10, 0, jTextField1.getText());
     }
 
@@ -112,20 +101,30 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Pelicula", "Genero", "Ver mas"
+                "Pelicula", "Genero"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         btnAnterior.setText("Anterior");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
 
         Siguiente.setText("Siguiente");
+        Siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SiguienteActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Peliculas Disponible en taquilla");
 
@@ -141,6 +140,11 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
         jTextField1.setText("        ");
 
         btnContinuar.setText("Continuar");
+        btnContinuar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContinuarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,25 +153,28 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnAnterior)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(114, 114, 114)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(btnRegresar)
-                                .addGap(93, 93, 93)
-                                .addComponent(jLabel2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)))
-                .addComponent(Siguiente)
+                                .addComponent(btnAnterior)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextField1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(114, 114, 114)
+                                        .addComponent(jLabel1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(btnRegresar)
+                                        .addGap(93, 93, 93)
+                                        .addComponent(jLabel2)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)))
+                        .addComponent(Siguiente))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -184,12 +191,13 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
                     .addComponent(btnRegresar))
                 .addGap(28, 28, 28)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addComponent(btnContinuar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnterior)
                     .addComponent(Siguiente)
-                    .addComponent(jTextField1)
-                    .addComponent(btnContinuar))
+                    .addComponent(jTextField1))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -199,46 +207,40 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+       SucursalesDisponibles regresar = new SucursalesDisponibles();
+       regresar.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PeliculasDisponibles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PeliculasDisponibles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PeliculasDisponibles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PeliculasDisponibles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
+         PeliculaDetalles continuar = new PeliculaDetalles();
+        continuar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnContinuarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PeliculasDisponibles().setVisible(true);
-            }
-        });
-    }
+    private void SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiguienteActionPerformed
+        this.pagina++;
+        int impresion = pagina + 1;
+         jTextField1.setText("Página " + impresion);
+        this.cargarTablaPeliculasDisponibles();
+    }//GEN-LAST:event_SiguienteActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        if (pagina == 0) {
+            JOptionPane.showMessageDialog(null, "inicio de la lista");
+        } else {
+            this.pagina--;
+
+            int impresion = pagina + 1;
+            jTextField1.setText("Página " + impresion);
+            this.cargarTablaPeliculasDisponibles();
+        }
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Siguiente;

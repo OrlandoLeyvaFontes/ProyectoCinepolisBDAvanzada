@@ -6,6 +6,8 @@ package Negocio;
 
 import Persistencia.PersistenciaException;
 import dtoCinepolis.SucursalesDTO;
+import dtoCinepolis.SucursalesFiltroTablaDTO;
+import java.util.List;
 
 /**
  *
@@ -16,4 +18,5 @@ public interface ISucursalesNegocio {
     void guardarSucursalConCiudadPorNombre(SucursalesDTO sucursalDTO, String nombreCiudad) throws NegocioException;
 
     public SucursalesDTO buscarSucursalPorNombre(String nombre) throws NegocioException;
+    List<SucursalesDTO> buscarSucursal(SucursalesFiltroTablaDTO filtro) throws NegocioException;
 }
