@@ -11,6 +11,7 @@ import Negocio.ISalasNegocios;
 import Negocio.PeliculasNegocio;
 import Negocio.SucursalesNegocio;
 import Negocio.IFuncionesNegocio;
+import Negocio.ISucursalesNegocio;
 import Persistencia.ConexionBD;
 
 /**
@@ -28,7 +29,10 @@ public class ExitoSucursal extends javax.swing.JFrame {
     private IFuncionesNegocio funcionesNegocio;
          private IClientesNegocios clientesNegocios;
 
-    public ExitoSucursal() {
+    public ExitoSucursal(ICiudadesNegocio ciudadesNegocio, ISucursalesNegocio sucursalesNegocio) {
+        this.ciudadesNegocio = ciudadesNegocio;
+        this.sucursalesNegocios=sucursalesNegocios;
+
         initComponents();
     }
 
