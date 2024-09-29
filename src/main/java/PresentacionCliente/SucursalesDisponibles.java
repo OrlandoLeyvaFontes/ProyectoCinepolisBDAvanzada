@@ -30,14 +30,14 @@ import dtoCinepolis.SucursalTablaDTO;
 public class SucursalesDisponibles extends javax.swing.JFrame {
 
     private ISucursalesNegocio sucursalesNegocio;
-    private IPeliculasNegocio peliculasNegocio; 
+    private IPeliculasNegocio peliculasNegocio;
     private int idSucursalSeleccionada = -1;
     private int pagina = 0;
     private final int LIMITE = 5;
 
     public SucursalesDisponibles(ISucursalesNegocio sucursalNegocio, IPeliculasNegocio peliculasNegocio) throws NegocioException {
-        this.sucursalesNegocio = sucursalNegocio; 
-        this.peliculasNegocio = peliculasNegocio; 
+        this.sucursalesNegocio = sucursalNegocio;
+        this.peliculasNegocio = peliculasNegocio;
         initComponents();
         cargarTablaSucursales();
 
@@ -72,13 +72,13 @@ public class SucursalesDisponibles extends javax.swing.JFrame {
     }
 
     private void cargarTablaSucursales() {
-         try {
+        try {
             SucursalesFiltroTablaDTO sucursalesFiltroTablaDTO = ObtenerFiltrosTablas();
             List<SucursalTablaDTO> peliculaLista = sucursalesNegocio.buscarSucursalesTabla(sucursalesFiltroTablaDTO);
             BorrarRegistroTablaSalas();
 
             AgregarRegistroTablaSucursales(peliculaLista);
-            
+
         } catch (NegocioException e) {
             BorrarRegistroTablaSalas();
             JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);

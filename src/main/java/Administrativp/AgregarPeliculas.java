@@ -123,10 +123,10 @@ private void limpiarCampos() {
         txtSinopsis = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        txtLinkTrailer = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtRutaImagen = new javax.swing.JTextField();
+        txtLinkTrailer = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -164,7 +164,7 @@ private void limpiarCampos() {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, -1, -1));
 
         jButton2.setText("Continuar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -172,21 +172,21 @@ private void limpiarCampos() {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, -1, -1));
-
-        jLabel8.setText("Link trailer:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, -1, -1));
-        getContentPane().add(txtLinkTrailer, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 230, 30));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 370, -1, -1));
 
         jLabel9.setText("Ruta Imagen");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, -1, -1));
 
         txtRutaImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRutaImagenActionPerformed(evt);
             }
         });
-        getContentPane().add(txtRutaImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 230, -1));
+        getContentPane().add(txtRutaImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 230, -1));
+        getContentPane().add(txtLinkTrailer, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 292, 230, 30));
+
+        jLabel8.setText("Link imagen");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
