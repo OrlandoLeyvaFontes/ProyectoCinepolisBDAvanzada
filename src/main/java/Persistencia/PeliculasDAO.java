@@ -103,21 +103,21 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
     public void editar(Peliculas peliculas) throws PersistenciaException {
-     String updatePeliculas = """
-                          UPDATE  pelicula
+      String updatePeliculas = """
+                          UPDATE pelicula
                           SET titulo=?,
                               clasificacion=?,
                               genero=?,
                               paisOrigen=?,
                               duracionMinutos=?,
                               sinopsis=?,
-                              rutaImagen=?,
+                              rutaImagen=?
                           WHERE id=?
                           """;
     try (Connection conexion = conexionBD.crearConexion(); 
          PreparedStatement prepa = conexion.prepareStatement(updatePeliculas)) {
         
-        // Asignar los valores a los parámetros
+        
         prepa.setString(1, peliculas.getTitulo());
         prepa.setString(2, peliculas.getClasificacion());
         prepa.setString(3, peliculas.getGenero());
@@ -125,7 +125,7 @@ public class PeliculasDAO implements IPeliculasDAO {
         prepa.setInt(5, peliculas.getDuracionMinutos());
         prepa.setString(6, peliculas.getSinopsis());
         prepa.setString(7, peliculas.getRutaImagen());
-        prepa.setInt(9, peliculas.getId());  
+        prepa.setInt(8, peliculas.getId()); 
         
         prepa.executeUpdate();
         

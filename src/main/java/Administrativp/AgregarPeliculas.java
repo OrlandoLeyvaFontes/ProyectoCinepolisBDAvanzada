@@ -197,7 +197,7 @@ private void limpiarCampos() {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
       if (!validarCampos()) {
-        return; // Si hay un error de validación, no continuar
+        return; 
     }
 
     String titulo = txtTitulo.getText();

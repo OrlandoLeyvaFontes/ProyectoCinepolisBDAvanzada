@@ -4,16 +4,31 @@
  */
 package Administrativp;
 
+import Negocio.ICiudadesNegocio;
+import Negocio.IClientesNegocios;
+import Negocio.IFuncionesNegocio;
 import Negocio.IPeliculasNegocio;
+import Negocio.ISalasNegocios;
+import Negocio.ISucursalesNegocio;
+import Negocio.NegocioException;
+import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Oley
  */
 public class EditarPeliculas extends javax.swing.JFrame {
- private IPeliculasNegocio peliculasNegocio;
- private int idPeliculas;
+private ICiudadesNegocio ciudadesNegocios;
+    private ISucursalesNegocio sucursalesNegocio;
+    private ISalasNegocios salasNegocios;
+    private IPeliculasNegocio peliculasNegocio;
+    private IFuncionesNegocio funcionesNegocio;
+     private IClientesNegocios clientesNegocios;
+     private int idPeliculas;
     /**
      * Creates new form EditarPeliculas
      */
@@ -21,6 +36,11 @@ public class EditarPeliculas extends javax.swing.JFrame {
           this.idPeliculas=idPeliculas;
         this.peliculasNegocio=peliculasNegocio;
         initComponents();
+    try {
+        cargarDatosTablaPeliculas(idPeliculas);
+    } catch (NegocioException ex) {
+        Logger.getLogger(EditarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
     
 
@@ -79,6 +99,11 @@ public class EditarPeliculas extends javax.swing.JFrame {
         getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 292, 340, 40));
 
         jButton1.setText("Editar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 570, -1, -1));
 
         jLabel7.setText("Sinopsis:");
@@ -95,10 +120,47 @@ public class EditarPeliculas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//private void cargarDatosTablaPeliculas(int idPeliculas){
-//    PeliculasDTO peliculasDTO= peliculasNegocio.buscarpor
-//}
-//    
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+
+        String titulo = jTextField1.getText();
+        String clasificacion = jTextField2.getText();
+        String genero = jTextField3.getText();
+        String paisOrigen = jTextField4.getText();
+        String duracionTexto = jTextField5.getText();
+        String sinopsis = jTextField6.getText();
+        String linkTrailer = jTextField7.getText();
+        String rutaImagen = jTextField8.getText();
+
+        int duracionMinutos;
+        try {
+            duracionMinutos = Integer.parseInt(duracionTexto);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la duración: debe ser un número entero.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return; // Salir si hay un error en la duración
+        }
+
+        PeliculasDTO peliculasDTO = new PeliculasDTO(idPeliculas, titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, linkTrailer, rutaImagen);
+        
+    try {
+        peliculasNegocio.editar(peliculasDTO); 
+    } catch (NegocioException ex) {
+        Logger.getLogger(EditarPeliculas.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        JOptionPane.showMessageDialog(this, "Película editada con éxito.");
+        this.setVisible(false);
+        Amdministrador amdministrador = new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio, clientesNegocios);
+        amdministrador.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+private void cargarDatosTablaPeliculas(int idPeliculas) throws NegocioException{
+    PeliculasDTO peliculasDTO= peliculasNegocio.buscarPeliculasPorID(idPeliculas);
+    if(peliculasDTO==null){
+                JOptionPane.showMessageDialog(this, "pelicula no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+return;
+    }
+}
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

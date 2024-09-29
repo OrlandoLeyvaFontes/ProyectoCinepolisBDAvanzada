@@ -73,7 +73,6 @@ private void cargarTablaClientes(){
         
         List<ClienteTablaDTO> clienteLista = clientesNegocios.buuscarClienteTabla(clienteFiltroTablaDTO);
         
-        // Limpiar la tabla
         BorrarRegistroTablaSalas();
         
         AgregarRegistroTablaClientes(clienteLista);
@@ -112,6 +111,11 @@ private ClienteFiltroTablaDTO obtenerFiltrosTablas(){
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 21, 290, -1));
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, -1, -1));
 
         jButton2.setText("Nuevo");
@@ -141,6 +145,11 @@ private ClienteFiltroTablaDTO obtenerFiltrosTablas(){
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 380, 150));
 
         jButton3.setText("Detalles");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
 
         jButton4.setText("Regresar");
@@ -159,8 +168,23 @@ private ClienteFiltroTablaDTO obtenerFiltrosTablas(){
         Amdministrador amdministrador = new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio, clientesNegocios);
         amdministrador.setVisible(true);
 
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+cargarTablaClientes();
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        setVisible(false);
+
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
