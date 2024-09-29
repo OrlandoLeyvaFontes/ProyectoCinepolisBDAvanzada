@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Presentacion;
+package PresentacionCliente;
 
 import Administrativp.AgregarFunciones;
 import Negocio.ClientesNegocio;
@@ -30,29 +30,20 @@ public class RegistrarCliente extends javax.swing.JFrame {
     private IClientesNegocios clienteNegocio;
     private ICiudadesNegocio ciudadesNegocio;
 
-    public RegistrarCliente() {
-        initComponents();
-    }    
-
     /**
      * Creates new form RegistrarCliente
+     *
      * @param clientesNegocio
      */
     public RegistrarCliente(IClientesNegocios clienteNegocio) {
-        initComponents();
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.clienteNegocio = clienteNegocio; // Guarda la lógica de negocio
-    }
-    
-    public RegistrarCliente(ICiudadesNegocio ciudadesNegocio, IClientesNegocios clientesNegocios) {
+         // Guarda la lógica de negocio
         initComponents();
-        this.clienteNegocio = clienteNegocio;
-        this.ciudadesNegocio=ciudadesNegocio;
     }
 
     private void guardarCliente(ClientesDTO nuevoCliente) throws NegocioException, PersistenciaException {
-        clienteNegocio.guardarCliente(nuevoCliente); // Usa el nuevo objeto FuncionesDTO
+         // Usa el nuevo objeto FuncionesDTO
         JOptionPane.showMessageDialog(this, "Cliente guardado con éxito.");
         initComponents();
     }
@@ -133,17 +124,18 @@ public class RegistrarCliente extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btnRegresar)))
                 .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnContinuar)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1)
-                        .addComponent(jTextField1)
-                        .addComponent(jTextField2)
-                        .addComponent(jTextField3)
-                        .addComponent(jTextField4)
-                        .addComponent(jTextField5)
-                        .addComponent(jTextField6)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1)
+                    .addComponent(jTextField2)
+                    .addComponent(jTextField3)
+                    .addComponent(jTextField4)
+                    .addComponent(jTextField5)
+                    .addComponent(jTextField6)
+                    .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnContinuar)))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -182,9 +174,9 @@ public class RegistrarCliente extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(33, 33, 33)
                 .addComponent(btnContinuar)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,6 +207,7 @@ public class RegistrarCliente extends javax.swing.JFrame {
         String correo = jTextField6.getText();
         String contraseña = jTextField7.getText();
 
+        // Validaciones de campos obligatorios
         if (apellidoPa.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El apellido paterno es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
             return;
@@ -228,7 +221,7 @@ public class RegistrarCliente extends javax.swing.JFrame {
             return;
         }
         if (fechaNacimientoTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La fecha de nacimiento es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "La fecha de nacimiento es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (ciudad.isEmpty()) {
@@ -236,7 +229,7 @@ public class RegistrarCliente extends javax.swing.JFrame {
             return;
         }
         if (correo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El correo es obligatoria.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El correo es obligatorio.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (contraseña.isEmpty()) {
@@ -244,9 +237,17 @@ public class RegistrarCliente extends javax.swing.JFrame {
             return;
         }
 
+        // Validar la fecha de nacimiento
+        LocalDate fechaNacimiento = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoTexto, formatter);
+        try {
+            fechaNacimiento = LocalDate.parse(fechaNacimientoTexto, formatter);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha de nacimiento inválido. Debe ser dd/MM/yyyy.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+        // Crear nuevo cliente
         ClientesDTO nuevoCliente = new ClientesDTO();
         nuevoCliente.setNombre(nombre);
         nuevoCliente.setApellidoPaterno(apellidoPa);
@@ -258,57 +259,25 @@ public class RegistrarCliente extends javax.swing.JFrame {
 
         try {
             guardarCliente(nuevoCliente);
+            // Limpiar los campos después de guardar
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField5.setText("");
+            jTextField6.setText("");
+            jTextField7.setText("");
+
+            // Mostrar ventana de éxito
+            ExitoCliente continuar = new ExitoCliente();
+            continuar.setVisible(true);
+            this.dispose();
         } catch (NegocioException | PersistenciaException ex) {
-            Logger.getLogger(AgregarFunciones.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistrarCliente.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
-        jTextField5.setText("");
-        jTextField6.setText("");
-        jTextField7.setText("");
-        ExitoCliente continuar = new ExitoCliente();
-        continuar.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnContinuarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            IClientesDAO clientesDAO = new ClientesDAO(new ConexionBD());
-            IClientesNegocios clienteNegocio = new ClientesNegocio(clientesDAO);
-            new RegistrarCliente(clienteNegocio).setVisible(true);
-
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnContinuar;

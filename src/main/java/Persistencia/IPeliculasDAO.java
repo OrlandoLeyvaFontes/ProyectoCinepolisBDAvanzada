@@ -29,4 +29,6 @@ public interface IPeliculasDAO {
 
     public Peliculas buscarPeliculasPorNombre(String nombrePelicula) throws PersistenciaException;
 
+    public List<PeliculasTablaDTO> buscarPeliculaTabla(PeliculasFiltroTablaDTO filtro) throws PersistenciaException;
+
 }

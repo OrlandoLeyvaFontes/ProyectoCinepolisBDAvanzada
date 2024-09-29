@@ -65,6 +65,24 @@ public class PeliculasNegocio implements IPeliculasNegocio {
         return peliculaLista;
     }
 
+    public List<PeliculasTablaDTO> buscarPeliculasTabla2(PeliculasFiltroTablaDTO filtro) throws NegocioException {
+        if (filtro == null) {
+            throw new NegocioException("El filtro recibido es null");
+
+        }
+        List<PeliculasTablaDTO> peliculaLista = null;
+        try {
+            peliculaLista = this.peliculasDAO.buscarPeliculaTabla(filtro);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(SalasNegocios.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error al buscar las salas con el filtro", ex);
+        }
+        if (peliculaLista == null || peliculaLista.isEmpty()) {
+            throw new NegocioException("No se encontraron registros con los filtros");
+
+        }
+        return peliculaLista;
+    }
     @Override
     public void editar(PeliculasDTO peliculasDTO) throws NegocioException {
         try {

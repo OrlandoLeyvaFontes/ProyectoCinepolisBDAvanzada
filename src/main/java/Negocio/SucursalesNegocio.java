@@ -87,12 +87,12 @@ public class SucursalesNegocio implements ISucursalesNegocio {
     public List<SucursalesDTO> buscarSucursal(SucursalesFiltroTablaDTO filtro) throws NegocioException {
         try {
             // Llamar al método del DAO para buscar las sucursales según el filtro
-            List<Sucursales> sucursalesList = sucursalesDAO.buscarSucursal(filtro);
+            List<SucursalTablaDTO> sucursalesList = sucursalesDAO.buscarSucursalTabla(filtro);
 
             // Convertir la lista de Sucursales a SucursalesDTO
             List<SucursalesDTO> sucursalesDTOList = new ArrayList<>();
 
-            for (Sucursales sucursal : sucursalesList) {
+            for (SucursalTablaDTO sucursal : sucursalesList) {
                 SucursalesDTO sucursalDTO = new SucursalesDTO();
                 sucursalDTO.setId(sucursal.getId());
                 sucursalDTO.setNombre(sucursal.getNombre());
@@ -110,12 +110,12 @@ public class SucursalesNegocio implements ISucursalesNegocio {
     public List<SucursalTablaDTO> buscarSucursalesTabla(SucursalesFiltroTablaDTO sucursalesFiltroTablaDTO) throws NegocioException {
     try {
         // Llamar al método del DAO para obtener la lista de sucursales basadas en el filtro
-        List<Sucursales> sucursalesList = sucursalesDAO.buscarSucursal(sucursalesFiltroTablaDTO);
+        List<SucursalTablaDTO> sucursalesList = sucursalesDAO.buscarSucursalTabla(sucursalesFiltroTablaDTO);
         
         // Convertir la lista de Sucursales a SucursalTablaDTO
         List<SucursalTablaDTO> sucursalTablaDTOList = new ArrayList<>();
 
-        for (Sucursales sucursal : sucursalesList) {
+        for (SucursalTablaDTO sucursal : sucursalesList) {
             SucursalTablaDTO sucursalTablaDTO = new SucursalTablaDTO();
             sucursalTablaDTO.setId(sucursal.getId());
             sucursalTablaDTO.setNombre(sucursal.getNombre());

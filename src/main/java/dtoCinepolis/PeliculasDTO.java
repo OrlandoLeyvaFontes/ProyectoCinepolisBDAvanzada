@@ -29,10 +29,11 @@ public class PeliculasDTO {
         this.id = id;
     }
 
-    public PeliculasDTO(String titulo) {
+    public PeliculasDTO(String titulo, String genero) {
         this.titulo = titulo;
+        this.genero = genero;
     }
-    
+
     public PeliculasDTO(String titulo, String clasificacion, String genero, String paisOrigen, int duracionMinutos, String sinopsis, String linkTrailer) {
         this.titulo = titulo;
         this.clasificacion = clasificacion;
@@ -77,6 +78,9 @@ public class PeliculasDTO {
         this.rutaImagen = rutaImagen;
     }
 
+    public PeliculasDTO(String titulo) {
+        this.titulo = titulo;
+    }
 
     public int getId() {
         return id;

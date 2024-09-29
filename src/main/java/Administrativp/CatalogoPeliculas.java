@@ -73,19 +73,6 @@ public class CatalogoPeliculas extends javax.swing.JFrame {
             fila[5] = row.getSinopsis();
             fila[6] = row.getRutaImagen();
             modeloTabla.addRow(fila);
-
-            /*
-                  private int id;
-    private String titulo;
-    private String clasificacion;
-    private String genero;
-    private String paisOrigen;
-    private int duracionMinutos;
-    private String sinopsis;
-    private String linkTrailer;
-    private String rutaImagen;
-    private int idFuncion;
-             */
         });
     }
 

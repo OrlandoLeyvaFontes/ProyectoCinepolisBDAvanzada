@@ -5,13 +5,13 @@
 package PresentacionCliente;
 
 import Negocio.ClientesNegocio;
+import Negocio.IClientesNegocios;
 import Negocio.NegocioException;
 import Persistencia.ClientesDAO;
 import Persistencia.ConexionBD;
 import Persistencia.IClientesDAO;
 import Persistencia.IConexionBD;
 import Presentacion.OpcionesCiudades;
-import Presentacion.RegistrarCliente;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +23,7 @@ public class IniciarSesion extends javax.swing.JFrame {
 
     IConexionBD conexionBD = new ConexionBD();
     IClientesDAO clientesDAO = new ClientesDAO(conexionBD);
+    private IClientesNegocios clienteNegocio;
      
     /**
      * Creates new form IniciarSesion
@@ -146,7 +147,7 @@ public class IniciarSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarClienteActionPerformed
-        RegistrarCliente rc = new RegistrarCliente();
+        RegistrarCliente rc = new RegistrarCliente(clienteNegocio);
         rc.setVisible(true);
     }//GEN-LAST:event_btnAgregarClienteActionPerformed
 

@@ -4,6 +4,7 @@
  */
 package Presentacion;
 
+import PresentacionCliente.RegistrarCliente;
 import Negocio.CiudadesNegocio;
 import Negocio.ClientesNegocio;
 import Negocio.ICiudadesNegocio;
@@ -20,6 +21,7 @@ import javax.swing.JOptionPane;
 public class CatalogoClientes extends javax.swing.JFrame {
     private ICiudadesNegocio ciudadesNegocio;
     private IClientesNegocios clientesNegocios;
+    
  private ConexionBD conexionBD;
     /**
      * Creates new form CatalogoClientes
@@ -94,7 +96,7 @@ initComponents();
 
         this.setVisible(false);
 
-    RegistrarCliente añadirClientes = new RegistrarCliente(ciudadesNegocio, clientesNegocios);
+    RegistrarCliente añadirClientes = new RegistrarCliente(clientesNegocios);
         añadirClientes.setVisible(true);
 
     }//GEN-LAST:event_btnAgregarClienteActionPerformed
