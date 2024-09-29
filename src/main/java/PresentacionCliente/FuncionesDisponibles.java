@@ -4,12 +4,26 @@
  */
 package PresentacionCliente;
 
+import Negocio.IFuncionesNegocio;
+import Negocio.NegocioException;
+import dtoCinepolis.FuncionesFiltroTablaDTO;
+import dtoCinepolis.FuncionesTablaDTO;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author aleja
  */
 public class FuncionesDisponibles extends javax.swing.JFrame {
 
+    private IFuncionesNegocio funcionesNegocio;
+    private int idFuncionSeleccionado = -1;
+    private int pagina = 0;
+    
     /**
      * Creates new form FuncionesDisponibles
      */
@@ -17,6 +31,53 @@ public class FuncionesDisponibles extends javax.swing.JFrame {
         initComponents();
     }
 
+    public FuncionesDisponibles(IFuncionesNegocio funcionesNegocio) {
+        this.funcionesNegocio = funcionesNegocio;
+        initComponents();
+        cargarTablaFuncionesDisponibles();
+
+        // Agregar listener para la selección de la tabla
+        jTable1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    int row = jTable1.getSelectedRow();
+                    if (row != -1) {
+                        idFuncionSeleccionado = (int) jTable1.getValueAt(row, 0);
+                        System.out.println("ID Película seleccionada: " + idFuncionSeleccionado);
+                    }
+                }
+            }
+        });
+    }
+    
+    private void agregarRegistroTablaFunciones(List<FuncionesTablaDTO> funcionesTablaDTO) {
+        if (funcionesTablaDTO == null) {
+            return;
+        }
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
+        modeloTabla.setRowCount(0); // Limpiar la tabla antes de agregar registros
+        for (FuncionesTablaDTO funciones : funcionesTablaDTO) {
+            Object[] fila = new Object[2]; // Cambiado a 2 columnas
+            fila[0] = funciones.getSala(); // Solo título
+            fila[1] = funciones.getHoraInicio(); // Solo género
+            modeloTabla.addRow(fila);
+        }
+    }
+    
+    private void cargarTablaFuncionesDisponibles() {
+        try {
+            FuncionesFiltroTablaDTO funcionesFiltroTablaDTO = obtenerFiltrosTablas();
+            //PeliculasFiltroTablaDTO peliculasFiltroTablaDTO = obtenerFiltrosTablas();
+            List<FuncionesTablaDTO> funcionesLista = funcionesNegocio.buscarFuncionesTabla(funcionesFiltroTablaDTO);
+            agregarRegistroTablaFunciones(funcionesLista);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private FuncionesFiltroTablaDTO obtenerFiltrosTablas() {
+        return new FuncionesFiltroTablaDTO(10, 0, jTextField1.getText());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,6 +95,9 @@ public class FuncionesDisponibles extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
         bntAnterior = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JLabel();
+        btnContinuar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,32 +121,64 @@ public class FuncionesDisponibles extends javax.swing.JFrame {
         btnRegresar.setText("Regresar");
 
         btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
 
         bntAnterior.setText("Anterior");
+        bntAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntAnteriorActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setText("        ");
+
+        jTextField2.setText("        ");
+
+        btnContinuar.setText("Continuar");
+        btnContinuar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContinuarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
+                        .addGap(139, 139, 139)
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bntAnterior)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSiguiente))
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(btnRegresar)
-                                    .addGap(87, 87, 87)
-                                    .addComponent(jLabel1))
+                                    .addComponent(bntAnterior)
+                                    .addGap(85, 85, 85)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(62, 62, 62)
+                                    .addComponent(btnSiguiente))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,14 +187,18 @@ public class FuncionesDisponibles extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(btnRegresar))
-                .addGap(35, 35, 35)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnContinuar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bntAnterior)
-                    .addComponent(btnSiguiente))
+                    .addComponent(btnSiguiente)
+                    .addComponent(jTextField1)
+                    .addComponent(jTextField2))
                 .addGap(14, 14, 14))
         );
 
@@ -106,13 +206,13 @@ public class FuncionesDisponibles extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 406, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 299, Short.MAX_VALUE)
+            .addGap(0, 304, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -120,6 +220,31 @@ public class FuncionesDisponibles extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bntAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAnteriorActionPerformed
+        if (pagina == 0) {
+            JOptionPane.showMessageDialog(null, "inicio de la lista");
+        } else {
+            this.pagina--;
+
+            int impresion = pagina + 1;
+            jTextField1.setText("Página " + impresion);
+            this.cargarTablaFuncionesDisponibles();
+        }
+    }//GEN-LAST:event_bntAnteriorActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        this.pagina++;
+        int impresion = pagina + 1;
+         jTextField1.setText("Página " + impresion);
+        this.cargarTablaFuncionesDisponibles();
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
+        FuncionesDisponibles continuar = new FuncionesDisponibles();
+        continuar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnContinuarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,8 +281,10 @@ public class FuncionesDisponibles extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntAnterior;
+    private javax.swing.JButton btnContinuar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JLabel jLabel1;
@@ -165,5 +292,7 @@ public class FuncionesDisponibles extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel jTextField1;
+    private javax.swing.JLabel jTextField2;
     // End of variables declaration//GEN-END:variables
 }
