@@ -26,6 +26,6 @@ public interface ISalasNegocios {
     
     SalasDTO buscarCiudadesPorNombre(String nombreSala) throws NegocioException;
     
-    
+    public SalasDTO buscarSalaPorId(int id) throws NegocioException ;
     
 }

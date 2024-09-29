@@ -61,10 +61,20 @@ public class SalasDAO implements ISalasDAO {
 
     @Override
     public void editar(Salas salas) throws PersistenciaException {
-         if (salas == null) {
+    if (salas == null) {
         throw new PersistenciaException("El objeto 'salas' no puede ser nulo.");
     }
-    
+
+    if (salas.getCantidadAsientos() <= 0) {
+        throw new PersistenciaException("La cantidad de asientos debe ser mayor que 0.");
+    }
+
+    Salas salaExistente = buscarPorID(salas.getId());
+    if (salaExistente == null) {
+        throw new PersistenciaException("La sala con el ID proporcionado no existe.");
+    }
+
+    // Consulta SQL para actualizar la sala
     String updateSalas = """
         UPDATE salas
         SET nombre = ?, 
@@ -80,8 +90,15 @@ public class SalasDAO implements ISalasDAO {
 
         prepared.setString(1, salas.getNombre());
         prepared.setInt(2, salas.getCantidadAsientos());
-        Timestamp timestamp = Timestamp.valueOf(salas.getTiempoLimpieza());
-        prepared.setTimestamp(3, timestamp);
+        
+        if (salas.getTiempoLimpieza() == null) {
+            throw new PersistenciaException("El tiempo de limpieza no puede ser nulo.");
+        }
+        prepared.setTimestamp(3, Timestamp.valueOf(salas.getTiempoLimpieza()));
+        
+        if (salas.getSucursales() == null || salas.getSucursales().getId() == 0) {
+            throw new PersistenciaException("Sucursal no válida.");
+        }
         prepared.setInt(4, salas.getSucursales().getId());
         prepared.setDouble(5, salas.getCostoSugerido());
         prepared.setInt(6, salas.getId());
@@ -91,10 +108,12 @@ public class SalasDAO implements ISalasDAO {
             throw new PersistenciaException("No se actualizó ninguna sala. Verifique el ID.");
         }
 
+        System.out.println("Sala actualizada exitosamente."); // Registro para depuración
+
     } catch (SQLException ex) {
+        ex.printStackTrace(); // Imprimir la traza de la excepción
         throw new PersistenciaException("Error al actualizar la sala: " + ex.getMessage(), ex);
     }
-
     }
 
     @Override

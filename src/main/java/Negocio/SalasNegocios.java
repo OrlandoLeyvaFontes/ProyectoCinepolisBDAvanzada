@@ -148,5 +148,17 @@ public class SalasNegocios implements ISalasNegocios {
 
     return salasLista;
     }
-    
+    @Override
+public SalasDTO buscarSalaPorId(int id) throws NegocioException {
+    try {
+        Salas sala = salasDAO.buscarPorID(id);
+        if (sala == null) {
+            throw new NegocioException("No se encontró la sala con el ID proporcionado.");
+        }
+        return convertirSalaDTO(sala);
+    } catch (PersistenciaException e) {
+        throw new NegocioException("Error al buscar la sala por ID en la capa de negocio", e);
+    }
+}
+
 }
