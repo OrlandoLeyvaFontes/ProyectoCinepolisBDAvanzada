@@ -32,9 +32,9 @@ import javax.swing.JOptionPane;
  * @author Oley
  */
 public class AgregarSucursales extends javax.swing.JFrame {
-     private IClientesNegocios clientesNegocios;
 
-     private ICiudadesNegocio ciudadesNegocios;
+    private IClientesNegocios clientesNegocios;
+    private ICiudadesNegocio ciudadesNegocios;
     private ISucursalesNegocio sucursalesNegocio;
     private ISalasNegocios salasNegocios;
     private IPeliculasNegocio peliculasNegocio;
@@ -52,22 +52,25 @@ public class AgregarSucursales extends javax.swing.JFrame {
 
     private void agregarSucursal() throws PersistenciaException {
         String nombreSucursal = jTextField1.getText();
-    String nombreCiudad = jTextField2.getText();
+        String nombreCiudad = jTextField2.getText();
 
-    try {
-        CiudadesDTO ciudad =  ciudadesNegocios.buscarCiudadPorNombre(nombreCiudad);
+        if (ciudadesNegocios == null) {
+        JOptionPane.showMessageDialog(this, "Error: El servicio de ciudades no está disponible.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+        try {
+            CiudadesDTO ciudad = ciudadesNegocios.buscarCiudadPorNombre(nombreCiudad);
 
-        if (ciudad != null) {
-            SucursalesDTO sucursalesDTO = new SucursalesDTO(nombreSucursal, ciudad);
-            sucursalesNegocio.guardarSucursalConCiudadPorNombre(sucursalesDTO, nombreCiudad);
-        } else {
-            JOptionPane.showMessageDialog(this, "La ciudad no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (ciudad != null) {
+                SucursalesDTO sucursalesDTO = new SucursalesDTO(nombreSucursal, ciudad);
+                sucursalesNegocio.guardarSucursalConCiudadPorNombre(sucursalesDTO, nombreCiudad);
+            } else {
+                JOptionPane.showMessageDialog(this, "La ciudad no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (NegocioException e) {
-        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-    }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -130,24 +133,22 @@ public class AgregarSucursales extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-this.setVisible(false);
- Amdministrador amdministrador=new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio,clientesNegocios);
-amdministrador.setVisible(true);
-        
-        
-        
-        
+        this.setVisible(false);
+        Amdministrador amdministrador = new Amdministrador(ciudadesNegocios, sucursalesNegocio, salasNegocios, peliculasNegocio, funcionesNegocio, clientesNegocios);
+        amdministrador.setVisible(true);
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-  try {
-        agregarSucursal();  
-    } catch (PersistenciaException ex) {
-        Logger.getLogger(AgregarSucursales.class.getName()).log(Level.SEVERE, null, ex);
-    }
-  this.setVisible(false);
-  ExitoSucursal exitoSucursal=new ExitoSucursal(ciudadesNegocios, sucursalesNegocio);
-exitoSucursal.setVisible(true);
+        try {
+            agregarSucursal();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(AgregarSucursales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setVisible(false);
+        ExitoSucursal exitoSucursal = new ExitoSucursal(ciudadesNegocios, sucursalesNegocio);
+        exitoSucursal.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
