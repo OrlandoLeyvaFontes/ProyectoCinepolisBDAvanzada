@@ -24,70 +24,73 @@ import javax.swing.table.DefaultTableModel;
  * @author Oley
  */
 public class CatalogoClientes extends javax.swing.JFrame {
-
+    
     private ICiudadesNegocio ciudadesNegocios;
     private ISucursalesNegocio sucursalesNegocio;
     private ISalasNegocios salasNegocios;
     private IPeliculasNegocio peliculasNegocio;
     private IFuncionesNegocio funcionesNegocio;
     private IClientesNegocios clientesNegocios;
-      private int idClientesSeleccionada = -1;
- 
+    private int idClientesSeleccionada = -1;
+
     /**
      * Creates new form CatalogoClientes
      */
     public CatalogoClientes(IClientesNegocios clientesNegocios) {
         this.clientesNegocios = clientesNegocios;
         initComponents();
-                cargarTablaClientes();
-jTable1.addMouseListener(new MouseAdapter() {
+        cargarTablaClientes();
+        jTable1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) {
                     int row = jTable1.getSelectedRow();
                     if (row != -1) {
                         idClientesSeleccionada = (int) jTable1.getValueAt(row, 0);
                         System.out.println("ID Ciudad seleccionada: " + idClientesSeleccionada);
-
+                        
                     }
                 }
             }
         });
     }
-    private void AgregarRegistroTablaClientes(List<ClienteTablaDTO> clienteTablaDTOs){
-        if(clienteTablaDTOs==null){
+
+    private void AgregarRegistroTablaClientes(List<ClienteTablaDTO> clienteTablaDTOs) {
+        if (clienteTablaDTOs == null) {
             return;
         }
-          DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
-          clienteTablaDTOs.forEach(row ->{
-              Object[] fila=new Object[4];
-              fila[0]=row.getId();
-fila[1]=row.getNombre();
-fila[2]=row.getApellidoPaterno();
-fila[3]=row.getApellidoMaterno();
-modeloTabla.addRow(fila);
-          });
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
+        clienteTablaDTOs.forEach(row -> {
+            Object[] fila = new Object[4];
+            fila[0] = row.getId();
+            fila[1] = row.getNombre();
+            fila[2] = row.getApellidoPaterno();
+            fila[3] = row.getApellidoMaterno();
+            modeloTabla.addRow(fila);
+        });
     }
-private void cargarTablaClientes(){
-    try {
-        ClienteFiltroTablaDTO clienteFiltroTablaDTO = obtenerFiltrosTablas();
-        
-        List<ClienteTablaDTO> clienteLista = clientesNegocios.buuscarClienteTabla(clienteFiltroTablaDTO);
-        
-        BorrarRegistroTablaSalas();
-        
-        AgregarRegistroTablaClientes(clienteLista);
-    } catch (NegocioException e) {
-        JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);
+
+    private void cargarTablaClientes() {
+        try {
+            ClienteFiltroTablaDTO clienteFiltroTablaDTO = obtenerFiltrosTablas();
+            
+            List<ClienteTablaDTO> clienteLista = clientesNegocios.buuscarClienteTabla(clienteFiltroTablaDTO);
+            
+            BorrarRegistroTablaSalas();
+            
+            AgregarRegistroTablaClientes(clienteLista);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);
+        }
     }
-}
-private ClienteFiltroTablaDTO obtenerFiltrosTablas(){
-    return new ClienteFiltroTablaDTO(10, 0, jTextField1.getText());
-}
- private void BorrarRegistroTablaSalas() {
+
+    private ClienteFiltroTablaDTO obtenerFiltrosTablas() {
+        return new ClienteFiltroTablaDTO(10, 0, jTextField1.getText());
+    }
+
+    private void BorrarRegistroTablaSalas() {
         DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
         modeloTabla.setRowCount(0);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -171,17 +174,15 @@ private ClienteFiltroTablaDTO obtenerFiltrosTablas(){
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-cargarTablaClientes();
-
+        cargarTablaClientes();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         setVisible(false);
-
-
-
+        DetallesClientes detallesClientes = new DetallesClientes(idClientesSeleccionada, clientesNegocios);
+        detallesClientes.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed

@@ -5,11 +5,16 @@
 package Negocio;
 
 import Persistencia.CiudadesDAO;
+import Persistencia.ClientesDAO;
 import Persistencia.ConexionBD;
+import Persistencia.IClientesDAO;
+import Persistencia.PersistenciaException;
 import Persistencia.SalasDAO;
 import Persistencia.SucursalDAO;
+import dtoCinepolis.ClientesDTO;
 import dtoCinepolis.SalasDTO;
 import dtoCinepolis.SucursalesDTO;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -17,41 +22,32 @@ import java.time.LocalDateTime;
  * @author Oley
  */
 public class PruebasMain {
-    public static void main(String[] args) {
-     try {
-    ConexionBD conexionBD = new ConexionBD();
-    SucursalDAO sucursalesDAO = new SucursalDAO(conexionBD);
-    SalasDAO salasDAO = new SalasDAO(conexionBD);
-    CiudadesDAO ciudadesDAO = new CiudadesDAO(conexionBD);
-    CiudadesNegocio ciudadesNegocio = new CiudadesNegocio(ciudadesDAO);
-    SucursalesNegocio sucursalesNegocio = new SucursalesNegocio(sucursalesDAO, ciudadesNegocio);
-    SalasNegocios salasNegocios = new SalasNegocios(salasDAO, sucursalesNegocio);
+    public static void main(String[] args) throws NegocioException {
+        try {
+            // Crear instancia de la conexión a la base de datos
+            ConexionBD conexionBD = new ConexionBD();
+            // Crear instancia de ClientesDAO
+            IClientesDAO clientesDAO = new ClientesDAO(conexionBD);
+            IClientesNegocios clientesNegocios = new ClientesNegocio(clientesDAO);
+            
+            // Crear un objeto ClientesDTO para editar
+            ClientesDTO clienteDTO = new ClientesDTO();
+            clienteDTO.setId(1); // Asegúrate de establecer el ID correcto
+            clienteDTO.setNombre("Juan");
+            clienteDTO.setApellidoPaterno("Pérez");
+            clienteDTO.setApellidoMaterno("González");
+            clienteDTO.setFechaNacimiento(LocalDate.of(1990, 5, 20));
+            clienteDTO.setCorreo("juan.perez@example.com");
+            clienteDTO.setContraseña("12345");
+            clienteDTO.setCiudad("Ciudad de México");
 
-    SalasDTO salasDTO = new SalasDTO();
-    salasDTO.setNombre("Sala 111");
-    salasDTO.setCantidadAsientos(50);
-    LocalDateTime tiempoLimpieza = LocalDateTime.now(); 
-    salasDTO.setTiempoLimpieza(tiempoLimpieza);
-    salasDTO.setCostoSugerido(667.7);
-    String nombreSucursal = "Soriana";  
-    System.out.println("Buscando sucursal con nombre: " + nombreSucursal);
-    
-    SucursalesDTO sucursalesDTO1 = sucursalesNegocio.buscarSucursalPorNombre(nombreSucursal);
-    
-    if (sucursalesDTO1 == null || sucursalesDTO1.getId() == 0) {
-        throw new NegocioException("Sucursal no encontrada o ID no válido");
-    }
-    
-    System.out.println("ID de la sucursal encontrado: " + sucursalesDTO1.getId());
-    salasDTO.setSucursales(sucursalesDTO1);
-
-    System.out.println("Datos de la sala: " + salasDTO);
-    salasNegocios.guardarSucursalesConSalas(salasDTO, nombreSucursal);
-    System.out.println("Sala guardada exitosamente.");
-} catch (NegocioException e) {
-    System.err.println("Error al guardar la sala: " + e.getMessage());
-    e.printStackTrace();
-}
-        
+            // Llamar al método editar
+            clientesNegocios.editar(clienteDTO);
+            System.out.println("Cliente editado exitosamente.");
+        } catch (NegocioException e) {
+            System.out.println("Error en la lógica de negocio: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error inesperado: " + e.getMessage());
+        }
     }
 }

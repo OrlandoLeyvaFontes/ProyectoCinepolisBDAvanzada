@@ -20,6 +20,7 @@ public class Clientes {
     String correo;
     String contraseña;
     String ciudad;
+    private boolean estaEliminado;
 
     public Clientes() {
     }
@@ -116,6 +117,14 @@ public class Clientes {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
+    }
+
+    public boolean isEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(boolean estaEliminado) {
+        this.estaEliminado = estaEliminado;
     }
 
 }

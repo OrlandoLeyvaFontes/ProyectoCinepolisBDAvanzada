@@ -20,7 +20,7 @@ public class ClientesDTO {
     String correo;
     String contraseña;
     String ciudad;
-
+int estaEliminado;
     public ClientesDTO() {
     }
 
@@ -126,4 +126,13 @@ public class ClientesDTO {
     public void setCiudad(String ciudad) {
          this.ciudad=ciudad;
     }
+
+    public int getEstaEliminado() {
+        return estaEliminado;
+    }
+
+    public void setEstaEliminado(int estaEliminado) {
+        this.estaEliminado = estaEliminado;
+    }
+    
 }
