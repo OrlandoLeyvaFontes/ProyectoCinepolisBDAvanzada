@@ -28,4 +28,6 @@ public interface IPeliculasNegocio {
     PeliculasDTO eliminar(int id) throws NegocioException;
 
     public PeliculasDTO buscarPeliculasPorNombre(String nombrePelicula) throws NegocioException;
+    
+    public PeliculasDTO buscarPeliculasPorID(int id) throws NegocioException;
 }

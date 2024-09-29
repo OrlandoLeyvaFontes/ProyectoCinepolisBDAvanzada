@@ -79,23 +79,22 @@ public class PeliculasNegocio implements IPeliculasNegocio {
 
     @Override
     public PeliculasDTO eliminar(int id) throws NegocioException {
-        try {
-            if (id <= 0) {
-                throw new NegocioException("El id recibido es incorrecto");
-
-            }
-            Peliculas peliculas = peliculasDAO.buscarPorID(id);
-            if (peliculas == null) {
-                throw new NegocioException("Nose pudo obtener la pelicula con la clave ingresada");
-
-            }
-            Peliculas peliculasEliminado = peliculasDAO.eliminar(id);
-            System.out.println(peliculasEliminado);
-            return convertirPeliculasDTO(peliculas);
-        } catch (PersistenciaException ex) {
-            throw new NegocioException(ex.getMessage());
-
+         try {
+        if (id <= 0) {
+            throw new NegocioException("El ID recibido es incorrecto.");
         }
+        
+        Peliculas peliculas = peliculasDAO.buscarPorID(id);
+        if (peliculas == null) {
+            throw new NegocioException("No se pudo obtener la película con la clave ingresada.");
+        }
+
+        peliculasDAO.eliminar(id);
+        
+        return convertirPeliculasDTO(peliculas);
+    } catch (PersistenciaException ex) {
+        throw new NegocioException("Error al eliminar la película: " + ex.getMessage());
+    }
     }
 
     @Override
@@ -126,5 +125,19 @@ public class PeliculasNegocio implements IPeliculasNegocio {
         return peliculasDTO;
 
     }
+
+    @Override
+    public PeliculasDTO buscarPeliculasPorID(int id) throws NegocioException {
+try{
+    Peliculas peliculas= peliculasDAO.buscarPorID(id);
+    if(peliculas==null){
+                    throw new NegocioException("No se encontró la pelicula con el ID proporcionado.");
+
+    }
+    return convertirPeliculasDTO(peliculas);
+}catch(PersistenciaException e){
+            throw new NegocioException("Error al buscar la pelicula por ID en la capa de negocio", e);
+
+}}
 
 }
