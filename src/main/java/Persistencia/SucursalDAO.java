@@ -55,6 +55,7 @@ public class SucursalDAO implements ISucursalDAO {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
     public List<Sucursales> buscarSucursal(SucursalesFiltroTablaDTO filtro) throws PersistenciaException {
     List<Sucursales> sucursalLista = new ArrayList<>();
     String sql = """
@@ -173,4 +174,34 @@ public class SucursalDAO implements ISucursalDAO {
         }
 
     }
+    
+    public List<SucursalTablaDTO> buscarSucursalTabla(SucursalesFiltroTablaDTO filtro) throws PersistenciaException {
+    List<SucursalTablaDTO> sucursalesLista = new ArrayList<>();
+    String sql = """
+        SELECT id, nombre
+        FROM sucursales
+        WHERE nombre LIKE ?
+        LIMIT ?
+        OFFSET ?
+        """;
+
+    try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(sql)) {
+        prepa.setString(1, "%" + filtro.getFiltro() + "%"); // Establecer filtro para el nombre
+        prepa.setInt(2, filtro.getLimit()); // Establecer límite
+        prepa.setInt(3, filtro.getOffset()); // Establecer desplazamiento
+
+        try (ResultSet resultado = prepa.executeQuery()) {
+            while (resultado.next()) {
+                SucursalTablaDTO sucursalTablaDTO = new SucursalTablaDTO();
+                sucursalTablaDTO.setId(resultado.getInt("id"));
+                sucursalTablaDTO.setNombre(resultado.getString("nombre"));
+                sucursalesLista.add(sucursalTablaDTO);
+            }
+        }
+    } catch (SQLException ex) {
+        throw new PersistenciaException("Error al buscar la sucursal", ex);
+    }
+    return sucursalesLista; // Retorna la lista de sucursales
+}
+
 }
