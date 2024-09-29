@@ -7,6 +7,7 @@ import dtoCinepolis.PeliculasDTO;
 import Persistencia.IPeliculasDAO;
 import dtoCinepolis.PeliculasFiltroTablaDTO;
 import dtoCinepolis.PeliculasTablaDTO;
+import dtoCinepolis.SucursalesFiltroTablaDTO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -54,13 +54,12 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
             return;
         }
         DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
-        modeloTabla.setRowCount(0); // Limpiar la tabla antes de agregar registros
-        for (PeliculasTablaDTO pelicula : peliculasTablaDTOs) {
-            Object[] fila = new Object[2]; // Cambiado a 2 columnas
-            fila[0] = pelicula.getTitulo(); // Solo título
-            fila[1] = pelicula.getGenero(); // Solo género
+       peliculasTablaDTOs.forEach(row -> {
+            Object[] fila = new Object[2]; 
+            fila[0] = row.getTitulo(); 
+            fila[1] = row.getGenero(); 
             modeloTabla.addRow(fila);
-        }
+        });
     }
 
     private void cargarTablaPeliculasDisponibles() {
@@ -69,10 +68,15 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
             List<PeliculasTablaDTO> peliculaLista = peliculasNegocio.buscarPeliculasTabla(peliculasFiltroTablaDTO);
             agregarRegistroTablaPeliculas(peliculaLista);
         } catch (NegocioException e) {
+            BorrarRegistroTablaSalas();
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+     private void BorrarRegistroTablaSalas() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
+        modeloTabla.setRowCount(0);
+    }
 
     private PeliculasFiltroTablaDTO obtenerFiltrosTablas() {
         return new PeliculasFiltroTablaDTO(10, 0, jTextField1.getText());

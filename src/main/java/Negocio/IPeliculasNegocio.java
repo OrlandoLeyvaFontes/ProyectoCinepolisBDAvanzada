@@ -9,6 +9,7 @@ import Persistencia.PersistenciaException;
 import dtoCinepolis.PeliculasDTO;
 import dtoCinepolis.PeliculasFiltroTablaDTO;
 import dtoCinepolis.PeliculasTablaDTO;
+import dtoCinepolis.SucursalesFiltroTablaDTO;
 import java.util.ArrayList;
 import java.util.List;
 

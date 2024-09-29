@@ -107,4 +107,29 @@ public class SucursalesNegocio implements ISucursalesNegocio {
         }
     }
 
+    public List<SucursalTablaDTO> buscarSucursalesTabla(SucursalesFiltroTablaDTO sucursalesFiltroTablaDTO) throws NegocioException {
+    try {
+        // Llamar al método del DAO para obtener la lista de sucursales basadas en el filtro
+        List<Sucursales> sucursalesList = sucursalesDAO.buscarSucursal(sucursalesFiltroTablaDTO);
+        
+        // Convertir la lista de Sucursales a SucursalTablaDTO
+        List<SucursalTablaDTO> sucursalTablaDTOList = new ArrayList<>();
+
+        for (Sucursales sucursal : sucursalesList) {
+            SucursalTablaDTO sucursalTablaDTO = new SucursalTablaDTO();
+            sucursalTablaDTO.setId(sucursal.getId());
+            sucursalTablaDTO.setNombre(sucursal.getNombre());
+            // Aquí puedes agregar otros atributos que desees incluir en el SucursalTablaDTO
+
+            sucursalTablaDTOList.add(sucursalTablaDTO);
+        }
+
+        return sucursalTablaDTOList; // Retorna la lista de SucursalTablaDTO
+    } catch (PersistenciaException e) {
+        throw new NegocioException("Error al buscar películas en la tabla de sucursales", e);
+    }
+}
+
+    
+
 }

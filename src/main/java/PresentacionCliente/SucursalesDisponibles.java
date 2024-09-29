@@ -21,22 +21,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import dtoCinepolis.SucursalesDTO;
+import dtoCinepolis.SucursalTablaDTO;
 
-/**
- *
+/*
  * @author aleja
  */
 public class SucursalesDisponibles extends javax.swing.JFrame {
 
     private ISucursalesNegocio sucursalesNegocio;
-    private IPeliculasNegocio peliculasNegocio; // Asegúrate de que esta variable esté declarada
+    private IPeliculasNegocio peliculasNegocio; 
     private int idSucursalSeleccionada = -1;
     private int pagina = 0;
     private final int LIMITE = 5;
 
     public SucursalesDisponibles(ISucursalesNegocio sucursalNegocio, IPeliculasNegocio peliculasNegocio) throws NegocioException {
-        this.sucursalesNegocio = sucursalNegocio; // Inicializar el negocio de sucursales
-        this.peliculasNegocio = peliculasNegocio; // Inicializar el negocio de películas
+        this.sucursalesNegocio = sucursalNegocio; 
+        this.peliculasNegocio = peliculasNegocio; 
         initComponents();
         cargarTablaSucursales();
 
@@ -63,29 +64,25 @@ public class SucursalesDisponibles extends javax.swing.JFrame {
         }
         DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
         sucursalTablaDTO.forEach(row -> {
-            Object[] fila = new Object[3]; // Ajusta el tamaño del array a 3
+            Object[] fila = new Object[2];
             fila[0] = row.getId();
             fila[1] = row.getNombre();
-            fila[2] = row.getCiudad(); // Asegúrate de que este campo exista
             modeloTabla.addRow(fila);
         });
     }
 
-    private void cargarTablaSucursales() throws NegocioException {
-        SucursalesFiltroTablaDTO sucursalesFiltroTablaDTO = ObtenerFiltrosTablas();
-        List<SucursalesDTO> sucursalesDTOList = sucursalesNegocio.buscarSucursal(sucursalesFiltroTablaDTO);
+    private void cargarTablaSucursales() {
+         try {
+            SucursalesFiltroTablaDTO sucursalesFiltroTablaDTO = ObtenerFiltrosTablas();
+            List<SucursalTablaDTO> peliculaLista = sucursalesNegocio.buscarSucursalesTabla(sucursalesFiltroTablaDTO);
+            BorrarRegistroTablaSalas();
 
-        List<SucursalTablaDTO> sucursalLista = new ArrayList<>();
-        for (SucursalesDTO sucursalDTO : sucursalesDTOList) {
-            SucursalTablaDTO sucursalTablaDTO = new SucursalTablaDTO();
-            sucursalTablaDTO.setId(sucursalDTO.getId());
-            sucursalTablaDTO.setNombre(sucursalDTO.getNombre());
-            sucursalTablaDTO.setCiudad(sucursalDTO.getCiudad()); // Asegúrate de que esto exista
-            sucursalLista.add(sucursalTablaDTO);
+            AgregarRegistroTablaSucursales(peliculaLista);
+            
+        } catch (NegocioException e) {
+            BorrarRegistroTablaSalas();
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Información", JOptionPane.ERROR_MESSAGE);
         }
-
-        BorrarRegistroTablaSalas();
-        AgregarRegistroTablaSucursales(sucursalLista);
     }
 
     private void BorrarRegistroTablaSalas() {
@@ -156,27 +153,27 @@ public class SucursalesDisponibles extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(165, 165, 165)
-                                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnRegresar)
-                                        .addGap(77, 77, 77)
-                                        .addComponent(jLabel1)
-                                        .addGap(196, 196, 196)))))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(107, 107, 107)
-                            .addComponent(jLabel2)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegresar)
+                        .addGap(77, 77, 77)
+                        .addComponent(jLabel1)
+                        .addGap(196, 196, 196))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnContinuar)))
+                        .addComponent(btnContinuar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(165, 165, 165)
+                                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(107, 107, 107)
+                                .addComponent(jLabel2)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -190,9 +187,9 @@ public class SucursalesDisponibles extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(btnContinuar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(25, 25, 25)
                 .addComponent(txtFiltro)
                 .addContainerGap())
         );
