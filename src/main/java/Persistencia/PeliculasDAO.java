@@ -139,21 +139,21 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
     public void editar(Peliculas peliculas) throws PersistenciaException {
-     String updatePeliculas = """
-                          UPDATE  pelicula
+      String updatePeliculas = """
+                          UPDATE pelicula
                           SET titulo=?,
                               clasificacion=?,
                               genero=?,
                               paisOrigen=?,
                               duracionMinutos=?,
                               sinopsis=?,
-                              rutaImagen=?,
+                              rutaImagen=?
                           WHERE id=?
                           """;
     try (Connection conexion = conexionBD.crearConexion(); 
          PreparedStatement prepa = conexion.prepareStatement(updatePeliculas)) {
         
-        // Asignar los valores a los parámetros
+        
         prepa.setString(1, peliculas.getTitulo());
         prepa.setString(2, peliculas.getClasificacion());
         prepa.setString(3, peliculas.getGenero());
@@ -161,9 +161,8 @@ public class PeliculasDAO implements IPeliculasDAO {
         prepa.setInt(5, peliculas.getDuracionMinutos());
         prepa.setString(6, peliculas.getSinopsis());
         prepa.setString(7, peliculas.getRutaImagen());
-        prepa.setInt(9, peliculas.getId());  
+        prepa.setInt(8, peliculas.getId()); 
         
-        // Ejecutar la actualización
         prepa.executeUpdate();
         
     } catch (SQLException e) {
@@ -174,7 +173,8 @@ public class PeliculasDAO implements IPeliculasDAO {
     @Override
     public Peliculas buscarPorID(int id) throws PersistenciaException {
         String codigoSQL = """
-                         SELECT id, titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, rutaImagen, FROM pelicula WHERE id=?
+                        SELECT id, titulo, clasificacion, genero, paisOrigen, duracionMinutos, sinopsis, rutaImagen
+                                              FROM pelicula WHERE id=?
                           """;
         try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(codigoSQL)) {
             prepa.setInt(1, id);
@@ -196,29 +196,32 @@ public class PeliculasDAO implements IPeliculasDAO {
 
     @Override
     public Peliculas eliminar(int id) throws PersistenciaException {
-         try {
-        Peliculas peliculas = buscarPorID(id);
-        if (peliculas == null) {
-            throw new PersistenciaException("Ocurrió un error en obtener la información de la pelicula por su clave");
-        }
+       Peliculas peliculas = buscarPorID(id);
+    if (peliculas == null) {
+        throw new PersistenciaException("Ocurrió un error al obtener la información de la película por su clave.");
+    }
 
-        Connection connection = this.conexionBD.crearConexion();
-        // Actualiza la consulta para establecer el valor de 'estaEliminado'
-        String updatePeliculas = """
-                               UPDATE pelicula
-                               SET estaEliminado = 1  
-                               WHERE id = ?;
-                               """;
+    String updatePeliculas = """
+        UPDATE pelicula
+        SET estaEliminado = 1
+        WHERE id = ?;
+    """;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(updatePeliculas);
+    try (Connection connection = this.conexionBD.crearConexion();
+         PreparedStatement preparedStatement = connection.prepareStatement(updatePeliculas)) {
+        
         preparedStatement.setInt(1, id);
         int filasAfectadas = preparedStatement.executeUpdate();
-        System.out.println("filasAfectadas = " + filasAfectadas);
-        preparedStatement.close();
-        connection.close();
+        System.out.println("Filas afectadas = " + filasAfectadas);
+        
+        if (filasAfectadas == 0) {
+            throw new PersistenciaException("No se pudo eliminar la película.");
+        }
+
         return peliculas;
+
     } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
+        ex.printStackTrace();
         throw new PersistenciaException("Ocurrió un error al modificar, inténtelo de nuevo y si el error persiste comuníquese con el encargado del sistema.");
     }
 

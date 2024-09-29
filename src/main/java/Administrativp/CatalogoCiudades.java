@@ -203,7 +203,7 @@ private int idCiudadSeleccionada = -1;
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, -1, -1));
 
         jButton5.setText("-->");
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 400, -1, -1));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, -1, -1));
 
         jButton6.setText("Detalles");
         jButton6.addActionListener(new java.awt.event.ActionListener() {

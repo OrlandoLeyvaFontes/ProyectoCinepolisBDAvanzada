@@ -76,32 +76,39 @@ public class ClientesDAO implements IClientesDAO {
 
     @Override
     public void editar(Clientes clientes) throws PersistenciaException {
-        String updateClientes = """
-                                   UPDATE clientes
-                                   SET nombre=?,
-                                   apellidoPaterno=?
-                                   , apellidoMaterno=?
-                                   , fechaNacimiento=?
-                                   , correo=?
-                                   , contraseña=?
-                                   , ciudad=?
-                                   WHERE id=?
-                                   """;
-        try (Connection conexion = ConexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(updateClientes)) {
-            prepa.setString(1, clientes.getNombre());
-            prepa.setString(2, clientes.getApellidoPaterno());
-            prepa.setString(3, clientes.getApellidoMaterno());
-            LocalDate fechaNacimiento = clientes.getFechaNacimiento();
-            Timestamp timestamp = Timestamp.valueOf(fechaNacimiento.atStartOfDay());
-            prepa.setTimestamp(4, timestamp);
-            prepa.setString(5, clientes.getCorreo());
-            prepa.setString(6, clientes.getContraseña());
-            prepa.setString(7, clientes.getCiudad());
-        } catch (SQLException e) {
-            throw new PersistenciaException("Error al actualizar la pelicula", e);
+       String updateClientes = """
+                               UPDATE clientes
+                               SET nombre=?,
+                                   apellidoPaterno=?,
+                                   apellidoMaterno=?,
+                                   fechaNacimiento=?,
+                                   correo=?,
+                                   contraseña=?,
+                                   ciudad=?
+                               WHERE id=?
+                               """;
+    try (Connection conexion = ConexionBD.crearConexion(); 
+         PreparedStatement prepa = conexion.prepareStatement(updateClientes)) {
 
-        }
+        prepa.setString(1, clientes.getNombre());
+        prepa.setString(2, clientes.getApellidoPaterno());
+        prepa.setString(3, clientes.getApellidoMaterno());
 
+        LocalDate fechaNacimiento = clientes.getFechaNacimiento();
+        // Convertir LocalDate a Timestamp
+        Timestamp timestamp = Timestamp.valueOf(fechaNacimiento.atStartOfDay());
+        prepa.setTimestamp(4, timestamp);
+        
+        prepa.setString(5, clientes.getCorreo());
+        prepa.setString(6, clientes.getContraseña());
+        prepa.setString(7, clientes.getCiudad());
+        prepa.setInt(8, clientes.getId());
+
+        prepa.executeUpdate();
+        
+    } catch (SQLException e) {
+        throw new PersistenciaException("Error al actualizar el cliente", e);
+    }
     }
 
     @Override
