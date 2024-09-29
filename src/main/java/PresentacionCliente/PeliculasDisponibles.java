@@ -65,7 +65,7 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
     private void cargarTablaPeliculasDisponibles() {
         try {
             PeliculasFiltroTablaDTO peliculasFiltroTablaDTO = obtenerFiltrosTablas();
-            List<PeliculasTablaDTO> peliculaLista = peliculasNegocio.buscarPeliculasTabla2(peliculasFiltroTablaDTO);
+            List<PeliculasTablaDTO> peliculaLista = peliculasNegocio.buscarPeliculasTabla(peliculasFiltroTablaDTO);
             agregarRegistroTablaPeliculas(peliculaLista);
         } catch (NegocioException e) {
             BorrarRegistroTablaSalas();
