@@ -55,43 +55,43 @@ public class SucursalDAO implements ISucursalDAO {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public List<Sucursales> buscarSucursal(SucursalesFiltroTablaDTO filtro) throws PersistenciaException {
-    List<Sucursales> sucursalLista = new ArrayList<>();
-    String sql = """
-        SELECT s.id, s.nombre, c.id AS ciudadId, c.nombre AS ciudadNombre
-        FROM sucursal s
-        JOIN ciudad c ON s.ciudad_id = c.id
-        WHERE s.nombre LIKE ?
-        AND s.estaEliminado = false
-        LIMIT ?
-        OFFSET ?
-        """;
-
-    try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(sql)) {
-        prepa.setString(1, "%" + filtro.getFiltro() + "%");
-        prepa.setInt(2, filtro.getLimit());
-        prepa.setInt(3, filtro.getOffset());
-
-        try (ResultSet resultado = prepa.executeQuery()) {
-            while (resultado.next()) {
-                // Crear un objeto Ciudad directamente
-                Ciudad ciudad = new Ciudad(resultado.getInt("ciudadId"), resultado.getString("ciudadNombre"));
-
-                // Crear un objeto Sucursales y asignar el objeto Ciudad
-                Sucursales sucursal = new Sucursales();
-                sucursal.setId(resultado.getInt("id"));
-                sucursal.setNombre(resultado.getString("nombre"));
-                sucursal.setCiudad(ciudad); // Asignar el objeto Ciudad
-
-                sucursalLista.add(sucursal);
-            }
-        }
-    } catch (SQLException ex) {
-        throw new PersistenciaException("Error al buscar la sucursal", ex);
-    }
-    return sucursalLista;
-}
+//    @Override
+//    public List<Sucursales> buscarSucursal(SucursalesFiltroTablaDTO filtro) throws PersistenciaException {
+//    List<Sucursales> sucursalLista = new ArrayList<>();
+//    String sql = """
+//        SELECT s.id, s.nombre, c.id AS ciudadId, c.nombre AS ciudadNombre
+//        FROM sucursal s
+//        JOIN ciudad c ON s.ciudad_id = c.id
+//        WHERE s.nombre LIKE ?
+//        AND s.estaEliminado = false
+//        LIMIT ?
+//        OFFSET ?
+//        """;
+//
+//    try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(sql)) {
+//        prepa.setString(1, "%" + filtro.getFiltro() + "%");
+//        prepa.setInt(2, filtro.getLimit());
+//        prepa.setInt(3, filtro.getOffset());
+//
+//        try (ResultSet resultado = prepa.executeQuery()) {
+//            while (resultado.next()) {
+//                // Crear un objeto Ciudad directamente
+//                Ciudad ciudad = new Ciudad(resultado.getInt("ciudadId"), resultado.getString("ciudadNombre"));
+//
+//                // Crear un objeto Sucursales y asignar el objeto Ciudad
+//                Sucursales sucursal = new Sucursales();
+//                sucursal.setId(resultado.getInt("id"));
+//                sucursal.setNombre(resultado.getString("nombre"));
+//                sucursal.setCiudad(ciudad); // Asignar el objeto Ciudad
+//
+//                sucursalLista.add(sucursal);
+//            }
+//        }
+//    } catch (SQLException ex) {
+//        throw new PersistenciaException("Error al buscar la sucursal", ex);
+//    }
+//    return sucursalLista;
+//}
 
     @Override
     public Sucursales buscarPorID(int id) throws PersistenciaException {

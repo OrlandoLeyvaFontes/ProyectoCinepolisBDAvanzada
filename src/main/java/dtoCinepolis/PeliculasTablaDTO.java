@@ -30,6 +30,13 @@ public class PeliculasTablaDTO {
         this.sinopsis = sinopsis;
     }
 
+    public PeliculasTablaDTO(String titulo, String genero) {
+        this.titulo = titulo;
+        this.genero = genero;
+    }
+    
+    
+
     public PeliculasTablaDTO(int id, String titulo, String clasificacion, String genero, String paisOrigen, int duracionMinutos, String sinopsis, String linkTrailer, String rutaImagen) {
         this.id = id;
         this.titulo = titulo;

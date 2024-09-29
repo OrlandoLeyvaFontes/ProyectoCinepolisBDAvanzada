@@ -17,16 +17,18 @@ import java.util.List;
  */
 public interface IPeliculasDAO {
 
-     public Peliculas guardar(Peliculas peliculas) throws PersistenciaException;
+    public Peliculas guardar(Peliculas peliculas) throws PersistenciaException;
 
-List<PeliculasTablaDTO> buscarPelicula(PeliculasFiltroTablaDTO filtro) throws PersistenciaException;
+    List<PeliculasTablaDTO> buscarPelicula(PeliculasFiltroTablaDTO filtro) throws PersistenciaException;
 
-void editar(Peliculas peliculas) throws PersistenciaException;
+    void editar(Peliculas peliculas) throws PersistenciaException;
 
-Peliculas buscarPorID(int id) throws PersistenciaException;
+    Peliculas buscarPorID(int id) throws PersistenciaException;
 
-Peliculas eliminar(int id) throws  PersistenciaException;
+    Peliculas eliminar(int id) throws PersistenciaException;
 
-public Peliculas buscarPeliculasPorNombre(String nombrePelicula) throws PersistenciaException;
+    public Peliculas buscarPeliculasPorNombre(String nombrePelicula) throws PersistenciaException;
+
+    public List<PeliculasTablaDTO> buscarPeliculaTabla(PeliculasFiltroTablaDTO filtro) throws PersistenciaException;
 
 }

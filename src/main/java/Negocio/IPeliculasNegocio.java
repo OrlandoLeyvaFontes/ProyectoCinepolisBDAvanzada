@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface IPeliculasNegocio {
 
-     PeliculasDTO guardarPeliculas(PeliculasDTO peliculasDTO) throws PersistenciaException;
+    PeliculasDTO guardarPeliculas(PeliculasDTO peliculasDTO) throws PersistenciaException;
 
     List<PeliculasTablaDTO> buscarPeliculasTabla(PeliculasFiltroTablaDTO filtro) throws NegocioException;
 
@@ -28,4 +28,6 @@ public interface IPeliculasNegocio {
     PeliculasDTO eliminar(int id) throws NegocioException;
 
     public PeliculasDTO buscarPeliculasPorNombre(String nombrePelicula) throws NegocioException;
+
+    public List<PeliculasTablaDTO> buscarPeliculasTabla2(PeliculasFiltroTablaDTO filtro) throws NegocioException;
 }

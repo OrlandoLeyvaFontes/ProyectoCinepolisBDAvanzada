@@ -29,6 +29,11 @@ public class PeliculasDTO {
         this.id = id;
     }
 
+    public PeliculasDTO(String titulo, String genero) {
+        this.titulo = titulo;
+        this.genero = genero;
+    }
+
     public PeliculasDTO(String titulo, String clasificacion, String genero, String paisOrigen, int duracionMinutos, String sinopsis, String linkTrailer) {
         this.titulo = titulo;
         this.clasificacion = clasificacion;

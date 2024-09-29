@@ -64,6 +64,42 @@ public class PeliculasDAO implements IPeliculasDAO {
     return peliculas; 
     }
 
+    public List<PeliculasTablaDTO> buscarPeliculaTabla(PeliculasFiltroTablaDTO filtro) throws PersistenciaException {
+       List<PeliculasTablaDTO> peliculasLista = new ArrayList<>();
+    String sql = """
+        SELECT titulo, genero
+        FROM pelicula
+        WHERE titulo LIKE ?
+        LIMIT ?
+        OFFSET ?
+        """;
+
+    try (Connection conexion = conexionBD.crearConexion(); PreparedStatement prepa = conexion.prepareStatement(sql)) {
+        prepa.setString(1, "%" + filtro.getFiltro() + "%");
+        prepa.setInt(2, filtro.getLimit());
+        prepa.setInt(3, filtro.getOffset());
+
+        try (ResultSet resultado = prepa.executeQuery()) {
+            while (resultado.next()) {
+                PeliculasTablaDTO peliculasTablaDTO = new PeliculasTablaDTO();
+                peliculasTablaDTO.setId(resultado.getInt("id"));
+                peliculasTablaDTO.setTitulo(resultado.getString("titulo"));
+                peliculasTablaDTO.setClasificacion(resultado.getString("clasificacion"));
+                peliculasTablaDTO.setGenero(resultado.getString("genero"));
+                peliculasTablaDTO.setPaisOrigen(resultado.getString("paisOrigen"));
+                peliculasTablaDTO.setDuracionMinutos(resultado.getInt("duracionMinutos"));
+                peliculasTablaDTO.setSinopsis(resultado.getString("sinopsis"));
+                peliculasTablaDTO.setRutaImagen(resultado.getString("rutaImagen"));
+                peliculasLista.add(peliculasTablaDTO);
+            }
+        }
+    } catch (SQLException ex) {
+        throw new PersistenciaException("Error al buscar la película", ex);
+    }
+    return peliculasLista;
+
+    }
+    
     @Override
     public List<PeliculasTablaDTO> buscarPelicula(PeliculasFiltroTablaDTO filtro) throws PersistenciaException {
        List<PeliculasTablaDTO> peliculasLista = new ArrayList<>();
