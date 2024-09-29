@@ -146,7 +146,7 @@ amdministrador.setVisible(true);
         Logger.getLogger(AgregarSucursales.class.getName()).log(Level.SEVERE, null, ex);
     }
   this.setVisible(false);
-  ExitoSucursal exitoSucursal=new ExitoSucursal();
+  ExitoSucursal exitoSucursal=new ExitoSucursal(ciudadesNegocios, sucursalesNegocio);
 exitoSucursal.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

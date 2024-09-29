@@ -33,7 +33,7 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
      public PeliculasDisponibles(IPeliculasNegocio peliculasNegocio) {
         this.peliculasNegocio = peliculasNegocio;
         initComponents();
-        cargarTablaPeliculasDisponibles();
+//        cargarTablaPeliculasDisponibles();
 
         // Agregar listener para la selección de la tabla
         jTable1.addMouseListener(new MouseAdapter() {
@@ -62,16 +62,16 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
         });
     }
 
-    private void cargarTablaPeliculasDisponibles() {
-        try {
-            PeliculasFiltroTablaDTO peliculasFiltroTablaDTO = obtenerFiltrosTablas();
-            List<PeliculasTablaDTO> peliculaLista = peliculasNegocio.buscarPeliculasTabla2(peliculasFiltroTablaDTO);
-            agregarRegistroTablaPeliculas(peliculaLista);
-        } catch (NegocioException e) {
-            BorrarRegistroTablaSalas();
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+//    private void cargarTablaPeliculasDisponibles() {
+//        try {
+//            PeliculasFiltroTablaDTO peliculasFiltroTablaDTO = obtenerFiltrosTablas();
+//            List<PeliculasTablaDTO> peliculaLista = peliculasNegocio.buscarPeliculasTabla2(peliculasFiltroTablaDTO);
+//            agregarRegistroTablaPeliculas(peliculaLista);
+//        } catch (NegocioException e) {
+//            BorrarRegistroTablaSalas();
+//            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
      private void BorrarRegistroTablaSalas() {
         DefaultTableModel modeloTabla = (DefaultTableModel) this.jTable1.getModel();
@@ -238,7 +238,7 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
         this.pagina++;
         int impresion = pagina + 1;
          jTextField1.setText("Página " + impresion);
-        this.cargarTablaPeliculasDisponibles();
+//        this.cargarTablaPeliculasDisponibles();
     }//GEN-LAST:event_SiguienteActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
@@ -249,7 +249,7 @@ public class PeliculasDisponibles extends javax.swing.JFrame {
 
             int impresion = pagina + 1;
             jTextField1.setText("Página " + impresion);
-            this.cargarTablaPeliculasDisponibles();
+//            this.cargarTablaPeliculasDisponibles();
         }
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
